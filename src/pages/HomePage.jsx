@@ -1,7 +1,7 @@
 import Navbar from './Navbar';
-import SearchBar from './SearchBar';
 import Notes from './Notes';
 import AddNoteButton from './AddNoteButton';
+import SearchBar from './SearchBar';
 
 const HomePage = () => {
   return (
