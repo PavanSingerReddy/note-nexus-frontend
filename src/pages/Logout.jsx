@@ -4,13 +4,13 @@ import HttpRequestUtility from '../utils/HttpRequestUtility';
 
 const Logout = () => {
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const logout = (event)=>{
-        event.preventDefault();
-        HttpRequestUtility.getAxiosInstance().post("http://localhost:8080/api/logout")
-          navigate("/login")
-    }
+  const logout = (event) => {
+    event.preventDefault();
+    HttpRequestUtility.getAxiosInstance().post("http://localhost:8080/api/logout")
+    navigate("/login")
+  }
   return (
     <button onClick={logout}>logout</button>
   )

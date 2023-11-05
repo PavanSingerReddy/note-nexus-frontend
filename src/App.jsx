@@ -3,11 +3,15 @@ import Login from "./pages/Login"
 import Signup from "./pages/Signup"
 import ErrorPage from './pages/ErrorPage';
 import Logout from './pages/Logout';
-import { useEffect } from 'react';
-import HttpRequestUtility from './utils/HttpRequestUtility';
+import HomePage from './pages/HomePage';
+import useFavicon from './hooks/useFavicon';
+import LightFavIcon from "./assets/note-nexus-favicon-white.svg"
+import DarkFavIcon from "./assets/note-nexus-favicon-black.svg"
 
 function App() {
 
+  useFavicon(DarkFavIcon,LightFavIcon)
+  
   return (
     <>
     <Router>
@@ -15,9 +19,10 @@ function App() {
         <Route path="/signup" element={<Signup/>} />
         <Route path='/logout' element={<Logout/>}></Route>
         <Route path="/Login" element={<Login/>} />
+        <Route path="/" element={<HomePage/>} />
         <Route path="*" element={<ErrorPage/>} />
       </Routes>
-    </Router>;
+    </Router>
     </>
   )
 }

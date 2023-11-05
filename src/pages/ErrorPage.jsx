@@ -1,11 +1,10 @@
-import React, { useEffect } from 'react'
 import errorImage from "../assets/ErrorImage.png"
 import { Link } from 'react-router-dom'
 
 const ErrorPage = () => {
-    
-  return (
-    <main>
+
+    return (
+        <main>
             <div className="max-w-screen-xl mx-auto px-4 flex items-center justify-start h-screen md:px-8">
                 <div className="max-w-lg mx-auto flex-1 flex-row-reverse gap-12 items-center justify-between md:max-w-none md:flex">
                     <div className="flex-1 max-w-lg">
@@ -31,7 +30,7 @@ const ErrorPage = () => {
                 </div>
             </div>
         </main>
-  )
+    )
 }
 
 export default ErrorPage

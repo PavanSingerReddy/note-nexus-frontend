@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-class HttpRequestUtility{
+class HttpRequestUtility {
 
     static axiosInstance = axios.create({
         withCredentials: true,
@@ -11,12 +11,12 @@ class HttpRequestUtility{
     });
 
     static csrfAxiosInstance = axios.create({
-        withCredentials:true
+        withCredentials: true
     })
 
     static axiosInstanceConfigured = false;
 
-    static configAxiosInstance(){
+    static configAxiosInstance() {
 
         // Add a request interceptor
         this.axiosInstance.interceptors.request.use(async config => {
@@ -34,28 +34,28 @@ class HttpRequestUtility{
     }
 
 
-    static async getCsrfToken(){
+    static async getCsrfToken() {
         let csrfCookie = Cookies.get('XSRF-TOKEN');
-        if(!csrfCookie){
+        if (!csrfCookie) {
             try {
                 await this.csrfAxiosInstance.post('http://localhost:8080/api/csrf-token');
                 csrfCookie = Cookies.get('XSRF-TOKEN');
             } catch (error) {
-                console.error("Failed to get CSRF token ",error);
+                console.error("Failed to get CSRF token ", error);
             }
         }
         return csrfCookie;
     }
 
-    
-    static getAxiosInstance(){
-        if(!this.axiosInstanceConfigured){
+
+    static getAxiosInstance() {
+        if (!this.axiosInstanceConfigured) {
             this.configAxiosInstance();
             this.axiosInstanceConfigured = !this.axiosInstanceConfigured
         }
         return this.axiosInstance;
     }
-    
+
 }
 
 export default HttpRequestUtility
