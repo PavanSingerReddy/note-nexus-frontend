@@ -7,22 +7,24 @@ import HomePage from './pages/HomePage';
 import useFavicon from './hooks/useFavicon';
 import LightFavIcon from "./assets/note-nexus-favicon-white.svg"
 import DarkFavIcon from "./assets/note-nexus-favicon-black.svg"
+import NoteEditPage from './pages/NoteEditPage';
 
 function App() {
 
-  useFavicon(DarkFavIcon,LightFavIcon)
-  
+  useFavicon(DarkFavIcon, LightFavIcon)
+
   return (
     <>
-    <Router>
-      <Routes>
-        <Route path="/signup" element={<Signup/>} />
-        <Route path='/logout' element={<Logout/>}></Route>
-        <Route path="/Login" element={<Login/>} />
-        <Route path="/" element={<HomePage/>} />
-        <Route path="*" element={<ErrorPage/>} />
-      </Routes>
-    </Router>
+      <Router>
+        <Routes>
+          <Route path="/signup" element={<Signup />} />
+          <Route path='/logout' element={<Logout />}></Route>
+          <Route path="/Login" element={<Login />} />
+          <Route path="/editpage" element={<NoteEditPage />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="*" element={<ErrorPage />} />
+        </Routes>
+      </Router>
     </>
   )
 }

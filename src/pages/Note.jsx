@@ -8,9 +8,9 @@ const Note = ({ value, index }) => {
       <div className={`flex bg-gray-300 relative transition-shadow shadow-sm hover:shadow-2xl p-5 rounded-lg break-all ${(index + 1) % 5 == 0 ? "col-span-2" : ""} ${(index + 1) % 3 == 0 ? "row-span-2" : ""}`}>
         <div className='flex flex-col mb-3'>
           <div className='flex flex-col'>
-            <h3 className='font-bold h-6 text-green-900 overflow-auto hide-scroll-bar'>Note Heading </h3>
+            <h3 className='font-bold text-lg h-6 text-green-900 overflow-auto hide-scroll-bar'>Note Heading </h3>
           </div>
-          <p className='overflow-auto hide-scroll-bar'
+          <p className='m-1 overflow-auto hide-scroll-bar'
           >Note Content {value}</p></div>
 
         <div className='font-thin text-xs absolute z-10 left-3 bottom-3'>12-22-2022</div>

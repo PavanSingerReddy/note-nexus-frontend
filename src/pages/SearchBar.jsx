@@ -2,15 +2,15 @@ import React, { useEffect } from 'react'
 import {
     Input,
     initTE,
-  } from "tw-elements";
-  
-  
-  const SearchPage = () => {
-    
+} from "tw-elements";
+
+
+const SearchPage = () => {
+
     useEffect(() => {
         initTE({ Input });
     }, [])
-    
+
     return (
         <div className="relative mb-3 m-4" data-te-input-wrapper-init>
             <input
