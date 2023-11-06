@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import Logo from "../assets/note-nexus-high-resolution-logo-black-transparent.svg"
-import Avatar from "../assets/note-nexus-favicon-color.svg"
+import Avatar from "../assets/note-nexus-favicon-black.svg"
 // Initialization for ES Users
 import {
   Collapse,
@@ -58,7 +58,7 @@ const Navbar = () => {
             {/* <!-- Second dropdown menu --> */}
             <ul
               className="absolute z-[1000] float-left m-0 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg dark:bg-neutral-700 [&[data-te-dropdown-show]]:block"
-              aria-labelledby="dropdownMenuButton2"
+              aria-labelledby="logout"
               data-te-dropdown-menu-ref>
               {/* <!-- Second dropdown menu items --> */}
               <li>

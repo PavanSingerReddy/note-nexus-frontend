@@ -8,6 +8,7 @@ import useFavicon from './hooks/useFavicon';
 import LightFavIcon from "./assets/note-nexus-favicon-white.svg"
 import DarkFavIcon from "./assets/note-nexus-favicon-black.svg"
 import NoteEditPage from './pages/NoteEditPage';
+import ShowNotesPage from './pages/ShowNotesPage';
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
           <Route path='/logout' element={<Logout />}></Route>
           <Route path="/Login" element={<Login />} />
           <Route path="/editpage" element={<NoteEditPage />} />
+          <Route path="/test" element={<ShowNotesPage />} />
           <Route path="/" element={<HomePage />} />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
