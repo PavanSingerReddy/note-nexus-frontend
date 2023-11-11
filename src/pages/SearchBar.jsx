@@ -1,12 +1,17 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import {
     Input,
     initTE,
 } from "tw-elements";
+import NotesContext from '../context/NotesContext';
 
 
 const SearchPage = () => {
 
+    // using searchTerm and setSearchTerm states from the Notes context
+    const {searchTerm,setSearchTerm} =useContext(NotesContext)
+
+    // initializing the input of the search bar
     useEffect(() => {
         initTE({ Input });
     }, [])
@@ -15,6 +20,8 @@ const SearchPage = () => {
         <div className="relative mb-3 m-4" data-te-input-wrapper-init>
             <input
                 type="search"
+                value={searchTerm}
+                onChange={(e)=> setSearchTerm(e.target.value)}
                 className="peer block min-h-[auto] w-full rounded border-0 bg-slate-200 px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:peer-focus:text-primary [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
                 id="Note Search"
                 placeholder="Note Search" />

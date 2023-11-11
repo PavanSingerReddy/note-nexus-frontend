@@ -1,17 +1,41 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import noteImage from "../assets/noteImage.jpg"
 import { Link, useNavigate } from 'react-router-dom'
-import HttpRequestUtility from '../utils/HttpRequestUtility';
+import httpRequestAxiosQueueUtility from '../utils/HttpRequestAxiosQueueUtility';
+import NotesContext from '../context/NotesContext';
 
 const Login = () => {
+  // use navigate is used for routing in to different webpages in the react router
   const navigate = useNavigate();
+  // used for setting the progress bar This state is taken from the notes context
+  const { setProgressBar } = useContext(NotesContext)
 
+  // used to set the the loading bar when any body comes to the login page 
+  useEffect(() => {
+
+    // set's the loading bar to 100 percent when we route to this page
+    setProgressBar((prevState) => ({
+      show: true,
+      width: 100
+    }))
+
+    // set's the loading bar to 0 after 1 second and hides the loading bar
+    setTimeout(() => {
+      setProgressBar((prevState) => ({
+        show: false,
+        width: 0
+      }))
+    }, 1000);
+
+  }, [])
+
+  // form data state used to store the form data and can be used to send the user login data to the backend api
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   })
 
-
+  // handles the form data change and updates the state of the form data
   const handleOnChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
@@ -19,16 +43,52 @@ const Login = () => {
     }));
   }
 
-
-  const handleOnClick = async (event) => {
+  // function which handles the login logic and send's the user data to the backend api for login
+  const handleOnSubmit = async (event) => {
     event.preventDefault();
-    const url = "http://localhost:8080/api/login"
+    // setting the progress bar loading to true and updating it's value
+    setProgressBar((prevState) => ({
+      show: true,
+      width: 25
+    }))
+
+    // backend url for logging in a user
+    const url = "http://localhost:8080/api/user/login"
+
+    // try catch for handling errors when we are calling the backend api
     try {
-      const response = await HttpRequestUtility.getAxiosInstance().post(url, formData);
-      console.log(response)
-      navigate("/logout")
+
+      // increasing the progress bar value
+      setProgressBar((prevState) => ({
+        ...prevState,
+        width: 40
+      }))
+
+      // using httpRequestAxiosQueueUtility which provides us a object for http request which is based on axios api
+      const respone = await httpRequestAxiosQueueUtility.post(url, formData)
+
+      // increasing the progress bar value
+      setProgressBar((prevState) => ({
+        ...prevState,
+        width: 75
+      }))
+
+      // navigating to the home page after successful login
+      navigate("/")
     } catch (error) {
+
+      // if any error occurs while logging in changing the progress bar value to zero and hiding the progress bar
+      setProgressBar((prevState) => ({
+        show: false,
+        width: 0
+      }))
+
+      // printing the error which has occured
       console.log(error)
+
+      // logout url which logout's the user by calling the backend api which cleans any cookies present if the user accidentally logs in
+      const logoutUrl = "http://localhost:8080/api/user/logout"
+      await httpRequestAxiosQueueUtility.post(logoutUrl)
     }
   }
 
@@ -62,7 +122,7 @@ const Login = () => {
           <Link to="#" className="hover:underline">Forgot Password?</Link>
         </div> */}
           {/* <!-- Login Button --> */}
-          <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-md py-2 px-4 w-full" onClick={handleOnClick} >Login</button>
+          <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-md py-2 px-4 w-full" onClick={handleOnSubmit} >Login</button>
         </form>
         {/* <!-- Sign up  Link --> */}
         <div className="mt-6 text-blue-500 text-center">

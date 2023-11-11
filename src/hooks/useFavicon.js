@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 
+// hook which changes the favicon based on the user's system default theme
 function useFavicon(darkIcon, lightIcon) {
   useEffect(() => {
     // Create a matcher for dark theme
