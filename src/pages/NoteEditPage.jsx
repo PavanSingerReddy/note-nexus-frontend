@@ -50,8 +50,9 @@ const NoteEditPage = () => {
     const onClickHandler = async (event) => {
         event.preventDefault()
         // url to update the note using it's note id
-        const addNoteUrl = `http://localhost:8080/api/notes/edit/${noteData.noteId}`
-        await httpRequestAxiosQueueUtility.authenticatedPut(addNoteUrl, noteData)
+        // importing edit note url using the environment variables in the root directory of this application
+        const editNoteUrl = `${import.meta.env.VITE_Edit_NOTE_URL}${noteData.noteId}`
+        await httpRequestAxiosQueueUtility.authenticatedPut(editNoteUrl, noteData)
         // after editing the note we are navigating to the home page of the user
         navigate("/")
     }

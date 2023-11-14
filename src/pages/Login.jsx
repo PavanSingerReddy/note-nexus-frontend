@@ -53,7 +53,8 @@ const Login = () => {
     }))
 
     // backend url for logging in a user
-    const url = "http://localhost:8080/api/user/login"
+    // importing login url using the environment variables in the root directory of this application
+    const url = import.meta.env.VITE_LOGIN_URL
 
     // try catch for handling errors when we are calling the backend api
     try {
@@ -87,7 +88,8 @@ const Login = () => {
       console.log(error)
 
       // logout url which logout's the user by calling the backend api which cleans any cookies present if the user accidentally logs in
-      const logoutUrl = "http://localhost:8080/api/user/logout"
+      // importing logout url using the environment variables in the root directory of this application
+      const logoutUrl = import.meta.env.VITE_LOGOUT_URL
       await httpRequestAxiosQueueUtility.post(logoutUrl)
     }
   }

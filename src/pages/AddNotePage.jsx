@@ -41,7 +41,8 @@ const AddNotePage = () => {
     // onClickHandler which adds the new note to the user when the user clicks on the tick mark button 
     const onClickHandler = async (event) => {
         event.preventDefault()
-        const addNoteUrl = "http://localhost:8080/api/notes/create"
+        // importing add note url using the environment variables in the root directory of this application
+        const addNoteUrl = import.meta.env.VITE_Add_Note_Url
         await httpRequestAxiosQueueUtility.authenticatedPost(addNoteUrl, noteData)
         navigate("/")
     }

@@ -16,14 +16,16 @@ const Navbar = () => {
   useEffect(() => {
     initTE({ Collapse, Dropdown });
   }, [])
-  
+
   // use navigate is used for routing in to different webpages in the react router
   const navigate = useNavigate();
 
   // when the user clicks on the logout button in the navbar the user logs out
   const logout = (event) => {
     event.preventDefault();
-    httpRequestAxiosQueueUtility.post("http://localhost:8080/api/user/logout")
+    // importing Logout url using the environment variables in the root directory of this application
+    const logouturl = import.meta.env.VITE_LOGOUT_URL
+    httpRequestAxiosQueueUtility.post(logouturl)
     navigate("/login")
   }
 

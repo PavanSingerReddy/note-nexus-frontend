@@ -57,7 +57,8 @@ const Signup = () => {
       width: 25
     }))
     // backend url for registering a new user
-    const url = "http://localhost:8080/api/user/register"
+    // importing sign up url using the environment variables in the root directory of this application
+    const url = import.meta.env.VITE_SIGNUP_URL
 
     // try catch for handling errors when we are calling the backend api
     try {

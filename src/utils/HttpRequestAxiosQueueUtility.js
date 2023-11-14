@@ -11,7 +11,8 @@ class HttpRequestAxiosQueueUtility {
 
     // requesting the backend api for getting the csrf token in a cookie named XSRF-TOKEN
     async getCsrf() {
-        const promise = this.instance.get("http://localhost:8080/api/user/csrf-token")
+        // importing get csrf token url using the environment variables in the root directory of this application
+        const promise = this.instance.get(import.meta.env.VITE_CSRF_TOKEN_URL)
         return promise;
     }
 
@@ -188,7 +189,8 @@ class HttpRequestAxiosQueueUtility {
                 }
             }
             // making our network request using the axios instance and passing our url and myconfig parameters to check if the user is authenticated or not
-            const promise = this.instance.get("http://localhost:8080/api/user/is-authenticated", myconfig)
+            // importing authentication url using the environment variables in the root directory of this application
+            const promise = this.instance.get(import.meta.env.VITE_CHECK_AUTHENTICATION_URL, myconfig)
             // without awaiting our promise we are returning our promise so that it can be added to the promise queue
             return promise;
         }).catch(error => {
