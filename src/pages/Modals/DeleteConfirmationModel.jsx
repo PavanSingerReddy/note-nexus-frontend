@@ -34,7 +34,7 @@ const DeleteConfirmationModel = ({noteItem}) => {
     // inset-0 set's the top-0 right-0 left-0 bottom-0 which spans the div across the whole page as the position is fixed 
     <div id='deleteModalBackground' onClick={onClickHandler} className='z-10 fixed inset-0 bg-black bg-opacity-40 backdrop-blur-sm flex items-center justify-center'>
         {/* the element which contains the actual note delete modal contents */}
-        <div className="bg-zinc-100 p-6 rounded-lg">
+        <div className="bg-zinc-100 p-6 h-auto max-h-screen flex overflow-auto flex-col rounded-lg">
             <div>
                 <p className='italic font-extrabold m-4 text-xl'>Are you sure you want to delete the below Note ?</p>
                 <span className='font-bold ml-4 m-1'>Note Title : </span> <span className='text-teal-900 font-mono'>{noteItem.title}</span>
