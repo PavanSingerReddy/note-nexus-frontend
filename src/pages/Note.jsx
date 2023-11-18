@@ -3,7 +3,8 @@ import "./Note.css"
 import { useNavigate } from 'react-router-dom'
 
 // In this notes element we get the following props : noteItem which has the details of the current note element and index which is used for using the row-span or col-span of the grid element and onclick function which is used to perform an delete operation when the user clicks on the delete button on this note element Component
-const Note = ({ noteItem, index, onClick }) => {
+// using React.forwardRef so that we can access the ref passed to this component.normally we cannot access ref passed to this component without using React.forwardRef
+const Note = React.forwardRef(({ noteItem, index, onClick },ref) => {
   // using useNavigate hook which is used for routing in react router dom
   const navigate = useNavigate()
 
@@ -51,7 +52,8 @@ const Note = ({ noteItem, index, onClick }) => {
   return (
     <>
       {/* if the user clicks on this note then we execute the viewNoteHandler which sends the user to another route /viewnote which shows the note details and we are also adjusting the col-span and row-span of the grid element based on the index number so that the style of the note element looks unique and also making the outer element flex and also making all its inner elements flex so that the text does not overflow out of the container */}
-      <div onClick={viewNoteHandler} className={`flex cursor-pointer bg-gray-300 relative transition-shadow shadow-sm hover:shadow-2xl p-5 rounded-lg break-all ${(index + 1) % 5 == 0 ? "col-span-2" : ""} ${(index + 1) % 3 == 0 ? "row-span-2" : ""}`}>
+      {/* passing the ref if we got the ref as a function or callback it get's executed here if we didnot got any ref here from the parent component ref will not be attached here */}
+      <div ref={ref} onClick={viewNoteHandler} className={`flex cursor-pointer bg-gray-300 relative transition-shadow shadow-sm hover:shadow-2xl p-5 rounded-lg break-all ${(index + 1) % 5 == 0 ? "col-span-2" : ""} ${(index + 1) % 3 == 0 ? "row-span-2" : ""}`}>
         <div className='flex flex-col mb-3'>
           <div className='flex flex-col'>
             {/* we are stoping propogation of event bubling from the above div which has onClick event attached to it so that the user can select the title of the note properly */}
@@ -88,6 +90,6 @@ const Note = ({ noteItem, index, onClick }) => {
 
     </>
   )
-}
+})
 
 export default Note
