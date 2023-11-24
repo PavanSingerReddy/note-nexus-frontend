@@ -1,8 +1,32 @@
 import errorImage from "../assets/ErrorImage.png"
 import { Link } from 'react-router-dom'
+import NotesContext from "../context/NotesContext"
+import { useContext, useEffect } from "react"
 
 const ErrorPage = () => {
 
+    // used for setting the progress bar This state is taken from the notes context
+    const { setProgressBar } = useContext(NotesContext)
+
+    // used to set the the loading bar when any body comes to the signup page 
+    useEffect(() => {
+
+        // set's the loading bar to 100 percent when we route to this page
+        setProgressBar((prevState) => ({
+            show: true,
+            width: 100
+        }))
+
+
+        // set's the loading bar to 0 after 1 second and hides the loading bar
+        setTimeout(() => {
+            setProgressBar((prevState) => ({
+                show: false,
+                width: 0
+            }))
+        }, 1000);
+
+    }, [])
     return (
         <main>
             <div className="max-w-screen-xl mx-auto px-4 flex items-center justify-start h-screen md:px-8">
@@ -20,8 +44,8 @@ const ErrorPage = () => {
                         <p className="text-gray-600">
                             Sorry, the page you are looking for could not be found or has been removed.
                         </p>
-                        <Link to={"/login"} className="text-indigo-600 duration-150 hover:text-indigo-400 font-medium inline-flex items-center gap-x-1">
-                            Go To Login
+                        <Link to={"/"} className="text-indigo-600 duration-150 hover:text-indigo-400 font-medium inline-flex items-center gap-x-1">
+                            Go To Home page
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
                                 <path fillRule="evenodd" d="M5 10a.75.75 0 01.75-.75h6.638L10.23 7.29a.75.75 0 111.04-1.08l3.5 3.25a.75.75 0 010 1.08l-3.5 3.25a.75.75 0 11-1.04-1.08l2.158-1.96H5.75A.75.75 0 015 10z" clipRule="evenodd" />
                             </svg>

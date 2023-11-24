@@ -23,17 +23,9 @@ const AddNotePage = () => {
         // set's the loading bar to 100 percent when we route to this page
         setProgressBar((prevState) => ({
             show: true,
-            width: 100
+            width: 80
         }))
 
-
-        // set's the loading bar to 0 after 1 second and hides the loading bar
-        setTimeout(() => {
-            setProgressBar((prevState) => ({
-                show: false,
-                width: 0
-            }))
-        }, 1000);
 
     }, [])
 
@@ -50,6 +42,21 @@ const AddNotePage = () => {
             // checking if the user is authenticated or not
             try {
                 await httpRequestAxiosQueueUtility.isAuthenticated()
+
+                // set's the loading bar to 100 percent when we route to this page
+                setProgressBar((prevState) => ({
+                    show: true,
+                    width: 100
+                }))
+
+                // set's the loading bar to 0 after 1 second and hides the loading bar
+                setTimeout(() => {
+                    setProgressBar((prevState) => ({
+                        show: false,
+                        width: 0
+                    }))
+                }, 1000);
+
                 // setting isFullPageLoaderActive state to false so that the full page loading is disabled
                 setIsFullPageLoaderActive(false)
             } catch (error) {
