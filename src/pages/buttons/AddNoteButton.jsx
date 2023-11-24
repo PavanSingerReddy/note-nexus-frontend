@@ -1,15 +1,25 @@
+import { useContext } from "react"
 import { useNavigate } from "react-router-dom"
+import NotesContext from "../../context/NotesContext"
 
 // Add note button which is used to add the new note to the user's account
 const AddNoteButton = () => {
-    
+
+    // used for setting the progress bar
+    const { setProgressBar } = useContext(NotesContext)
+
     // function which routes the user to the addnote endpoint which takes to the AddNotePage component which can be used to add new notes
     const navigate = useNavigate()
-    const addNoteButtonOnClick = ()=>{
+    const addNoteButtonOnClick = () => {
         console.log("clicked")
-    navigate("/addnote")
+        // increasing the progress bar value
+        setProgressBar((prevState) => ({
+            show: true,
+            width: 75
+        }))
+        navigate("/addnote")
     }
-    
+
 
     return (
         // routing the user to the AddNotePage component when the user clicks on the add note page

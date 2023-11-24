@@ -1,17 +1,25 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import "./Note.css"
 import { useNavigate } from 'react-router-dom'
+import NotesContext from '../context/NotesContext'
 
 // In this notes element we get the following props : noteItem which has the details of the current note element and index which is used for using the row-span or col-span of the grid element and onclick function which is used to perform an delete operation when the user clicks on the delete button on this note element Component
 // using React.forwardRef so that we can access the ref passed to this component.normally we cannot access ref passed to this component without using React.forwardRef
-const Note = React.forwardRef(({ noteItem, index, onClick },ref) => {
+const Note = React.forwardRef(({ noteItem, index, onClick }, ref) => {
   // using useNavigate hook which is used for routing in react router dom
   const navigate = useNavigate()
+  // getting progress bar from notes context
+  const { setProgressBar } = useContext(NotesContext)
 
   const editButtonHandler = (event) => {
     // stops the event bubling from the note component as note component also has the onclick event attached to it
     event.stopPropagation()
     event.preventDefault()
+    // increasing the progress bar value
+    setProgressBar((prevState) => ({
+      show: true,
+      width: 75
+    }))
     // navigating the user to the /editpage element and along with that we are passing our current note state value to the react router dom which can be accessed by the component on the /editpage endpoint using the useLocation hook
     navigate("/editpage", { state: { noteItem } })
   }
@@ -20,6 +28,11 @@ const Note = React.forwardRef(({ noteItem, index, onClick },ref) => {
   // view note handler which is used to route the user to the /viewnote endpoint along with the current note element details as a state
   const viewNoteHandler = (event) => {
     event.preventDefault()
+    // increasing the progress bar value
+    setProgressBar((prevState) => ({
+      show: true,
+      width: 75
+    }))
     navigate("/viewnote", { state: { noteItem } })
   }
 

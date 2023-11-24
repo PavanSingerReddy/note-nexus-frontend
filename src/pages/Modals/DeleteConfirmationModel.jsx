@@ -6,7 +6,7 @@ import httpRequestAxiosQueueUtility from '../../utils/HttpRequestAxiosQueueUtili
 const DeleteConfirmationModel = ({ noteItem }) => {
 
     // uses the setShowDeleteModal function which set's the state of the showDeleteModal and uses the notes state and also uses the setSortedNotes which set's the notes state after sorting it according to date
-    const { setShowNoteDeleteModal, notes, setSortedNotes } = useContext(NotesContext)
+    const { setShowNoteDeleteModal, notes, setSortedNotes, setProgressBar } = useContext(NotesContext)
 
     // function which is used to close the delete modal 
     const onClickHandler = (event) => {
@@ -18,10 +18,44 @@ const DeleteConfirmationModel = ({ noteItem }) => {
     // async function which deletes the notes when the user presses yes to delete the selected note
     const DeleteNoteHandler = async (event) => {
         event.preventDefault()
+
+        // increasing the progress bar value
+        setProgressBar((prevState) => ({
+            show: true,
+            width: 25
+        }))
+
         // making network request to delete the selected user note
         // importing delete note url using the environment variables in the root directory of this application
         const deleteNoteUrl = `${import.meta.env.VITE_DELETE_NOTE_URL}${noteItem.noteId}`
-        await httpRequestAxiosQueueUtility.authenticatedDelete(deleteNoteUrl)
+        try {
+            // increasing the progress bar value
+            setProgressBar((prevState) => ({
+                show: true,
+                width: 50
+            }))
+
+            await httpRequestAxiosQueueUtility.authenticatedDelete(deleteNoteUrl)
+            // increasing the progress bar value
+            setProgressBar((prevState) => ({
+                show: true,
+                width: 100
+            }))
+
+            // set's the loading bar to 0 after 1 second and hides the loading bar
+            setTimeout(() => {
+                setProgressBar((prevState) => ({
+                    show: false,
+                    width: 0
+                }))
+            }, 1000);
+        } catch (error) {
+            // if any error occurs while deleting a note change the progress bar value to zero and hiding the progress bar
+            setProgressBar((prevState) => ({
+                show: false,
+                width: 0
+            }))
+        }
         // removes the note item from the notes after it get's successfully deleted and assigns it to a variable
         const newNotes = notes.filter(note => note.noteId !== noteItem.noteId)
         // set's the notes state to the updated new notes which removes the deleted note

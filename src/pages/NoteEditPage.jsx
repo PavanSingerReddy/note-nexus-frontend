@@ -6,11 +6,35 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import httpRequestAxiosQueueUtility from '../utils/HttpRequestAxiosQueueUtility';
 import LoaderContext from '../context/LoaderContext';
 import FullPageLoader from './Loaders/FullPageLoader';
+import NotesContext from '../context/NotesContext';
 
 const NoteEditPage = () => {
 
     // use navigate hook which is used for routing in the react router dom
     const navigate = useNavigate()
+
+    // used for setting the progress bar
+    const { setProgressBar } = useContext(NotesContext)
+
+    // used to set the the loading bar when any body comes to the Note Edit Page 
+    useEffect(() => {
+
+        // set's the loading bar to 100 percent when we route to this page
+        setProgressBar((prevState) => ({
+            show: true,
+            width: 100
+        }))
+
+
+        // set's the loading bar to 0 after 1 second and hides the loading bar
+        setTimeout(() => {
+            setProgressBar((prevState) => ({
+                show: false,
+                width: 0
+            }))
+        }, 1000);
+
+    }, [])
 
 
     // loading the isFullPageLoaderActive state and setIsFullPageLoaderActive function from the LoaderContext to show the loading page while authenticating the user 
@@ -74,10 +98,34 @@ const NoteEditPage = () => {
     // onClickHandler which is used to handle the edited note and update the edited note in our backend 
     const onClickHandler = async (event) => {
         event.preventDefault()
+        // increasing the progress bar value
+        setProgressBar((prevState) => ({
+            show: true,
+            width: 25
+        }))
         // url to update the note using it's note id
         // importing edit note url using the environment variables in the root directory of this application
         const editNoteUrl = `${import.meta.env.VITE_Edit_NOTE_URL}${noteData.noteId}`
-        await httpRequestAxiosQueueUtility.authenticatedPut(editNoteUrl, noteData)
+
+        try {
+            // increasing the progress bar value
+            setProgressBar((prevState) => ({
+                show: true,
+                width: 40
+            }))
+            await httpRequestAxiosQueueUtility.authenticatedPut(editNoteUrl, noteData)
+            // increasing the progress bar value
+            setProgressBar((prevState) => ({
+                show: true,
+                width: 75
+            }))
+        } catch (error) {
+            // if any error occurs while edited note submission change the progress bar value to zero and hiding the progress bar
+            setProgressBar((prevState) => ({
+                show: false,
+                width: 0
+            }))
+        }
         // after editing the note we are navigating to the home page of the user
         navigate("/")
     }
@@ -85,6 +133,11 @@ const NoteEditPage = () => {
     // function which is used to handle the back button click and navigate the user to the home page
     const onClickBackButtonHandler = (event) => {
         event.preventDefault()
+        // increasing the progress bar value
+        setProgressBar((prevState) => ({
+            show: true,
+            width: 50
+        }))
         navigate("/")
     }
 

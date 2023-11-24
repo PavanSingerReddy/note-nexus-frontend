@@ -6,12 +6,36 @@ import httpRequestAxiosQueueUtility from '../utils/HttpRequestAxiosQueueUtility'
 import { useNavigate } from 'react-router-dom';
 import LoaderContext from '../context/LoaderContext';
 import FullPageLoader from './Loaders/FullPageLoader';
+import NotesContext from '../context/NotesContext';
 
 const AddNotePage = () => {
 
 
     // navigate hook which is used to navigate to the different routes in the react router dom
     const navigate = useNavigate()
+
+    // used for setting the progress bar
+    const { setProgressBar } = useContext(NotesContext)
+
+    // used to set the the loading bar when any body comes to the Add Note Page 
+    useEffect(() => {
+
+        // set's the loading bar to 100 percent when we route to this page
+        setProgressBar((prevState) => ({
+            show: true,
+            width: 100
+        }))
+
+
+        // set's the loading bar to 0 after 1 second and hides the loading bar
+        setTimeout(() => {
+            setProgressBar((prevState) => ({
+                show: false,
+                width: 0
+            }))
+        }, 1000);
+
+    }, [])
 
     // loading the isFullPageLoaderActive state and setIsFullPageLoaderActive function from the LoaderContext to show the loading page while authenticating the user 
     const { isFullPageLoaderActive, setIsFullPageLoaderActive } = useContext(LoaderContext);
@@ -71,15 +95,44 @@ const AddNotePage = () => {
     // onClickHandler which adds the new note to the user when the user clicks on the tick mark button 
     const onClickHandler = async (event) => {
         event.preventDefault()
+        // increasing the progress bar value
+        setProgressBar((prevState) => ({
+            show: true,
+            width: 25
+        }))
         // importing add note url using the environment variables in the root directory of this application
         const addNoteUrl = import.meta.env.VITE_Add_Note_Url
-        await httpRequestAxiosQueueUtility.authenticatedPost(addNoteUrl, noteData)
+        try {
+            // increasing the progress bar value
+            setProgressBar((prevState) => ({
+                show: true,
+                width: 40
+            }))
+            await httpRequestAxiosQueueUtility.authenticatedPost(addNoteUrl, noteData)
+            // increasing the progress bar value
+            setProgressBar((prevState) => ({
+                show: true,
+                width: 75
+            }))
+        } catch (error) {
+
+            // if any error occurs while adding new note change the progress bar value to zero and hiding the progress bar
+            setProgressBar((prevState) => ({
+                show: false,
+                width: 0
+            }))
+        }
         navigate("/")
     }
 
     // back button which goes to the user's home page which shows all the notes of the user
     const onClickBackButtonHandler = (event) => {
         event.preventDefault()
+        // increasing the progress bar value
+        setProgressBar((prevState) => ({
+            show: true,
+            width: 50
+        }))
         navigate("/")
     }
 

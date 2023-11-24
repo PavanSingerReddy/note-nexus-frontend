@@ -5,13 +5,35 @@ import Navbar from './Navbar';
 import LoaderContext from '../context/LoaderContext';
 import httpRequestAxiosQueueUtility from '../utils/HttpRequestAxiosQueueUtility';
 import FullPageLoader from './Loaders/FullPageLoader';
+import NotesContext from '../context/NotesContext';
 
 const ShowNotesPage = () => {
 
     // use navigate hook which is used for routing in the react router dom
     const navigate = useNavigate()
 
+    // used for setting the progress bar
+    const { setProgressBar } = useContext(NotesContext)
 
+    // used to set the the loading bar when any body comes to the Add Note Page 
+    useEffect(() => {
+
+        // set's the loading bar to 100 percent when we route to this page
+        setProgressBar((prevState) => ({
+            show: true,
+            width: 100
+        }))
+
+
+        // set's the loading bar to 0 after 1 second and hides the loading bar
+        setTimeout(() => {
+            setProgressBar((prevState) => ({
+                show: false,
+                width: 0
+            }))
+        }, 1000);
+
+    }, [])
 
     // loading the isFullPageLoaderActive state and setIsFullPageLoaderActive function from the LoaderContext to show the loading page while authenticating the user 
     const { isFullPageLoaderActive, setIsFullPageLoaderActive } = useContext(LoaderContext);
@@ -59,6 +81,11 @@ const ShowNotesPage = () => {
     // function which is used to handle the back button click and navigate the user to the home page
     const onClickBackButtonHandler = (event) => {
         event.preventDefault()
+        // increasing the progress bar value
+        setProgressBar((prevState) => ({
+            show: true,
+            width: 50
+        }))
         navigate("/")
     }
 
