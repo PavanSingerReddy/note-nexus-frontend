@@ -11,37 +11,40 @@ import NotesContextProvider from './context/NotesContextProvider';
 import AddNotePage from './pages/AddNotePage';
 import ShowNotesPage from './pages/ShowNotesPage';
 import ProgressBar from './pages/ProgressBar';
-import { useEffect } from 'react';
+import LoaderContextProvider from './context/LoaderContextProvider';
 
 function App() {
 
   // when our page loads this custom react hook set's the favicon of the website dynamically based on the user's selected system theme mode like dark mode or light mode
   useFavicon(DarkFavIcon, LightFavIcon)
-  
+
 
   return (
-    // wrapping our application in the NotesContextProvider so that our application has access to our Notes context
-    <NotesContextProvider>
-      <ProgressBar/>
-      <Router>
-        <Routes>
-          {/* on signup route of react router we are rendering the signup component */}
-          <Route path="/signup" element={<Signup />} />
-          {/* on Login route of react router we are rendering the Login component */}
-          <Route path="/Login" element={<Login />} />
-          {/* on editpage route of react router we are rendering the NoteEditPage component */}
-          <Route path="/editpage" element={<NoteEditPage />} />
-          {/* on addnote route of react router we are rendering the AddNotePage component */}
-          <Route path='/addnote' element={<AddNotePage/>}></Route>
-          {/* on viewnote route of react router we are rendering the ShowNotesPage component */}
-          <Route path='/viewnote' element={<ShowNotesPage/>}></Route>
-          {/* on the application home route or root of the application of react router we are rendering the HomePage component */}
-          <Route path="/" element={<HomePage />} />
-          {/* on every other route of react router dom we are rendering the error page */}
-          <Route path="*" element={<ErrorPage />} />
-        </Routes>
-      </Router>
-    </NotesContextProvider>
+    // wrapping our application in the LoaderContextProvider so that our application has access to our Loader Context
+    <LoaderContextProvider>
+      {/* // wrapping our application in the NotesContextProvider so that our application has access to our Notes context */}
+      <NotesContextProvider>
+        <ProgressBar />
+        <Router>
+          <Routes>
+            {/* on signup route of react router we are rendering the signup component */}
+            <Route path="/signup" element={<Signup />} />
+            {/* on Login route of react router we are rendering the Login component */}
+            <Route path="/Login" element={<Login />} />
+            {/* on editpage route of react router we are rendering the NoteEditPage component */}
+            <Route path="/editpage" element={<NoteEditPage />} />
+            {/* on addnote route of react router we are rendering the AddNotePage component */}
+            <Route path='/addnote' element={<AddNotePage />}></Route>
+            {/* on viewnote route of react router we are rendering the ShowNotesPage component */}
+            <Route path='/viewnote' element={<ShowNotesPage />}></Route>
+            {/* on the application home route or root of the application of react router we are rendering the HomePage component */}
+            <Route path="/" element={<HomePage />} />
+            {/* on every other route of react router dom we are rendering the error page */}
+            <Route path="*" element={<ErrorPage />} />
+          </Routes>
+        </Router>
+      </NotesContextProvider>
+    </LoaderContextProvider>
   )
 }
 
