@@ -6,6 +6,7 @@ import NotesContext from '../context/NotesContext';
 import DeleteConfirmationModel from './Modals/DeleteConfirmationModel';
 import useNotes from '../hooks/useNotes';
 import { useCallback } from 'react';
+import PaginationLoader from './Loaders/PaginationLoader';
 
 const Notes = () => {
 
@@ -131,6 +132,9 @@ const Notes = () => {
                 handleNoteClick(noteItem, event)} />
             })}
           </div>
+
+          {isLoading? <PaginationLoader/>:<></>}
+
           {/* the note deleted modal state is set to true when we click on the delete button on the note component so we get the delete modal with the selected note details to delete as we pass the selected note state  */}
           {showNoteDeleteModal && <DeleteConfirmationModel noteItem={selectedNote} />}
         </>
