@@ -13,6 +13,8 @@ import ShowNotesPage from './pages/ShowNotesPage';
 import ProgressBar from './pages/ProgressBar';
 import LoaderContextProvider from './context/LoaderContextProvider';
 import ChangePasswordPage from './pages/ChangePasswordPage';
+import RegistrationVerificationPage from './pages/RegistrationVerificationPage';
+import AwaitingConfirmationPage from './pages/AwaitingConfirmationPage';
 
 function App() {
 
@@ -30,6 +32,10 @@ function App() {
           <Routes>
             {/* on signup route of react router we are rendering the signup component */}
             <Route path="/signup" element={<Signup />} />
+            {/* after signup user get's routed to the /awaitConfirmation route of react router and here we are rendering the AwaitingConfirmationPage component */}
+            <Route path="/awaitConfirmation" element={<AwaitingConfirmationPage />} />
+            {/* after user signs up and we get the link to verify the signup we go to this page of react router and we are rendering the RegistrationVerificationPage component */}
+            <Route path="/verifyRegistration" element={<RegistrationVerificationPage />} />
             {/* on Login route of react router we are rendering the Login component */}
             <Route path="/Login" element={<Login />} />
             {/* on changePassword route of react router we are rendering the ChangePasswordPage component */}
