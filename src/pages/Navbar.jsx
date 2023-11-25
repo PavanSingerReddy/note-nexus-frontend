@@ -29,6 +29,12 @@ const Navbar = () => {
     navigate("/login")
   }
 
+  // when the user clicks on this change password button then the user goes to the change password page
+  const changePassword = (event)=>{
+    event.preventDefault()
+    navigate("/changePassword")
+  }
+
 
   return (
     // <!-- Main navigation container -->
@@ -55,7 +61,7 @@ const Navbar = () => {
             className="relative"
             data-te-dropdown-ref
             data-te-dropdown-alignment="end">
-            {/* <!-- Second dropdown trigger --> */}
+            {/* <!-- dropdown trigger --> */}
             <a
               className="hidden-arrow flex items-center whitespace-nowrap transition duration-150 ease-in-out motion-reduce:transition-none"
               href="#"
@@ -71,12 +77,12 @@ const Navbar = () => {
                 alt="User Avatar or Logo of Note Nexus"
                 loading="lazy" />
             </a>
-            {/* <!-- Second dropdown menu --> */}
+            {/* <!-- dropdown menu --> */}
             <ul
               className="absolute z-[1000] float-left m-0 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg dark:bg-neutral-700 [&[data-te-dropdown-show]]:block"
               aria-labelledby="logout"
               data-te-dropdown-menu-ref>
-              {/* <!-- Second dropdown menu items --> */}
+              {/* <!-- dropdown menu items --> */}
               <li>
                 <a
                   className="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
@@ -84,6 +90,15 @@ const Navbar = () => {
                   onClick={logout}
                   data-te-dropdown-item-ref>
                   Logout
+                </a>
+              </li>
+              <li>
+                <a
+                  className="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
+                  href="#"
+                  onClick={changePassword}
+                  data-te-dropdown-item-ref>
+                  Change Password
                 </a>
               </li>
             </ul>

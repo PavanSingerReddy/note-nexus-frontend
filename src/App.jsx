@@ -12,6 +12,7 @@ import AddNotePage from './pages/AddNotePage';
 import ShowNotesPage from './pages/ShowNotesPage';
 import ProgressBar from './pages/ProgressBar';
 import LoaderContextProvider from './context/LoaderContextProvider';
+import ChangePasswordPage from './pages/ChangePasswordPage';
 
 function App() {
 
@@ -31,6 +32,8 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             {/* on Login route of react router we are rendering the Login component */}
             <Route path="/Login" element={<Login />} />
+            {/* on changePassword route of react router we are rendering the ChangePasswordPage component */}
+            <Route path="/changePassword" element={<ChangePasswordPage />} />
             {/* on editpage route of react router we are rendering the NoteEditPage component */}
             <Route path="/editpage" element={<NoteEditPage />} />
             {/* on addnote route of react router we are rendering the AddNotePage component */}

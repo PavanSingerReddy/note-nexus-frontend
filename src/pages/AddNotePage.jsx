@@ -151,7 +151,7 @@ const AddNotePage = () => {
 
                 <>
 
-                    {/* navbar element which is used to logout a user and also shows the application branding */}
+                    {/* navbar element which is used to logout a user,change password and also shows the application branding */}
                     < Navbar />
                     <div className='relative'>
                         {/* passing the onClickBackButtonHandler which routes the user to the home page ("/") which contains all the user notes */}
