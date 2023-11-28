@@ -15,6 +15,7 @@ import LoaderContextProvider from './context/LoaderContextProvider';
 import ChangePasswordPage from './pages/ChangePasswordPage';
 import RegistrationVerificationPage from './pages/RegistrationVerificationPage';
 import AwaitingConfirmationPage from './pages/AwaitingConfirmationPage';
+import ForgotPasswordPage from './pages/ForgotPasswordPage';
 
 function App() {
 
@@ -36,6 +37,8 @@ function App() {
             <Route path="/awaitConfirmation" element={<AwaitingConfirmationPage />} />
             {/* after user signs up and we get the link to verify the signup we go to this page of react router and we are rendering the RegistrationVerificationPage component */}
             <Route path="/verifyRegistration" element={<RegistrationVerificationPage />} />
+            {/* on forgot password route of react router we are rendering the ForgotPasswordPage component */}
+            <Route path="/forgotPassword" element={<ForgotPasswordPage />} />
             {/* on Login route of react router we are rendering the Login component */}
             <Route path="/Login" element={<Login />} />
             {/* on changePassword route of react router we are rendering the ChangePasswordPage component */}
