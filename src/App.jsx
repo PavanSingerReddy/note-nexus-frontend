@@ -16,6 +16,7 @@ import ChangePasswordPage from './pages/ChangePasswordPage';
 import RegistrationVerificationPage from './pages/RegistrationVerificationPage';
 import AwaitingConfirmationPage from './pages/AwaitingConfirmationPage';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
+import ResetForgotPasswordPage from './pages/ResetForgotPasswordPage';
 
 function App() {
 
@@ -39,6 +40,8 @@ function App() {
             <Route path="/verifyRegistration" element={<RegistrationVerificationPage />} />
             {/* on forgot password route of react router we are rendering the ForgotPasswordPage component */}
             <Route path="/forgotPassword" element={<ForgotPasswordPage />} />
+            {/* on forgot password route of react router we are rendering the ForgotPasswordPage component */}
+            <Route path="/verifyResetPassword" element={<ResetForgotPasswordPage />} />
             {/* on Login route of react router we are rendering the Login component */}
             <Route path="/Login" element={<Login />} />
             {/* on changePassword route of react router we are rendering the ChangePasswordPage component */}
