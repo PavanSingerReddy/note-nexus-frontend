@@ -120,9 +120,9 @@ const Login = () => {
           <label htmlFor="rememberMe" className="text-gray-600 ml-2">Remember Me</label>
         </div> */}
           {/* <!-- Forgot Password Link --> */}
-          {/* <div className="mb-6 text-blue-500">
-          <Link to="#" className="hover:underline">Forgot Password?</Link>
-        </div> */}
+          <div className="mb-6 text-blue-500">
+          <Link to="/forgotPassword" className="hover:underline">Forgot Password?</Link>
+        </div>
           {/* <!-- Login Button --> */}
           <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-md py-2 px-4 w-full" onClick={handleOnSubmit} >Login</button>
         </form>
