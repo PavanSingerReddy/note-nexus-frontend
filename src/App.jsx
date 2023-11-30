@@ -17,6 +17,8 @@ import RegistrationVerificationPage from './pages/RegistrationVerificationPage';
 import AwaitingConfirmationPage from './pages/AwaitingConfirmationPage';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
 import ResetForgotPasswordPage from './pages/ResetForgotPasswordPage';
+import Alert from './pages/Alert';
+import AlertContextProvider from './context/AlertContextProvider';
 
 function App() {
 
@@ -27,38 +29,42 @@ function App() {
   return (
     // wrapping our application in the LoaderContextProvider so that our application has access to our Loader Context
     <LoaderContextProvider>
-      {/* // wrapping our application in the NotesContextProvider so that our application has access to our Notes context */}
-      <NotesContextProvider>
-        <ProgressBar />
-        <Router>
-          <Routes>
-            {/* on signup route of react router we are rendering the signup component */}
-            <Route path="/signup" element={<Signup />} />
-            {/* after signup user get's routed to the /awaitConfirmation route of react router and here we are rendering the AwaitingConfirmationPage component */}
-            <Route path="/awaitConfirmation" element={<AwaitingConfirmationPage />} />
-            {/* after user signs up and we get the link to verify the signup we go to this page of react router and we are rendering the RegistrationVerificationPage component */}
-            <Route path="/verifyRegistration" element={<RegistrationVerificationPage />} />
-            {/* on forgot password route of react router we are rendering the ForgotPasswordPage component */}
-            <Route path="/forgotPassword" element={<ForgotPasswordPage />} />
-            {/* on forgot password route of react router we are rendering the ForgotPasswordPage component */}
-            <Route path="/verifyResetPassword" element={<ResetForgotPasswordPage />} />
-            {/* on Login route of react router we are rendering the Login component */}
-            <Route path="/Login" element={<Login />} />
-            {/* on changePassword route of react router we are rendering the ChangePasswordPage component */}
-            <Route path="/changePassword" element={<ChangePasswordPage />} />
-            {/* on editpage route of react router we are rendering the NoteEditPage component */}
-            <Route path="/editpage" element={<NoteEditPage />} />
-            {/* on addnote route of react router we are rendering the AddNotePage component */}
-            <Route path='/addnote' element={<AddNotePage />}></Route>
-            {/* on viewnote route of react router we are rendering the ShowNotesPage component */}
-            <Route path='/viewnote' element={<ShowNotesPage />}></Route>
-            {/* on the application home route or root of the application of react router we are rendering the HomePage component */}
-            <Route path="/" element={<HomePage />} />
-            {/* on every other route of react router dom we are rendering the error page */}
-            <Route path="*" element={<ErrorPage />} />
-          </Routes>
-        </Router>
-      </NotesContextProvider>
+      {/* // wrapping our application in the AlertContextProvider so that our application has access to our Alert context */}
+      <AlertContextProvider>
+        {/* // wrapping our application in the NotesContextProvider so that our application has access to our Notes context */}
+        <NotesContextProvider>
+          <ProgressBar />
+          <Alert />
+          <Router>
+            <Routes>
+              {/* on signup route of react router we are rendering the signup component */}
+              <Route path="/signup" element={<Signup />} />
+              {/* after signup user get's routed to the /awaitConfirmation route of react router and here we are rendering the AwaitingConfirmationPage component */}
+              <Route path="/awaitConfirmation" element={<AwaitingConfirmationPage />} />
+              {/* after user signs up and we get the link to verify the signup we go to this page of react router and we are rendering the RegistrationVerificationPage component */}
+              <Route path="/verifyRegistration" element={<RegistrationVerificationPage />} />
+              {/* on forgot password route of react router we are rendering the ForgotPasswordPage component */}
+              <Route path="/forgotPassword" element={<ForgotPasswordPage />} />
+              {/* on forgot password route of react router we are rendering the ForgotPasswordPage component */}
+              <Route path="/verifyResetPassword" element={<ResetForgotPasswordPage />} />
+              {/* on Login route of react router we are rendering the Login component */}
+              <Route path="/Login" element={<Login />} />
+              {/* on changePassword route of react router we are rendering the ChangePasswordPage component */}
+              <Route path="/changePassword" element={<ChangePasswordPage />} />
+              {/* on editpage route of react router we are rendering the NoteEditPage component */}
+              <Route path="/editpage" element={<NoteEditPage />} />
+              {/* on addnote route of react router we are rendering the AddNotePage component */}
+              <Route path='/addnote' element={<AddNotePage />}></Route>
+              {/* on viewnote route of react router we are rendering the ShowNotesPage component */}
+              <Route path='/viewnote' element={<ShowNotesPage />}></Route>
+              {/* on the application home route or root of the application of react router we are rendering the HomePage component */}
+              <Route path="/" element={<HomePage />} />
+              {/* on every other route of react router dom we are rendering the error page */}
+              <Route path="*" element={<ErrorPage />} />
+            </Routes>
+          </Router>
+        </NotesContextProvider>
+      </AlertContextProvider>
     </LoaderContextProvider>
   )
 }

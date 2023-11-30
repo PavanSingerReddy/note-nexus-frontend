@@ -6,7 +6,12 @@ export default {
     "./node_modules/tw-elements/dist/js/**/*.js"
   ],
   theme: {
-    extend: {},
+    extend: {
+      animation:{
+        // using our custom styles for animation the custom animation is from CustomAnimation.css file
+        'custom-fade-up':'custom-fade-up 1s forwards',
+      }
+    },
   },
   darkMode: "class",
   plugins: [

@@ -1,0 +1,21 @@
+/* Custom animation for tailwind css animate-custom-fade-up class */
+@keyframes custom-fade-up {
+    0% {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+
+    75% {
+        opacity: 0.25;
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate3d(0, -100%, 0);
+        visibility: hidden;
+    }
+}
