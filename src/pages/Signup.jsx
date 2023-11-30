@@ -6,12 +6,16 @@ import NotesContext from '../context/NotesContext';
 import Cookies from 'js-cookie';
 import httpRequestAxiosQueueUtility from '../utils/HttpRequestAxiosQueueUtility';
 import validator from 'validator';
+import AlertContext from '../context/AlertContext';
 const Signup = () => {
 
   // use navigate is used for routing in to different webpages in the react router
   const navigate = useNavigate();
   // used for setting the progress bar
   const { setProgressBar } = useContext(NotesContext)
+
+  // getting setShowAlert and setAlertErrorMessage from AlertContext
+  const { setShowAlert, setAlertErrorMessage } = useContext(AlertContext)
 
   // used to set the the loading bar when any body comes to the signup page 
   useEffect(() => {
@@ -138,12 +142,17 @@ const Signup = () => {
           width: 0
         }))
 
-        // printing the error which has occured
-        console.log(error)
+        // setting the show Alert to true so that we can see the alert
+        setShowAlert(true)
+        // setting the alert message based on the error response
+        setAlertErrorMessage(error.response && error.response.data && error.response.data.errorMessage ? error.response.data.errorMessage : error.message)
       }
     }
     else {
-      console.error("passwords didnot match");
+      // setting the show Alert to true so that we can see the alert
+      setShowAlert(true)
+      // setting the alert message
+      setAlertErrorMessage("Error while doing sign up");
     }
   }
 

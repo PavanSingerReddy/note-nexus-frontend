@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import httpRequestAxiosQueueUtility from '../utils/HttpRequestAxiosQueueUtility';
 import NotesContext from '../context/NotesContext';
 import validator from 'validator';
+import AlertContext from '../context/AlertContext';
 
 
 const Login = () => {
@@ -11,6 +12,9 @@ const Login = () => {
   const navigate = useNavigate();
   // used for setting the progress bar This state is taken from the notes context
   const { setProgressBar } = useContext(NotesContext)
+
+  // getting setShowAlert and setAlertErrorMessage from AlertContext
+  const { setShowAlert, setAlertErrorMessage } = useContext(AlertContext)
 
   // used to set the the loading bar when any body comes to the login page 
   useEffect(() => {
@@ -114,16 +118,17 @@ const Login = () => {
           width: 0
         }))
 
-        // printing the error which has occured
-        console.log(error)
-
-        // logout url which logout's the user by calling the backend api which cleans any cookies present if the user accidentally logs in
-        // importing logout url using the environment variables in the root directory of this application
-        const logoutUrl = import.meta.env.VITE_LOGOUT_URL
-        await httpRequestAxiosQueueUtility.post(logoutUrl)
+        // setting the show Alert to true so that we can see the alert
+        setShowAlert(true)
+        // setting the alert message based on the error response
+        setAlertErrorMessage(error.response && error.response.data && error.response.data.errorMessage ? error.response.data.errorMessage : error.message)
       }
     } else {
-      console.error("error while doing logging in");
+      // setting the show Alert to true so that we can see the alert
+      setShowAlert(true)
+      // setting the alert message
+      setAlertErrorMessage("error while doing logging in")
+
     }
   }
 
@@ -264,7 +269,7 @@ const Login = () => {
           <div className="mb-4">
             <label htmlFor="password" className="block text-gray-600">Password</label>
             <div className='relative'>
-              <input type="password" id="password" name="password" placeholder='Password' className="w-full pl-12 pr-12 border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" value={formData.password} onChange={handleOnChange} style={{borderColor : passwordBorderColor}} autoComplete="on" />
+              <input type="password" id="password" name="password" placeholder='Password' className="w-full pl-12 pr-12 border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" value={formData.password} onChange={handleOnChange} style={{ borderColor: passwordBorderColor }} autoComplete="on" />
 
               <span className='absolute top-1/2 left-4 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6'>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="#9CA3AF" className="bi bi-lock" viewBox="0 0 16 16">
