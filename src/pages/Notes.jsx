@@ -83,16 +83,16 @@ const Notes = () => {
 
     // if any error occurs while doing pagination of notes we set the alert with alert message
     if (isError) {
-  
+
       // setting the show Alert to true so that we can see the alert
       setShowAlert(true)
-  
+
       // setting the alert message based on the error response
       setAlertErrorMessage(error.response && error.response.data && error.response.data.errorMessage ? error.response.data.errorMessage : error.message)
     }
 
-  }, [isError,error])
-  
+  }, [isError, error])
+
 
 
   // Debounced Search Function: Here we create a debounced version of our search function using the Debouncer class we defined in the NotesContext. This new function will wait for 300 milliseconds after the last call before executing. If it is called again within this time, it will reset the timer.

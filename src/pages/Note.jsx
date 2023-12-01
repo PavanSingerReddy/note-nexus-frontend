@@ -76,10 +76,10 @@ const Note = React.forwardRef(({ noteItem, index, onClick }, ref) => {
           <p onClick={(e) => e.stopPropagation()} className='mt-1 cursor-text overflow-auto hide-scroll-bar'
           > {noteItem.content} </p></div>
 
-        <div className='font-thin cursor-text text-xs absolute z-10 left-3 bottom-3'>
+        <div className='font-thin cursor-text text-xs absolute left-3 bottom-3'>
           {getDateAndTime(noteItem).time}
         </div>
-        <div className='font-thin cursor-text text-xs absolute z-10 right-2 top-2'>{getDateAndTime(noteItem).date}</div>
+        <div className='font-thin cursor-text text-xs absolute right-2 top-2'>{getDateAndTime(noteItem).date}</div>
 
 
 

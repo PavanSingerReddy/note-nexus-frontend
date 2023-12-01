@@ -97,7 +97,7 @@ const HomePage = () => {
     // calling the exec() function to perform our user authentication process
     exec();
 
-        // if this component unmounts then we are aborting any network request if the network request are pending and not completed.if they are already completed and there are no network request pending of this useEffect then nothing happens
+    // if this component unmounts then we are aborting any network request if the network request are pending and not completed.if they are already completed and there are no network request pending of this useEffect then nothing happens
     return () => {
       controller.abort()
     }

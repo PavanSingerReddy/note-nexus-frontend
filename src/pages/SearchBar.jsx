@@ -15,7 +15,7 @@ const SearchPage = () => {
                     placeholder="Note Search"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className='w-full bg-transparent rounded-md border border-stroke dark:border-dark-3 py-[10px] pr-3 pl-12 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2'
+                    className='w-full bg-white rounded-md border border-stroke dark:border-dark-3 py-[10px] pr-3 pl-12 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2'
                 />
                 <span className='absolute top-1/2 left-4 -translate-y-1/2'>
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#9CA3AF" viewBox="0 0 16 16">
