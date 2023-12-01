@@ -29,9 +29,9 @@ function App() {
   return (
     // wrapping our application in the LoaderContextProvider so that our application has access to our Loader Context
     <LoaderContextProvider>
+        {/* // wrapping our application in the NotesContextProvider so that our application has access to our Notes context */}
       {/* // wrapping our application in the AlertContextProvider so that our application has access to our Alert context */}
       <AlertContextProvider>
-        {/* // wrapping our application in the NotesContextProvider so that our application has access to our Notes context */}
         <NotesContextProvider>
           <ProgressBar />
           <Alert />
@@ -45,7 +45,7 @@ function App() {
               <Route path="/verifyRegistration" element={<RegistrationVerificationPage />} />
               {/* on forgot password route of react router we are rendering the ForgotPasswordPage component */}
               <Route path="/forgotPassword" element={<ForgotPasswordPage />} />
-              {/* on forgot password route of react router we are rendering the ForgotPasswordPage component */}
+              {/* after user enters the email in the /forgotpassword endpoint page then he get's a verification link this the verification link points to the /verifyResetPassword for verification and resetting the password*/}
               <Route path="/verifyResetPassword" element={<ResetForgotPasswordPage />} />
               {/* on Login route of react router we are rendering the Login component */}
               <Route path="/Login" element={<Login />} />

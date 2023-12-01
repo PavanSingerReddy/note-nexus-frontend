@@ -28,20 +28,11 @@ const ResetForgotPasswordPage = () => {
     // used to set the the progress bar when any body comes to the Reset Forgot Password Page 
     useEffect(() => {
 
-        // set's the loading bar to 100 percent when we route to this page
+        // set's the progress bar to 80 percent when we route to this page
         setProgressBar((prevState) => ({
             show: true,
-            width: 100
+            width: 80
         }))
-
-        // set's the loading bar to 0 after 1 second and hides the loading bar
-        setTimeout(() => {
-            setProgressBar((prevState) => ({
-                show: false,
-                width: 0
-            }))
-        }, 1000);
-
 
     }, [])
 
@@ -94,13 +85,13 @@ const ResetForgotPasswordPage = () => {
             try {
                 const verificationUrl = `${import.meta.env.VITE_VERIFY_RESET_PASSWORD_VERIFICATION_TOKEN_URL}?token=${tokenValue}`
                 await httpRequestAxiosQueueUtility.get(verificationUrl, { signal })
-                // set's the loading bar to 100 percent when we successfully verify the password reset token
+                // set's the progress bar to 100 percent when we successfully verify the password reset token
                 setProgressBar((prevState) => ({
                     show: true,
                     width: 100
                 }))
 
-                // set's the loading bar to 0 after 1 second and hides the loading bar
+                // set's the progress bar to 0 after 1 second and hides the progress bar
                 setTimeout(() => {
                     setProgressBar((prevState) => ({
                         show: false,
@@ -165,16 +156,22 @@ const ResetForgotPasswordPage = () => {
                 const queryParams = new URLSearchParams(location.search);
                 // getting our token query param value from our query params
                 const tokenValue = queryParams.get('token');
+
+                // set's the progress bar to 80 percent when we successfully change the password of the user
+                setProgressBar((prevState) => ({
+                    show: true,
+                    width: 75
+                }))
                 // reset password url
                 const verificationUrl = `${import.meta.env.VITE_RESET_PASSWORD_VERIFICATION_TOKEN_URL}?token=${tokenValue}`
                 await httpRequestAxiosQueueUtility.post(verificationUrl, passwordFormData)
-                // set's the loading bar to 100 percent when we successfully change the password of the user
+                // set's the progress bar to 100 percent when we successfully change the password of the user
                 setProgressBar((prevState) => ({
                     show: true,
                     width: 100
                 }))
 
-                // set's the loading bar to 0 after 1 second and hides the loading bar
+                // set's the progress bar to 0 after 1 second and hides the progress bar
                 setTimeout(() => {
                     setProgressBar((prevState) => ({
                         show: false,

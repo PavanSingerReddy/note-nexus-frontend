@@ -10,6 +10,7 @@ import {
 import { Link, useNavigate } from 'react-router-dom';
 import httpRequestAxiosQueueUtility from '../utils/HttpRequestAxiosQueueUtility';
 import AlertContext from '../context/AlertContext';
+import NotesContext from '../context/NotesContext';
 
 const Navbar = () => {
 
@@ -18,6 +19,9 @@ const Navbar = () => {
     initTE({ Collapse, Dropdown });
   }, [])
 
+  // used for setting the progress bar
+  const { setProgressBar } = useContext(NotesContext)
+
   // use navigate is used for routing in to different webpages in the react router
   const navigate = useNavigate();
 
@@ -25,27 +29,44 @@ const Navbar = () => {
   const { setShowAlert, setAlertErrorMessage } = useContext(AlertContext)
 
   // when the user clicks on the logout button in the navbar the user logs out
-  const logout =async (event) => {
+  const logout = async (event) => {
     event.preventDefault();
 
     try {
 
+      // set's the progress bar to 50 percent when user performs logout functionality
+      setProgressBar((prevState) => ({
+        show: true,
+        width: 50
+      }))
       const logouturl = import.meta.env.VITE_LOGOUT_URL
       await httpRequestAxiosQueueUtility.post(logouturl)
+      // set's the progress bar to 80 percent when we route to this page
+      setProgressBar((prevState) => ({
+        show: true,
+        width: 80
+      }))
 
     } catch (error) {
+
       // setting the show Alert to true so that we can see the alert
       setShowAlert(true)
+      
       // setting the alert message based on the error response
       setAlertErrorMessage(error.response && error.response.data && error.response.data.errorMessage ? error.response.data.errorMessage : error.message)
     }
-    // importing Logout url using the environment variables in the root directory of this application
+    // going to the login page
     navigate("/login")
   }
 
   // when the user clicks on this change password button then the user goes to the change password page
   const changePassword = (event) => {
     event.preventDefault()
+    // set's the progress bar to 75 percent when we route to this page
+    setProgressBar((prevState) => ({
+      show: true,
+      width: 75
+    }))
     navigate("/changePassword")
   }
 

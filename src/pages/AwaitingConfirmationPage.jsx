@@ -20,17 +20,17 @@ const AwaitingConfirmationPage = () => {
     // getting setShowAlert and setAlertErrorMessage from AlertContext
     const { setShowAlert, setAlertErrorMessage } = useContext(AlertContext)
 
-    // used to set the the loading bar when any body comes to the Awaiting confirmation page
+    // used to set the the progress bar when any body comes to the Awaiting confirmation page
     useEffect(() => {
 
-        // set's the loading bar to 100 percent when we route to this page
+        // set's the progress bar to 100 percent when we route to this page
         setProgressBar((prevState) => ({
             show: true,
             width: 100
         }))
 
 
-        // set's the loading bar to 0 after 1 second and hides the loading bar
+        // set's the progress bar to 0 after 1 second and hides the progress bar
         setTimeout(() => {
             setProgressBar((prevState) => ({
                 show: false,
@@ -58,7 +58,7 @@ const AwaitingConfirmationPage = () => {
     const [countdown, setCountdown] = useState(30);
 
     // This is a function which get's executed when a user clicks on the resend verification token button
-    const handleClick =async () => {
+    const handleClick = async () => {
         // setting is disabled to true when the user clicks on the button so that he cannot send multiple tokens without waiting for 30 seconds after 30 seconds the button get's enabled automatically
         setIsDisabled(true);
         // setting the countdown value to 30 seconds so that button will be disabled for 30 seconds
@@ -68,13 +68,13 @@ const AwaitingConfirmationPage = () => {
         const resendVerificationTokenUrl = import.meta.env.VITE_RESEND_VERIFY_TOKEN_URL
 
         try {
-            // set's the loading bar to 75 percent before the resend verification token request
+            // set's the progress bar to 75 percent before the resend verification token request
             setProgressBar((prevState) => ({
                 show: true,
                 width: 75
             }))
             await httpRequestAxiosQueueUtility.post(resendVerificationTokenUrl, { email })
-            // set's the loading bar to 100 percent after the resend verification token request is successfull and we are suing the timout to delay the progress animation so that user can notice it
+            // set's the progress bar to 100 percent after the resend verification token request is successfull and we are suing the timout to delay the progress animation so that user can notice it
             setTimeout(() => {
                 setProgressBar((prevState) => ({
                     show: false,
@@ -124,6 +124,11 @@ const AwaitingConfirmationPage = () => {
 
     // this function is used to remove the email cookie when the user clicks on login link
     const removeEmailToken = () => {
+        // set's the progress bar to 75 percent when the user goes to the login page
+        setProgressBar((prevState) => ({
+            show: true,
+            width: 75
+        }))
         Cookies.remove("email");
     }
 

@@ -47,7 +47,7 @@ const DeleteConfirmationModel = ({ noteItem }) => {
                 width: 100
             }))
 
-            // set's the loading bar to 0 after 1 second and hides the loading bar
+            // set's the progress bar to 0 after 1 second and hides the progress bar
             setTimeout(() => {
                 setProgressBar((prevState) => ({
                     show: false,

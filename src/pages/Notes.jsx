@@ -13,6 +13,9 @@ const Notes = () => {
   // use navigate is used for routing in to different webpages in the react router
   const navigate = useNavigate();
 
+  // getting setShowAlert and setAlertErrorMessage from AlertContext
+  const { setShowAlert, setAlertErrorMessage } = useContext(AlertContext)
+
   // used for getting the states from the notes context 
   const { filteredNotes, notes, setSortedNotes, setSortedFilteredNotes, Debouncer, searchNotes, showNoteDeleteModal, setShowNoteDeleteModal, searchTerm } = useContext(NotesContext)
 
@@ -76,7 +79,15 @@ const Notes = () => {
   }, [results])
 
 
-  // if(isError) return <p>Error : {error.message}</p>
+  // if any error occurs while doing pagination of notes we set the alert with alert message
+  if (isError) {
+
+    // setting the show Alert to true so that we can see the alert
+    setShowAlert(true)
+
+    // setting the alert message based on the error response
+    setAlertErrorMessage(error.response && error.response.data && error.response.data.errorMessage ? error.response.data.errorMessage : error.message)
+  }
 
   // Debounced Search Function: Here we create a debounced version of our search function using the Debouncer class we defined in the NotesContext. This new function will wait for 300 milliseconds after the last call before executing. If it is called again within this time, it will reset the timer.
   // Create a ref object that holds an instance of the Debouncer class.

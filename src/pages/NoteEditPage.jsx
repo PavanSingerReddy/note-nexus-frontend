@@ -20,10 +20,10 @@ const NoteEditPage = () => {
     // getting setShowAlert and setAlertErrorMessage from AlertContext
     const { setShowAlert, setAlertErrorMessage } = useContext(AlertContext)
 
-    // used to set the the loading bar when any body comes to the Note Edit Page 
+    // used to set the the progress bar when any body comes to the Note Edit Page 
     useEffect(() => {
 
-        // set's the loading bar to 80 percent when we route to this page
+        // set's the progress bar to 80 percent when we route to this page
         setProgressBar((prevState) => ({
             show: true,
             width: 80
@@ -46,13 +46,13 @@ const NoteEditPage = () => {
             try {
                 await httpRequestAxiosQueueUtility.isAuthenticated()
 
-                // set's the loading bar to 100 percent when we route to this page
+                // set's the progress bar to 100 percent when we route to this page
                 setProgressBar((prevState) => ({
                     show: true,
                     width: 100
                 }))
 
-                // set's the loading bar to 0 after 1 second and hides the loading bar
+                // set's the progress bar to 0 after 1 second and hides the progress bar
                 setTimeout(() => {
                     setProgressBar((prevState) => ({
                         show: false,
@@ -136,12 +136,6 @@ const NoteEditPage = () => {
                 width: 75
             }))
         } catch (error) {
-            // if any error occurs while edited note submission change the progress bar value to zero and hiding the progress bar
-            setProgressBar((prevState) => ({
-                show: false,
-                width: 0
-            }))
-
             // setting the show Alert to true so that we can see the alert
             setShowAlert(true)
             // setting the alert message based on the error response

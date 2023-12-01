@@ -55,10 +55,10 @@ const ChangePasswordPage = () => {
         ))
     }
 
-    // used to set the the loading bar when any body comes to the Add Note Page 
+    // used to set the the progress bar when any body comes to the Add Note Page 
     useEffect(() => {
 
-        // set's the loading bar to 80 percent when we route to this page
+        // set's the progress bar to 80 percent when we route to this page
         setProgressBar((prevState) => ({
             show: true,
             width: 80
@@ -79,13 +79,13 @@ const ChangePasswordPage = () => {
             try {
                 await httpRequestAxiosQueueUtility.isAuthenticated()
 
-                // set's the loading bar to 100 percent when we route to this page and the authentication is successfull
+                // set's the progress bar to 100 percent when we route to this page and the authentication is successfull
                 setProgressBar((prevState) => ({
                     show: true,
                     width: 100
                 }))
 
-                // set's the loading bar to 0 after 1 second and hides the loading bar
+                // set's the progress bar to 0 after 1 second and hides the progress bar
                 setTimeout(() => {
                     setProgressBar((prevState) => ({
                         show: false,
@@ -204,8 +204,10 @@ const ChangePasswordPage = () => {
             }
         }
         else {
-            // if the new password and re-entered new password's does not match then we console log the error
-            console.error("new password and re-entered new password does not match")
+            // setting the show Alert to true so that we can see the alert
+            setShowAlert(true)
+            // setting the alert message
+            setAlertErrorMessage("Error while changing the password")
         }
 
     }

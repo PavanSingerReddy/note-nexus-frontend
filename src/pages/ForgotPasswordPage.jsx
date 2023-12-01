@@ -28,6 +28,25 @@ const ForgotPasswordPage = () => {
     // is disabled state to show if the password reset Link button is disabled or not
     const [isDisabled, setIsDisabled] = useState(false);
 
+    // used to set the the progress bar when any body comes to the login page 
+    useEffect(() => {
+
+        // set's the progress bar to 100 percent when we route to this page
+        setProgressBar((prevState) => ({
+            show: true,
+            width: 100
+        }))
+
+        // set's the progress bar to 0 after 1 second and hides the progress bar
+        setTimeout(() => {
+            setProgressBar((prevState) => ({
+                show: false,
+                width: 0
+            }))
+        }, 1000);
+
+    }, [])
+
     // this use effect is used to set the timer when ever user click on the password reset Link button
     useEffect(() => {
         // defining timer so that it can be used to clear the setInterval when the next time this useEffect runs using the clean up function
@@ -108,8 +127,17 @@ const ForgotPasswordPage = () => {
                 // increasing the progress bar value
                 setProgressBar((prevState) => ({
                     show: true,
-                    width: 75
+                    width: 100
                 }))
+
+                // set's the progress bar to 0 after 1 second and hides the progress bar
+                setTimeout(() => {
+                    setProgressBar((prevState) => ({
+                        show: false,
+                        width: 0
+                    }))
+                }, 1000);
+
             } catch (error) {
                 // setting the show Alert to true so that we can see the alert
                 setShowAlert(true)
@@ -120,7 +148,6 @@ const ForgotPasswordPage = () => {
                     show: false,
                     width: 0
                 }))
-                // navigate("/login");
             }
 
         }

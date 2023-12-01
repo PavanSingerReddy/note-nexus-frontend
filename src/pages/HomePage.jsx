@@ -17,12 +17,12 @@ const HomePage = () => {
 
   // getting setShowAlert and setAlertErrorMessage from AlertContext
   const { setShowAlert, setAlertErrorMessage } = useContext(AlertContext)
-  
 
-  // used to set the the loading bar when any body comes to the home page of the user 
+
+  // used to set the the progress bar when any body comes to the home page of the user 
   useEffect(() => {
 
-    // set's the loading bar to 100 percent when we route to this page
+    // set's the progress bar to 80 percent when we route to this page
     setProgressBar((prevState) => ({
       show: true,
       width: 80
@@ -46,15 +46,15 @@ const HomePage = () => {
       // checking if the user is authenticated or not
       try {
 
-          await httpRequestAxiosQueueUtility.isAuthenticated()
+        await httpRequestAxiosQueueUtility.isAuthenticated()
 
-        // set's the loading bar to 100 percent when we route to this page
+        // set's the progress bar to 100 percent when we route to this page
         setProgressBar((prevState) => ({
           show: true,
           width: 100
         }))
 
-        // set's the loading bar to 0 after 1 second and hides the loading bar
+        // set's the progress bar to 0 after 1 second and hides the progress bar
         setTimeout(() => {
           setProgressBar((prevState) => ({
             show: false,
@@ -65,19 +65,21 @@ const HomePage = () => {
         // setting isFullPageLoaderActive state to false so that the full page loading is disabled
         setIsFullPageLoaderActive(false)
       } catch (error) {
-        // printing error if the user is not authenticated
-        console.error("got error while authenticating the user");
+        // setting the show Alert to true so that we can see the alert
+        setShowAlert(true)
+        // setting the alert message
+        setAlertErrorMessage("got error while authenticating the user");
         // logging out the user which clears all the user's cookies
         try {
           const logoutUrl = import.meta.env.VITE_LOGOUT_URL
           await httpRequestAxiosQueueUtility.authenticatedPost(logoutUrl)
         } catch (error) {
           // if any error occurs while logging out we print the error
-          
-        // setting the show Alert to true so that we can see the alert
-        setShowAlert(true)
-         // setting the alert message
-         setAlertErrorMessage("error doing logout")
+
+          // setting the show Alert to true so that we can see the alert
+          setShowAlert(true)
+          // setting the alert message
+          setAlertErrorMessage("error doing logout")
         }
 
         // setting isFullPageLoaderActive state to false so that the full page loading is disabled

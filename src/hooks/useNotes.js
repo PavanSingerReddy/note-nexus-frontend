@@ -50,8 +50,8 @@ const useNotes = (pageNum = 0) => {
                 if (signal.aborted) return
                 // else we are setting isError to true as error has occured while making network requests
                 setIsError(true)
-                // and we are setting the state of the error to the error message object
-                setError({ message: e.message })
+                // and we are setting the state of the error to the error object
+                setError({ message: e })
             })
 
             // if this custom hook unmounts then we are aborting any network request if the network request are pending and not completed.if they are already completed and there are no network request pending regarding the getNotesPage then nothing happens

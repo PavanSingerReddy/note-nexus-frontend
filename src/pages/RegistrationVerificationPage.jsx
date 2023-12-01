@@ -15,14 +15,14 @@ const RegistrationVerificationPage = () => {
 
     // used for setting the progress bar
     const { setProgressBar } = useContext(NotesContext)
-    
+
     // getting setShowAlert and setAlertErrorMessage from AlertContext
     const { setShowAlert, setAlertErrorMessage } = useContext(AlertContext)
 
-    // used to set the the loading bar when any body comes to the Registration Verification Page 
+    // used to set the the progress bar when any body comes to the Registration Verification Page 
     useEffect(() => {
 
-        // set's the loading bar to 80 percent when we route to this page
+        // set's the progress bar to 80 percent when we route to this page
         setProgressBar((prevState) => ({
             show: true,
             width: 80
@@ -57,13 +57,13 @@ const RegistrationVerificationPage = () => {
             try {
                 const verificationUrl = `${import.meta.env.VITE_VERIFY_USER_URL}?token=${tokenValue}`
                 await httpRequestAxiosQueueUtility.get(verificationUrl, { signal })
-                // set's the loading bar to 100 percent when we successfully verify the user and enable the user
+                // set's the progress bar to 100 percent when we successfully verify the user and enable the user
                 setProgressBar((prevState) => ({
                     show: true,
                     width: 100
                 }))
 
-                // set's the loading bar to 0 after 1 second and hides the loading bar
+                // set's the progress bar to 0 after 1 second and hides the progress bar
                 setTimeout(() => {
                     setProgressBar((prevState) => ({
                         show: false,
