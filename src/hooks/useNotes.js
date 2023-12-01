@@ -54,7 +54,7 @@ const useNotes = (pageNum = 0) => {
                 setError({ message: e })
             })
 
-            // if this custom hook unmounts then we are aborting any network request if the network request are pending and not completed.if they are already completed and there are no network request pending regarding the getNotesPage then nothing happens
+        // if this custom hook unmounts then we are aborting any network request if the network request are pending and not completed.if they are already completed and there are no network request pending regarding the getNotesPage then nothing happens
         return () => {
             controller.abort()
         }

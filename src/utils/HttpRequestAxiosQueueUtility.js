@@ -36,7 +36,6 @@ class HttpRequestAxiosQueueUtility {
             }
             // adding the config which was passed to this function for network request and merging it with our myconfig preset config so that the csrf token also get's attached to our custom config during network request
             myconfig = Object.assign(myconfig, config);
-            console.log(myconfig)
             // making our network request using the axios instance and passing our url and myconfig parameters
             const promise = this.instance.get(url, myconfig)
             // without awaiting our promise we are returning our promise so that it can be added to the promise queue
@@ -84,7 +83,6 @@ class HttpRequestAxiosQueueUtility {
 
             // adding the config which was passed to this function for network request and merging it with our myconfig preset config so that the csrf token also get's attached to our custom config during network request
             myconfig = Object.assign(myconfig, config);
-            console.log(myconfig)
             // making our network request using the axios instance and passing our url,data and myconfig parameters
             let promise = this.instance.post(url, data, myconfig)
             // without awaiting our promise we are returning our promise so that it can be added to the promise queue
@@ -131,7 +129,6 @@ class HttpRequestAxiosQueueUtility {
             }
             // adding the config which was passed to this function for network request and merging it with our myconfig preset config so that the csrf token also get's attached to our custom config during network request
             myconfig = Object.assign(myconfig, config);
-            console.log(myconfig)
             // making our network request using the axios instance and passing our url,data and myconfig parameters
             let promise = this.instance.put(url, data, myconfig)
             // without awaiting our promise we are returning our promise so that it can be added to the promise queue
@@ -178,7 +175,6 @@ class HttpRequestAxiosQueueUtility {
             }
             // adding the config which was passed to this function for network request and merging it with our myconfig preset config so that the csrf token also get's attached to our custom config during network request
             myconfig = Object.assign(myconfig, config);
-            console.log(myconfig)
             // making our network request using the axios instance and passing our url and myconfig parameters
             let promise = this.instance.delete(url, myconfig)
             // without awaiting our promise we are returning our promise so that it can be added to the promise queue

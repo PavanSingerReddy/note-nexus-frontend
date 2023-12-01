@@ -29,7 +29,7 @@ function App() {
   return (
     // wrapping our application in the LoaderContextProvider so that our application has access to our Loader Context
     <LoaderContextProvider>
-        {/* // wrapping our application in the NotesContextProvider so that our application has access to our Notes context */}
+      {/* // wrapping our application in the NotesContextProvider so that our application has access to our Notes context */}
       {/* // wrapping our application in the AlertContextProvider so that our application has access to our Alert context */}
       <AlertContextProvider>
         <NotesContextProvider>

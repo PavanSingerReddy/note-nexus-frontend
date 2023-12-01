@@ -20,7 +20,7 @@ const AddNotePage = () => {
 
     // getting setShowAlert and setAlertErrorMessage from AlertContext
     const { setShowAlert, setAlertErrorMessage } = useContext(AlertContext)
-    
+
 
     // used to set the the progress bar when any body comes to the Add Note Page 
     useEffect(() => {

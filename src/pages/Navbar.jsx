@@ -51,7 +51,7 @@ const Navbar = () => {
 
       // setting the show Alert to true so that we can see the alert
       setShowAlert(true)
-      
+
       // setting the alert message based on the error response
       setAlertErrorMessage(error.response && error.response.data && error.response.data.errorMessage ? error.response.data.errorMessage : error.message)
     }

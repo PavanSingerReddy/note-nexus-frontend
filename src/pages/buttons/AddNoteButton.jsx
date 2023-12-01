@@ -11,7 +11,6 @@ const AddNoteButton = () => {
     // function which routes the user to the addnote endpoint which takes to the AddNotePage component which can be used to add new notes
     const navigate = useNavigate()
     const addNoteButtonOnClick = () => {
-        console.log("clicked")
         // increasing the progress bar value
         setProgressBar((prevState) => ({
             show: true,

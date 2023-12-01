@@ -6,9 +6,9 @@ const Alert = () => {
     // animate state which holds the animation state like animate-fade-down and animate-custom-fade-up.but we are initializing it with hidden because we don't want to show this alert element
     const [animate, setAnimate] = useState("hidden");
     // getting the state values from the Alert context
-    const {showAlert,setShowAlert,alertErrorMessage} = useContext(AlertContext);
+    const { showAlert, setShowAlert, alertErrorMessage } = useContext(AlertContext);
 
-// useEffect hook which is used to set the animate state animation when ever showAlert state set to true
+    // useEffect hook which is used to set the animate state animation when ever showAlert state set to true
     useEffect(() => {
 
         // if the showAlert state is true then we set the animate state to "animate-fade-down" so that we can see the alert element and after 3 seconds we set the animate state to animate-custom-fade-up so that alert can be hidden after 3 seconds and we set the show alert to false
@@ -29,7 +29,7 @@ const Alert = () => {
 
         <>
 
-        {/* alert component with animation and position to absolute so that it does not take any space on the dom elements */}
+            {/* alert component with animation and position to absolute so that it does not take any space on the dom elements */}
             <div className={`-m-2 absolute z-50 top-10 left-0 right-0 text-center animate-ease-in-out animate-normal ${animate}`}>
                 <div className="p-2">
                     <div className="inline-flex items-center bg-white leading-none text-red-600 rounded-full p-2 shadow text-teal text-sm">
