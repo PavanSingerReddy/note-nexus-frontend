@@ -67,7 +67,7 @@ const NotesContextProvider = ({ children }) => {
   // Search Function: This function is used to call your search API. It takes a search term as an argument, makes a request to your API, and returns the result.
   const searchNotes = async (searchTerm) => {
     try {
-      const response = await httpRequestAxiosQueueUtility.authenticatedGet(`${import.meta.env.VITE_SEARCH_URL}${searchTerm}`);
+      const response = await httpRequestAxiosQueueUtility.get(`${import.meta.env.VITE_SEARCH_URL}${searchTerm}`);
       const data = await response.data
       return data;
 

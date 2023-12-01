@@ -40,7 +40,7 @@ const DeleteConfirmationModel = ({ noteItem }) => {
                 width: 50
             }))
 
-            await httpRequestAxiosQueueUtility.authenticatedDelete(deleteNoteUrl)
+            await httpRequestAxiosQueueUtility.delete(deleteNoteUrl)
             // increasing the progress bar value
             setProgressBar((prevState) => ({
                 show: true,

@@ -72,14 +72,14 @@ const HomePage = () => {
         // logging out the user which clears all the user's cookies
         try {
           const logoutUrl = import.meta.env.VITE_LOGOUT_URL
-          await httpRequestAxiosQueueUtility.authenticatedPost(logoutUrl)
+          await httpRequestAxiosQueueUtility.post(logoutUrl)
         } catch (error) {
           // if any error occurs while logging out we print the error
 
           // setting the show Alert to true so that we can see the alert
           setShowAlert(true)
           // setting the alert message
-          setAlertErrorMessage("error doing logout")
+          setAlertErrorMessage("got error while authenticating the user and got error doing logout too")
         }
 
         // setting isFullPageLoaderActive state to false so that the full page loading is disabled

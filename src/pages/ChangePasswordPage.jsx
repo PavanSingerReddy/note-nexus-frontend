@@ -96,12 +96,6 @@ const ChangePasswordPage = () => {
                 // setting isFullPageLoaderActive state to false so that the full page loading is disabled
                 setIsFullPageLoaderActive(false)
             } catch (error) {
-                // if any error occurs while authenticating the user change the progress bar value to zero and hiding the progress bar
-                setProgressBar((prevState) => ({
-                    show: false,
-                    width: 0
-                }))
-
                 // setting the show Alert to true so that we can see the alert
                 setShowAlert(true)
                 // setting the alert message
@@ -111,13 +105,13 @@ const ChangePasswordPage = () => {
                     // importing logout url from the env file
                     const logoutUrl = import.meta.env.VITE_LOGOUT_URL
                     // request used for logging out the user
-                    await httpRequestAxiosQueueUtility.authenticatedPost(logoutUrl)
+                    await httpRequestAxiosQueueUtility.post(logoutUrl)
                 } catch (error) {
 
                     // setting the show Alert to true so that we can see the alert
                     setShowAlert(true)
                     // setting the alert message
-                    setAlertErrorMessage("error doing logout")
+                    setAlertErrorMessage("got error while authenticating the user and got error doing logout too")
                 }
                 // setting isFullPageLoaderActive state to false so that the full page loading is disabled
                 setIsFullPageLoaderActive(false)
@@ -182,20 +176,15 @@ const ChangePasswordPage = () => {
                 setShowAlert(true)
                 // setting the alert message
                 setAlertErrorMessage("error while saving new password")
-                // if any error occurs while changing the password change the progress bar value to zero and hiding the progress bar
-                setProgressBar((prevState) => ({
-                    show: false,
-                    width: 0
-                }))
                 // logging out the user which clears all the user's cookies
                 try {
                     const logoutUrl = import.meta.env.VITE_LOGOUT_URL
-                    await httpRequestAxiosQueueUtility.authenticatedPost(logoutUrl)
+                    await httpRequestAxiosQueueUtility.post(logoutUrl)
                 } catch (error) {
                     // setting the show Alert to true so that we can see the alert
                     setShowAlert(true)
                     // setting the alert message
-                    setAlertErrorMessage("error doing logout")
+                    setAlertErrorMessage("error while saving new password and also got error during logout")
                 }
                 // setting isFullPageLoaderActive state to false so that the full page loading is disabled
                 setIsFullPageLoaderActive(false)
