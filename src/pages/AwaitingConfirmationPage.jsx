@@ -3,18 +3,22 @@ import { Link, useNavigate } from 'react-router-dom'
 import NotesContext from '../context/NotesContext'
 import Cookies from 'js-cookie';
 import httpRequestAxiosQueueUtility from '../utils/HttpRequestAxiosQueueUtility';
+import AlertContext from '../context/AlertContext';
 
 // The user get's redirected to this page after signup
 const AwaitingConfirmationPage = () => {
 
     // state which is used to store the email from the previous signup page using cookies so that it can be used to resend verification token
     const [email, setEmail] = useState("")
-    
+
     // navigate hook which is used to navigate to the different routes in the react router dom
     const navigate = useNavigate();
 
     // used for setting the progress bar
     const { setProgressBar } = useContext(NotesContext)
+
+    // getting setShowAlert and setAlertErrorMessage from AlertContext
+    const { setShowAlert, setAlertErrorMessage } = useContext(AlertContext)
 
     // used to set the the loading bar when any body comes to the Awaiting confirmation page
     useEffect(() => {
@@ -54,7 +58,7 @@ const AwaitingConfirmationPage = () => {
     const [countdown, setCountdown] = useState(30);
 
     // This is a function which get's executed when a user clicks on the resend verification token button
-    const handleClick = () => {
+    const handleClick =async () => {
         // setting is disabled to true when the user clicks on the button so that he cannot send multiple tokens without waiting for 30 seconds after 30 seconds the button get's enabled automatically
         setIsDisabled(true);
         // setting the countdown value to 30 seconds so that button will be disabled for 30 seconds
@@ -69,7 +73,7 @@ const AwaitingConfirmationPage = () => {
                 show: true,
                 width: 75
             }))
-            httpRequestAxiosQueueUtility.post(resendVerificationTokenUrl, { email })
+            await httpRequestAxiosQueueUtility.post(resendVerificationTokenUrl, { email })
             // set's the loading bar to 100 percent after the resend verification token request is successfull and we are suing the timout to delay the progress animation so that user can notice it
             setTimeout(() => {
                 setProgressBar((prevState) => ({
@@ -83,6 +87,11 @@ const AwaitingConfirmationPage = () => {
                 show: false,
                 width: 0
             }))
+
+            // setting the show Alert to true so that we can see the alert
+            setShowAlert(true)
+            // setting the alert message based on the error response
+            setAlertErrorMessage(error.response && error.response.data && error.response.data.errorMessage ? error.response.data.errorMessage : error.message)
 
         }
 

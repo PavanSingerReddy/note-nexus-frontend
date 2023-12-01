@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import NotesContext from './NotesContext'
 import httpRequestAxiosQueueUtility from '../utils/HttpRequestAxiosQueueUtility'
+import AlertContext from './AlertContext'
 
 // Notes Context provider holds all the states of the Notes and we can import this states using the Notes context
 const NotesContextProvider = ({ children }) => {
@@ -9,6 +10,10 @@ const NotesContextProvider = ({ children }) => {
   const [notes, setNotes] = useState([])
   // showNoteDeleteModal sets the state to true or false based on this noteDeleteModal is shown
   const [showNoteDeleteModal, setShowNoteDeleteModal] = useState(false)
+
+  // getting setShowAlert and setAlertErrorMessage from AlertContext
+  const { setShowAlert, setAlertErrorMessage } = useContext(AlertContext)
+
   // searchTerm state holds the terms which the user types to search for a note
   const [searchTerm, setSearchTerm] = useState("")
   // progress bar holds the state of the progress bar whether the progress bar should be shown using the show variable and the progress percentage using width variable
@@ -61,9 +66,17 @@ const NotesContextProvider = ({ children }) => {
 
   // Search Function: This function is used to call your search API. It takes a search term as an argument, makes a request to your API, and returns the result.
   const searchNotes = async (searchTerm) => {
-    const response = await httpRequestAxiosQueueUtility.authenticatedGet(`${import.meta.env.VITE_SEARCH_URL}${searchTerm}`);
-    const data = await response.data
-    return data;
+    try {
+      const response = await httpRequestAxiosQueueUtility.authenticatedGet(`${import.meta.env.VITE_SEARCH_URL}${searchTerm}`);
+      const data = await response.data
+      return data;
+
+    } catch (error) {
+      // setting the show Alert to true so that we can see the alert
+      setShowAlert(true)
+      // setting the alert message based on the error response
+      setAlertErrorMessage(error.response && error.response.data && error.response.data.errorMessage ? error.response.data.errorMessage : error.message)
+    }
   }
 
 

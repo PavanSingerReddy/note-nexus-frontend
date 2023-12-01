@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import Logo from "../assets/note-nexus-high-resolution-logo-black-transparent.svg"
 import Avatar from "../assets/note-nexus-favicon-black.svg"
 // Initialization for ES Users
@@ -9,6 +9,7 @@ import {
 } from "tw-elements";
 import { Link, useNavigate } from 'react-router-dom';
 import httpRequestAxiosQueueUtility from '../utils/HttpRequestAxiosQueueUtility';
+import AlertContext from '../context/AlertContext';
 
 const Navbar = () => {
 
@@ -20,17 +21,30 @@ const Navbar = () => {
   // use navigate is used for routing in to different webpages in the react router
   const navigate = useNavigate();
 
+  // getting setShowAlert and setAlertErrorMessage from AlertContext
+  const { setShowAlert, setAlertErrorMessage } = useContext(AlertContext)
+
   // when the user clicks on the logout button in the navbar the user logs out
-  const logout = (event) => {
+  const logout =async (event) => {
     event.preventDefault();
+
+    try {
+
+      const logouturl = import.meta.env.VITE_LOGOUT_URL
+      await httpRequestAxiosQueueUtility.post(logouturl)
+
+    } catch (error) {
+      // setting the show Alert to true so that we can see the alert
+      setShowAlert(true)
+      // setting the alert message based on the error response
+      setAlertErrorMessage(error.response && error.response.data && error.response.data.errorMessage ? error.response.data.errorMessage : error.message)
+    }
     // importing Logout url using the environment variables in the root directory of this application
-    const logouturl = import.meta.env.VITE_LOGOUT_URL
-    httpRequestAxiosQueueUtility.post(logouturl)
     navigate("/login")
   }
 
   // when the user clicks on this change password button then the user goes to the change password page
-  const changePassword = (event)=>{
+  const changePassword = (event) => {
     event.preventDefault()
     navigate("/changePassword")
   }

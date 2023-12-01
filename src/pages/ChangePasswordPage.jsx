@@ -6,6 +6,7 @@ import LoaderContext from '../context/LoaderContext';
 import FullPageLoader from './Loaders/FullPageLoader';
 import Navbar from './Navbar';
 import validator from 'validator';
+import AlertContext from '../context/AlertContext';
 
 
 
@@ -22,6 +23,9 @@ const ChangePasswordPage = () => {
 
     // loading the isFullPageLoaderActive state and setIsFullPageLoaderActive function from the LoaderContext to show the loading page while authenticating the user 
     const { isFullPageLoaderActive, setIsFullPageLoaderActive } = useContext(LoaderContext);
+
+    // getting setShowAlert and setAlertErrorMessage from AlertContext
+    const { setShowAlert, setAlertErrorMessage } = useContext(AlertContext)
 
     // PasswordFormData state which is used to store the data of the input password fields
     const [passwordFormData, setPasswordFormData] = useState({
@@ -97,8 +101,11 @@ const ChangePasswordPage = () => {
                     show: false,
                     width: 0
                 }))
-                // printing error if the user is not authenticated
-                console.error("got error while authenticating the user");
+
+                // setting the show Alert to true so that we can see the alert
+                setShowAlert(true)
+                // setting the alert message
+                setAlertErrorMessage("got error while authenticating the user");
                 // logging out the user which clears all the user's cookies
                 try {
                     // importing logout url from the env file
@@ -106,8 +113,11 @@ const ChangePasswordPage = () => {
                     // request used for logging out the user
                     await httpRequestAxiosQueueUtility.authenticatedPost(logoutUrl)
                 } catch (error) {
-                    // if any error occurs while logging out we print the error
-                    console.error("error doing logout")
+
+                    // setting the show Alert to true so that we can see the alert
+                    setShowAlert(true)
+                    // setting the alert message
+                    setAlertErrorMessage("error doing logout")
                 }
                 // setting isFullPageLoaderActive state to false so that the full page loading is disabled
                 setIsFullPageLoaderActive(false)
@@ -158,7 +168,7 @@ const ChangePasswordPage = () => {
                 // url for changing the password
                 const changePasswordUrl = import.meta.env.VITE_CHANGE_PASSWORD_URL;
                 // making post request with data to change the password
-                httpRequestAxiosQueueUtility.post(changePasswordUrl, passwordFormData)
+                await httpRequestAxiosQueueUtility.post(changePasswordUrl, passwordFormData)
                 // increasing the progress bar value
                 setProgressBar((prevState) => ({
                     show: true,
@@ -167,8 +177,11 @@ const ChangePasswordPage = () => {
                 // after successfully changing the password redirect to home page
                 navigate("/")
             } catch (error) {
-                // if any error occurs while changing the password then we print the error
-                console.error("error while saving new password")
+
+                // setting the show Alert to true so that we can see the alert
+                setShowAlert(true)
+                // setting the alert message
+                setAlertErrorMessage("error while saving new password")
                 // if any error occurs while changing the password change the progress bar value to zero and hiding the progress bar
                 setProgressBar((prevState) => ({
                     show: false,
@@ -179,8 +192,10 @@ const ChangePasswordPage = () => {
                     const logoutUrl = import.meta.env.VITE_LOGOUT_URL
                     await httpRequestAxiosQueueUtility.authenticatedPost(logoutUrl)
                 } catch (error) {
-                    // if any error occurs while logging out we print the error
-                    console.error("error doing logout")
+                    // setting the show Alert to true so that we can see the alert
+                    setShowAlert(true)
+                    // setting the alert message
+                    setAlertErrorMessage("error doing logout")
                 }
                 // setting isFullPageLoaderActive state to false so that the full page loading is disabled
                 setIsFullPageLoaderActive(false)
@@ -268,7 +283,7 @@ const ChangePasswordPage = () => {
                                     id='Previous Password'
                                     name='oldpassword'
                                     type='password'
-                                    style={{borderColor:oldPasswordBorderColor}}
+                                    style={{ borderColor: oldPasswordBorderColor }}
                                     placeholder='Previous Password'
                                     className='w-[90vw] sm:w-[80vw] md:w-[50vw] bg-transparent rounded-md border border-stroke dark:border-dark-3 py-[10px] pr-12 pl-9 sm:pl-10 md:pl-11 lg:pl-12 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2'
                                     autoFocus

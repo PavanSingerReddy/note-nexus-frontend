@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import Note from './Note'
 import { useNavigate } from 'react-router-dom'
-import httpRequestAxiosQueueUtility from '../utils/HttpRequestAxiosQueueUtility';
 import NotesContext from '../context/NotesContext';
 import DeleteConfirmationModel from './Modals/DeleteConfirmationModel';
 import useNotes from '../hooks/useNotes';
 import { useCallback } from 'react';
 import PaginationLoader from './Loaders/PaginationLoader';
+import AlertContext from '../context/AlertContext';
 
 const Notes = () => {
 
@@ -54,7 +54,7 @@ const Notes = () => {
     if (isLoading) return
     // If an Intersection Observer instance already exists, it disconnects the observer. This stops the observer from watching all of its target elements for visibility changes.so this line of code removes the intersection observer from the previous last note
     if (intersectionObserver.current) intersectionObserver.current.disconnect()
-// This line creates a new Intersection Observer instance and assigns it to intersectionObserver.current.
+    // This line creates a new Intersection Observer instance and assigns it to intersectionObserver.current.
     intersectionObserver.current = new IntersectionObserver(note => {
       // Inside the Intersection Observer callback, it checks if the last note is intersecting with the viewport and if there is a next page of notes and also if the search Term is active or not it only works if the search term is not active.search term not active means user is not searching for anything.
       if (note[0].isIntersecting && hasNextPage && !isSearchTermActive) {
@@ -121,7 +121,7 @@ const Notes = () => {
               // returning each individual note component and we pass the index of the array as a key and noteItem as prop so that the note component can populate with the user note details and pass the index for calculating the grid row-span and col-span onClick event handler which is used for making the grid tiles for notes
 
               // here we should not use key as index instead we should use unique key that is given by the noteItem state when it made a network request for fetching notes
-              
+
               // Inside the map callback, we check if the current note is the last note in the results array. If it is, it returns a Note component with the lastNoteRef callback attached to its ref prop. If it’s not the last note, it returns a Note component without a ref
               if (results.length === index + 1 && !isSearchTermActive) {
                 return <Note ref={lastNoteRef} key={noteItem.noteId} noteItem={noteItem} index={index} onClick={(event) =>
@@ -133,7 +133,7 @@ const Notes = () => {
             })}
           </div>
 
-          {isLoading? <PaginationLoader/>:<></>}
+          {isLoading ? <PaginationLoader /> : <></>}
 
           {/* the note deleted modal state is set to true when we click on the delete button on the note component so we get the delete modal with the selected note details to delete as we pass the selected note state  */}
           {showNoteDeleteModal && <DeleteConfirmationModel noteItem={selectedNote} />}

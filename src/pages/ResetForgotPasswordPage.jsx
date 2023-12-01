@@ -5,6 +5,7 @@ import LoaderContext from '../context/LoaderContext';
 import httpRequestAxiosQueueUtility from '../utils/HttpRequestAxiosQueueUtility';
 import FullPageLoader from './Loaders/FullPageLoader';
 import validator from 'validator';
+import AlertContext from '../context/AlertContext';
 
 const ResetForgotPasswordPage = () => {
 
@@ -17,6 +18,9 @@ const ResetForgotPasswordPage = () => {
 
     // used for setting the progress bar
     const { setProgressBar } = useContext(NotesContext)
+
+    // getting setShowAlert and setAlertErrorMessage from AlertContext
+    const { setShowAlert, setAlertErrorMessage } = useContext(AlertContext)
 
     // loading the isFullPageLoaderActive state and setIsFullPageLoaderActive function from the LoaderContext to show the loading page while verifying the password reset token of the user
     const { isFullPageLoaderActive, setIsFullPageLoaderActive } = useContext(LoaderContext);
@@ -109,6 +113,11 @@ const ResetForgotPasswordPage = () => {
 
             } catch (error) {
 
+                // setting the show Alert to true so that we can see the alert
+                setShowAlert(true)
+                // setting the alert message based on the error response
+                setAlertErrorMessage(error.response && error.response.data && error.response.data.errorMessage ? error.response.data.errorMessage : error.message)
+
                 // setting isFullPageLoaderActive state to false so that the full page loading is disabled
                 setIsFullPageLoaderActive(false)
 
@@ -177,6 +186,12 @@ const ResetForgotPasswordPage = () => {
                 navigate("/login");
 
             } catch (error) {
+
+                // setting the show Alert to true so that we can see the alert
+                setShowAlert(true)
+                // setting the alert message based on the error response
+                setAlertErrorMessage(error.response && error.response.data && error.response.data.errorMessage ? error.response.data.errorMessage : error.message)
+
                 // setting isFullPageLoaderActive state to false so that the full page loading is disabled
                 setIsFullPageLoaderActive(false)
 

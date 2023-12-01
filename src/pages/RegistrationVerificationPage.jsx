@@ -4,6 +4,7 @@ import httpRequestAxiosQueueUtility from '../utils/HttpRequestAxiosQueueUtility'
 import NotesContext from '../context/NotesContext';
 import LoaderContext from '../context/LoaderContext';
 import FullPageLoader from './Loaders/FullPageLoader';
+import AlertContext from '../context/AlertContext';
 
 const RegistrationVerificationPage = () => {
 
@@ -14,6 +15,9 @@ const RegistrationVerificationPage = () => {
 
     // used for setting the progress bar
     const { setProgressBar } = useContext(NotesContext)
+    
+    // getting setShowAlert and setAlertErrorMessage from AlertContext
+    const { setShowAlert, setAlertErrorMessage } = useContext(AlertContext)
 
     // used to set the the loading bar when any body comes to the Registration Verification Page 
     useEffect(() => {
@@ -32,7 +36,7 @@ const RegistrationVerificationPage = () => {
 
     // when the user comes to this page then we verify the user's registration by calling the backend with the user's verification token value from our react's page url query parameters
     useEffect(() => {
-        
+
         //   getting AbortController from javascript which is used to cancel asynchronous functions like network request etc
         const controller = new AbortController();
         //   extracting signal from the controller of abort controller
@@ -52,7 +56,7 @@ const RegistrationVerificationPage = () => {
             // sending request to the backend to verify our registration by using the registration token
             try {
                 const verificationUrl = `${import.meta.env.VITE_VERIFY_USER_URL}?token=${tokenValue}`
-                await httpRequestAxiosQueueUtility.get(verificationUrl,{signal})
+                await httpRequestAxiosQueueUtility.get(verificationUrl, { signal })
                 // set's the loading bar to 100 percent when we successfully verify the user and enable the user
                 setProgressBar((prevState) => ({
                     show: true,
@@ -71,6 +75,11 @@ const RegistrationVerificationPage = () => {
                 setIsFullPageLoaderActive(false)
 
             } catch (error) {
+
+                // setting the show Alert to true so that we can see the alert
+                setShowAlert(true)
+                // setting the alert message based on the error response
+                setAlertErrorMessage(error.response && error.response.data && error.response.data.errorMessage ? error.response.data.errorMessage : error.message)
 
                 // setting isFullPageLoaderActive state to false so that the full page loading is disabled
                 setIsFullPageLoaderActive(false)

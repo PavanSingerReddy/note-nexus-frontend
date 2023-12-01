@@ -1,12 +1,17 @@
 import React, { useContext } from 'react'
 import NotesContext from '../../context/NotesContext';
 import httpRequestAxiosQueueUtility from '../../utils/HttpRequestAxiosQueueUtility';
+import AlertContext from '../../context/AlertContext';
 
 // this delete note modal takes the note item as a prop which is used in case if we want to delete that note as note item contains details about the selected note 
 const DeleteConfirmationModel = ({ noteItem }) => {
 
     // uses the setShowDeleteModal function which set's the state of the showDeleteModal and uses the notes state and also uses the setSortedNotes which set's the notes state after sorting it according to date
     const { setShowNoteDeleteModal, notes, setSortedNotes, setProgressBar } = useContext(NotesContext)
+
+
+    // getting setShowAlert and setAlertErrorMessage from AlertContext
+    const { setShowAlert, setAlertErrorMessage } = useContext(AlertContext)
 
     // function which is used to close the delete modal 
     const onClickHandler = (event) => {
@@ -55,6 +60,11 @@ const DeleteConfirmationModel = ({ noteItem }) => {
                 show: false,
                 width: 0
             }))
+
+            // setting the show Alert to true so that we can see the alert
+            setShowAlert(true)
+            // setting the alert message based on the error response
+            setAlertErrorMessage(error.response && error.response.data && error.response.data.errorMessage ? error.response.data.errorMessage : error.message)
         }
         // removes the note item from the notes after it get's successfully deleted and assigns it to a variable
         const newNotes = notes.filter(note => note.noteId !== noteItem.noteId)

@@ -3,6 +3,7 @@ import validator from 'validator'
 import NotesContext from '../context/NotesContext'
 import { Link, useNavigate } from 'react-router-dom'
 import httpRequestAxiosQueueUtility from '../utils/HttpRequestAxiosQueueUtility'
+import AlertContext from '../context/AlertContext'
 
 const ForgotPasswordPage = () => {
 
@@ -12,6 +13,9 @@ const ForgotPasswordPage = () => {
 
     // used for setting the progress bar
     const { setProgressBar } = useContext(NotesContext)
+
+    // getting setShowAlert and setAlertErrorMessage from AlertContext
+    const { setShowAlert, setAlertErrorMessage } = useContext(AlertContext)
 
     // formData state which is used to store the email of the user who forgotten the password
     const [formData, setFormData] = useState({
@@ -100,15 +104,17 @@ const ForgotPasswordPage = () => {
                 // url of the backend for sending the verification mail to reset the password
                 const changePasswordUrl = import.meta.env.VITE_FORGOT_PASSWORD_URL;
                 // making post request with data to change the password
-                httpRequestAxiosQueueUtility.post(changePasswordUrl, formData)
+                await httpRequestAxiosQueueUtility.post(changePasswordUrl, formData)
                 // increasing the progress bar value
                 setProgressBar((prevState) => ({
                     show: true,
                     width: 75
                 }))
             } catch (error) {
-                // if any error occurs while sending the link to email for resetting the password then we print the error
-                console.error("error sending the password reset token to the user")
+                // setting the show Alert to true so that we can see the alert
+                setShowAlert(true)
+                // setting the alert message
+                setAlertErrorMessage("error sending the password reset token to the user")
                 // if any error occurs while sending the link to email for resetting the password change the progress bar value to zero and hiding the progress bar
                 setProgressBar((prevState) => ({
                     show: false,

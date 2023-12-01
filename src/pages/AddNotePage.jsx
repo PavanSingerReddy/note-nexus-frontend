@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import LoaderContext from '../context/LoaderContext';
 import FullPageLoader from './Loaders/FullPageLoader';
 import NotesContext from '../context/NotesContext';
+import AlertContext from '../context/AlertContext';
 
 const AddNotePage = () => {
 
@@ -16,6 +17,10 @@ const AddNotePage = () => {
 
     // used for setting the progress bar
     const { setProgressBar } = useContext(NotesContext)
+
+    // getting setShowAlert and setAlertErrorMessage from AlertContext
+    const { setShowAlert, setAlertErrorMessage } = useContext(AlertContext)
+    
 
     // used to set the the loading bar when any body comes to the Add Note Page 
     useEffect(() => {
@@ -60,15 +65,20 @@ const AddNotePage = () => {
                 // setting isFullPageLoaderActive state to false so that the full page loading is disabled
                 setIsFullPageLoaderActive(false)
             } catch (error) {
-                // printing error if the user is not authenticated
-                console.error("got error while authenticating the user");
+                // setting the show Alert to true so that we can see the alert
+                setShowAlert(true)
+                // setting the alert message based on the error response
+                setAlertErrorMessage("got error while authenticating the user");
                 // logging out the user which clears all the user's cookies
                 try {
                     const logoutUrl = import.meta.env.VITE_LOGOUT_URL
                     await httpRequestAxiosQueueUtility.authenticatedPost(logoutUrl)
                 } catch (error) {
                     // if any error occurs while logging out we print the error
-                    console.error("error doing logout")
+                    // setting the show Alert to true so that we can see the alert
+                    setShowAlert(true)
+                    // setting the alert message based on the error response
+                    setAlertErrorMessage("error doing logout")
                 }
                 // setting isFullPageLoaderActive state to false so that the full page loading is disabled
                 setIsFullPageLoaderActive(false)
@@ -128,6 +138,12 @@ const AddNotePage = () => {
                 show: false,
                 width: 0
             }))
+
+            // setting the show Alert to true so that we can see the alert
+            setShowAlert(true)
+            // setting the alert message based on the error response
+            setAlertErrorMessage(error.response && error.response.data && error.response.data.errorMessage ? error.response.data.errorMessage : error.message)
+
         }
         navigate("/")
     }
