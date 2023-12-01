@@ -5,6 +5,8 @@ import httpRequestAxiosQueueUtility from '../utils/HttpRequestAxiosQueueUtility'
 import NotesContext from '../context/NotesContext';
 import validator from 'validator';
 import AlertContext from '../context/AlertContext';
+import Cookies from 'js-cookie';
+
 
 
 const Login = () => {
@@ -32,6 +34,13 @@ const Login = () => {
         width: 0
       }))
     }, 1000);
+
+
+    // To get the value of the email set by signup page while registration and if it the email cookie is present then we delete the cookie as it is not needed here it is only needed to send the verification token again
+    const cookie = Cookies.get('email')
+    if (cookie) {
+      Cookies.remove("email");
+    }
 
   }, [])
 
