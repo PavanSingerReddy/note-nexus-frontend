@@ -1,36 +1,29 @@
-import React, { useContext, useEffect, useState } from 'react'
-import {
-    Input,
-    initTE,
-} from "tw-elements";
+import React, { useContext} from 'react'
 import NotesContext from '../context/NotesContext';
 
 
 const SearchPage = () => {
 
     // using searchTerm and setSearchTerm states from the Notes context
-    const {searchTerm,setSearchTerm} =useContext(NotesContext)
-
-    // initializing the input of the search bar
-    useEffect(() => {
-        initTE({ Input });
-    }, [])
+    const { searchTerm, setSearchTerm } = useContext(NotesContext)
 
     return (
-        <div className="relative mb-3 m-4" data-te-input-wrapper-init>
-            <input
-                type="search"
-                value={searchTerm}
-                onChange={(e)=> setSearchTerm(e.target.value)}
-                className="peer block min-h-[auto] w-full rounded border-0 bg-slate-200 px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:peer-focus:text-primary [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
-                id="Note Search"
-                placeholder="Note Search" />
-            <label
-                htmlFor="Note Search"
-                className="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-slate-600 peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
-            >Search Notes
-            </label>
-        </div>
+        <>
+            <div className='relative mb-3 m-4'>
+                <input
+                    type='search'
+                    placeholder="Note Search"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className='w-full bg-transparent rounded-md border border-stroke dark:border-dark-3 py-[10px] pr-3 pl-12 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2'
+                />
+                <span className='absolute top-1/2 left-4 -translate-y-1/2'>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#9CA3AF" class="bi bi-search" viewBox="0 0 16 16">
+                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                    </svg>
+                </span>
+            </div>
+        </>
     )
 }
 
