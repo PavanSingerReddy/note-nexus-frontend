@@ -200,7 +200,7 @@ class HttpRequestAxiosQueueUtility {
     }
 
     // function which is used to check if the user is authenticated or not by calling the backend api for checking if the user is logged in or not
-    isAuthenticated() {
+    isAuthenticated(config = {}) {
         // adding our get network request promise for checking authentication to the promise queue
         this.queue = this.queue.then(async () => {
             // getting our csrf cookie value from the XSRF-TOKEN cookie before making any api request as we need the csrf token to validate our request
@@ -217,12 +217,24 @@ class HttpRequestAxiosQueueUtility {
                     'X-XSRF-TOKEN': csrfCookie
                 }
             }
+
+            // adding the config which was passed to this function for network request and merging it with our myconfig preset config so that the csrf token also get's attached to our custom config during network request
+            myconfig = Object.assign(myconfig, config);
             // making our network request using the axios instance and passing our url and myconfig parameters to check if the user is authenticated or not
             // importing authentication url using the environment variables in the root directory of this application
             const promise = this.instance.get(import.meta.env.VITE_CHECK_AUTHENTICATION_URL, myconfig)
             // without awaiting our promise we are returning our promise so that it can be added to the promise queue
             return promise;
         }).catch(error => {
+
+            // If the error is due to a cancelled request (checked using axios.isCancel).The cancelled request uses AbortController. if you want to check if the request is cancelled or not you can use the signal.aborted from the AbortController object which returns true or false.true if the request is aborted and false if the request is not aborted
+            if (axios.isCancel(error)) {
+                // reset the queue by setting it to a resolved promise.
+                this.queue = Promise.resolve();
+                // Then, return immediately to prevent further execution.
+                return;
+            }
+
             // if any error occurs while making the network request we are printing the error
             console.error('Authenticating request failed:', error);
             //And Reset the queue so that the unresolved promise didnot get's stuck in the promise queue.if we didnot reset the promise queue as we have unresloved promise we get network error every time we make a new request that's why we reset the promise queue

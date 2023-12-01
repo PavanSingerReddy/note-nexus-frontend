@@ -37,14 +37,21 @@ const NoteEditPage = () => {
 
     // this useEffect is used to check if the user is authenticated or not and it activates the loading page while the user is getting authenticated and after the authentication the loading page is set to false
     useEffect(() => {
+
+        //   getting AbortController from javascript which is used to cancel asynchronous functions like network request etc
+        const controller = new AbortController()
+
+        //   extracting signal from the controller of abort controller
+        const { signal } = controller
+
         // this function is used instead of directly writing the code because useEffect does not support async function so we write this function and call it below
         const exec = async () => {
 
             // setting the isFullPageLoaderActive to true so that we can see the full loading page
             setIsFullPageLoaderActive(true);
-            // checking if the user is authenticated or not
+            // checking if the user is authenticated or not and passing signal to cancel the request in the below return statement of this useEffect hook if this component unmounts so that we don't need to make multiple request if this component loads two or three times repeatedly
             try {
-                await httpRequestAxiosQueueUtility.isAuthenticated()
+                await httpRequestAxiosQueueUtility.isAuthenticated({signal})
 
                 // set's the progress bar to 100 percent when we route to this page
                 setProgressBar((prevState) => ({
@@ -87,6 +94,11 @@ const NoteEditPage = () => {
         }
         // calling the exec() function to perform our user authentication process
         exec();
+
+        // if this component unmounts then we are aborting any network request if the network request are pending and not completed.if they are already completed and there are no network request pending of this useEffect then nothing happens
+        return () => {
+            controller.abort()
+        }
 
     }, [])
 

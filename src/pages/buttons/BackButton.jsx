@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 
 // back button component in which we will get the event handling function as the props when the user clicks on this button
 const BackButton = ({ onClickBackButtonHandler }) => {
