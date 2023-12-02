@@ -49,7 +49,7 @@ const RegistrationVerificationPage = () => {
 
             // setting the isFullPageLoaderActive to true so that we can see the full loading page while the user is verifying the registration
             setIsFullPageLoaderActive(true);
-            // getting all our queryparams from the url
+            // getting all our query params from the url
             const queryParams = new URLSearchParams(location.search);
             // getting our token query param value from our query params
             const tokenValue = queryParams.get('token');

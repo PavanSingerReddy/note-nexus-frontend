@@ -53,7 +53,12 @@ const AddNotePage = () => {
             setIsFullPageLoaderActive(true);
             // checking if the user is authenticated or not and passing signal to cancel the request in the below return statement of this useEffect hook if this component unmounts so that we don't need to make multiple request if this component loads two or three times repeatedly
             try {
-                await httpRequestAxiosQueueUtility.isAuthenticated({ signal })
+                const response = await httpRequestAxiosQueueUtility.isAuthenticated({ signal })
+
+                // aborting any operation if we cancelled the isAuthenticated network request
+                if (import.meta.env.VITE_CANCEL_NETWORK_REQUEST_STRING.localeCompare(response) === 0) {
+                    return
+                }
 
                 // set's the progress bar to 100 percent when we route to this page
                 setProgressBar((prevState) => ({

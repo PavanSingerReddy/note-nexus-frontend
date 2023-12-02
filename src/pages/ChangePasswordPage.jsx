@@ -85,9 +85,14 @@ const ChangePasswordPage = () => {
             // checking if the user is authenticated or not and passing signal to cancel the request in the below return statement of this useEffect hook if this component unmounts so that we don't need to make multiple request if this component loads two or three times repeatedly
             try {
 
-                await httpRequestAxiosQueueUtility.isAuthenticated({ signal })
+                const response = await httpRequestAxiosQueueUtility.isAuthenticated({ signal })
 
-                // set's the progress bar to 100 percent when we route to this page and the authentication is successfull
+                // aborting any operation if we cancelled the isAuthenticated network request
+                if (import.meta.env.VITE_CANCEL_NETWORK_REQUEST_STRING.localeCompare(response) === 0) {
+                    return
+                }
+
+                // set's the progress bar to 100 percent when we route to this page and the authentication is successful
                 setProgressBar((prevState) => ({
                     show: true,
                     width: 100
@@ -143,7 +148,7 @@ const ChangePasswordPage = () => {
 
     // function which is executed when user clicks on the change password button
     const changePassword = async (event) => {
-        // preventing the default behaviour of the button
+        // preventing the default behavior of the button
         event.preventDefault()
 
         // checking if the new password entry is empty or not

@@ -5,10 +5,10 @@ import Cookies from 'js-cookie';
 import httpRequestAxiosQueueUtility from '../utils/HttpRequestAxiosQueueUtility';
 import AlertContext from '../context/AlertContext';
 
-// The user get's redirected to this page after signup
+// The user get's redirected to this page after sign up
 const AwaitingConfirmationPage = () => {
 
-    // state which is used to store the email from the previous signup page using cookies so that it can be used to resend verification token
+    // state which is used to store the email from the previous sign up page using cookies so that it can be used to resend verification token
     const [email, setEmail] = useState("")
 
     // navigate hook which is used to navigate to the different routes in the react router dom
@@ -74,7 +74,7 @@ const AwaitingConfirmationPage = () => {
                 width: 75
             }))
             await httpRequestAxiosQueueUtility.post(resendVerificationTokenUrl, { email })
-            // set's the progress bar to 100 percent after the resend verification token request is successfull and we are suing the timout to delay the progress animation so that user can notice it
+            // set's the progress bar to 100 percent after the resend verification token request is successful and we are suing the timeout to delay the progress animation so that user can notice it
             setTimeout(() => {
                 setProgressBar((prevState) => ({
                     show: false,
@@ -146,7 +146,7 @@ const AwaitingConfirmationPage = () => {
                         <p className="mb-2 text-lg text-zinc-500">We are glad, that you're with us ? We've sent you a verification link to the registered email address.</p>
                         <Link onClick={removeEmailToken} to="/login" className="mt-3 inline-block w-full rounded bg-indigo-600 px-5 py-3 font-medium text-white shadow-md shadow-indigo-500/20 hover:bg-indigo-700">Go To Login Page →</Link>
 
-                        {/* when the user clicks on this button we resend the verification token to the user the styles of this button is based on the isDisabled state when the user clicks on this button it remains greyed out untill the is disabled state becomes false */}
+                        {/* when the user clicks on this button we resend the verification token to the user the styles of this button is based on the isDisabled state when the user clicks on this button it remains greyed out until the is disabled state becomes false */}
                         <button onClick={handleClick} disabled={isDisabled} className={`${!isDisabled ? 'animate-bounce mt-8 inline-block w-full rounded bg-indigo-600 px-5 py-3 font-medium text-white shadow-md shadow-indigo-500/20 hover:bg-indigo-700' : 'mt-8 inline-block w-full px-5 py-3 rounded font-medium bg-gray-300 cursor-not-allowed opacity-50'}`}>
                             Resend Verification Token
                         </button>

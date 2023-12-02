@@ -27,7 +27,7 @@ const Notes = () => {
 
   // function which handles the delete functionality of a note when a user clicks on the delete note button on a note we pass this function as a prop to every single note
   const handleNoteClick = (noteItem, event) => {
-    // stops the event bubling from the note component as note component also has the onclick event attached to it
+    // stops the event bubbling from the note component as note component also has the onclick event attached to it
     event.stopPropagation()
     // sets the selected note item for delete so that our delete modal can get the selected note item and send request to the delete the selected note item
     setSelectedNote(noteItem);
@@ -133,7 +133,7 @@ const Notes = () => {
         <>
           {/* div containing the notes */}
           <div className="grid grid-cols-2 gap-4 m-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 auto-rows-[minmax(0,_20vh)] grid-flow-dense">
-            {/* iterating over filtered notes to show the note details these filterd notes is an array which is based upon our search term you can see it's implementation in the notes context */}
+            {/* iterating over filtered notes to show the note details these filtered notes is an array which is based upon our search term you can see it's implementation in the notes context */}
             {filteredNotes.map((noteItem, index) => {
               // returning each individual note component and we pass the index of the array as a key and noteItem as prop so that the note component can populate with the user note details and pass the index for calculating the grid row-span and col-span onClick event handler which is used for making the grid tiles for notes
 

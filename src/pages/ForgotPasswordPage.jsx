@@ -48,7 +48,7 @@ const ForgotPasswordPage = () => {
         }, 1000);
 
 
-        // To get the value of the email set by signup page while registration and if it the email cookie is present then we delete the cookie as it is not needed here it is only needed to send the verification token again
+        // To get the value of the email set by sign up page while registration and if it the email cookie is present then we delete the cookie as it is not needed here it is only needed to send the verification token again
         const cookie = Cookies.get('email')
         if (cookie) {
             Cookies.remove("email");
@@ -103,7 +103,7 @@ const ForgotPasswordPage = () => {
 
     // function which executes when the user click on the Get Password Reset Link Button
     const getPasswordResetLink = async (event) => {
-        // preventing the default behaviour of the button
+        // preventing the default behavior of the button
         event.preventDefault()
 
         // validator is a npm package which is used for input fields validation here it is used to validate the email.It is used to validate the email

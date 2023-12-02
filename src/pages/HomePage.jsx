@@ -52,7 +52,12 @@ const HomePage = () => {
       setIsFullPageLoaderActive(true);
       // checking if the user is authenticated or not and passing signal to cancel the request in the below return statement of this useEffect hook if this component unmounts so that we don't need to make multiple request if this component loads two or three times repeatedly
       try {
-        await httpRequestAxiosQueueUtility.isAuthenticated({ signal })
+        const response = await httpRequestAxiosQueueUtility.isAuthenticated({ signal })
+
+        // aborting any operation if we cancelled the isAuthenticated network request
+        if (import.meta.env.VITE_CANCEL_NETWORK_REQUEST_STRING.localeCompare(response) === 0) {
+          return
+        }
 
         // set's the progress bar to 100 percent when we route to this page
         setProgressBar((prevState) => ({
@@ -87,7 +92,7 @@ const HomePage = () => {
           // setting the alert message
           setAlertErrorMessage("got error while authenticating the user and got error doing logout too")
         }
-        
+
         // setting isFullPageLoaderActive state to false so that the full page loading is disabled
         setIsFullPageLoaderActive(false)
         // setting the sorted filter notes array to empty so that while logging out our sorted filtered notes array is empty

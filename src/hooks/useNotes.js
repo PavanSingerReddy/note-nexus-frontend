@@ -2,13 +2,13 @@ import getNotesPage from '../utils/getNotesPage'
 import { useEffect } from 'react'
 import { useState } from 'react'
 
-// we get pageNum state as a prop if we didnot get anything then we set it to the default value of 0
+// we get pageNum state as a prop if we did not get anything then we set it to the default value of 0
 const useNotes = (pageNum = 0) => {
     // state which contains all the notes and updates by appending new notes as the user scrolls 
     const [results, setResults] = useState([])
     // state which is used to set the loading to true or false we set it to true when we are doing network request for getting the next page of note
     const [isLoading, setIsLoading] = useState(false)
-    // state which is used to check if any error occured while fetching our notes
+    // state which is used to check if any error occurred while fetching our notes
     const [isError, setIsError] = useState(false)
     // if the isError state is true then we can check this error state for the type of error we got
     const [error, setError] = useState({})
@@ -48,7 +48,7 @@ const useNotes = (pageNum = 0) => {
                 setIsLoading(false)
                 // if the error we got is because of the aborted network request which we made during this hook unmount then we are just returning and not setting any error 
                 if (signal.aborted) return
-                // else we are setting isError to true as error has occured while making network requests
+                // else we are setting isError to true as error has occurred while making network requests
                 setIsError(true)
                 // and we are setting the state of the error to the error object
                 setError(e)

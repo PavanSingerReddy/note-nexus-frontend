@@ -50,13 +50,13 @@ class HttpRequestAxiosQueueUtility {
             }
             // if any error occurs while making the network request we are printing the error
             console.error('GET request failed:', error);
-            //And Reset the queue so that the unresolved promise didnot get's stuck in the promise queue.if we didnot reset the promise queue as we have unresloved promise we get network error every time we make a new request that's why we reset the promise queue
+            //And Reset the queue so that the unresolved promise did not get's stuck in the promise queue.if we did not reset the promise queue as we have unresolved promise we get network error every time we make a new request that's why we reset the promise queue
             this.queue = Promise.resolve();
             // throwing the error to the parent function which called this function
             throw error;
 
         });
-        //   returing the pending promise queue with our network request promise
+        //   returning the pending promise queue with our network request promise
         return this.queue;
     }
 
@@ -98,12 +98,12 @@ class HttpRequestAxiosQueueUtility {
             }
             // if any error occurs while making the network request we are printing the error
             console.error('POST request failed:', error);
-            //And Reset the queue so that the unresolved promise do not get's stuck in the promise queue.if we do not reset the promise queue as we are having unresloved promise we get network error every time we make a new request that's why we reset the promise queue
+            //And Reset the queue so that the unresolved promise do not get's stuck in the promise queue.if we do not reset the promise queue as we are having unresolved promise we get network error every time we make a new request that's why we reset the promise queue
             this.queue = Promise.resolve();
             // throwing the error to the parent function which called this function
             throw error;
         });
-        //   returing the pending promise queue with our network request promise
+        //   returning the pending promise queue with our network request promise
         return this.queue;
     }
 
@@ -145,12 +145,12 @@ class HttpRequestAxiosQueueUtility {
 
             // if any error occurs while making the network request we are printing the error
             console.error('PUT request failed:', error);
-            //And Reset the queue so that the unresolved promise didnot get's stuck in the promise queue.if we didnot reset the promise queue as we have unresloved promise we get network error every time we make a new request that's why we reset the promise queue
+            //And Reset the queue so that the unresolved promise did not get's stuck in the promise queue.if we did not reset the promise queue as we have unresolved promise we get network error every time we make a new request that's why we reset the promise queue
             this.queue = Promise.resolve();
             // throwing the error to the parent function which called this function
             throw error;
         });
-        //   returing the pending promise queue with our network request promise
+        //   returning the pending promise queue with our network request promise
         return this.queue;
     }
 
@@ -190,12 +190,12 @@ class HttpRequestAxiosQueueUtility {
             }
             // if any error occurs while making the network request we are printing the error
             console.error('Delete request failed:', error);
-            //And Reset the queue so that the unresolved promise didnot get's stuck in the promise queue.if we didnot reset the promise queue as we have unresloved promise we get network error every time we make a new request that's why we reset the promise queue
+            //And Reset the queue so that the unresolved promise did not get's stuck in the promise queue.if we did not reset the promise queue as we have unresolved promise we get network error every time we make a new request that's why we reset the promise queue
             this.queue = Promise.resolve();
             // throwing the error to the parent function which called this function
             throw error;
         });
-        //   returing the pending promise queue with our network request promise
+        //   returning the pending promise queue with our network request promise
         return this.queue;
     }
 
@@ -229,20 +229,18 @@ class HttpRequestAxiosQueueUtility {
 
             // If the error is due to a cancelled request (checked using axios.isCancel).The cancelled request uses AbortController. if you want to check if the request is cancelled or not you can use the signal.aborted from the AbortController object which returns true or false.true if the request is aborted and false if the request is not aborted
             if (axios.isCancel(error)) {
-                // reset the queue by setting it to a resolved promise.
-                this.queue = Promise.resolve();
-                // Then, return immediately to prevent further execution.
-                return;
+                // if the request is cancelled then we are returning the resolved promise with the cancel network string
+                return Promise.resolve(import.meta.env.VITE_CANCEL_NETWORK_REQUEST_STRING);
             }
 
             // if any error occurs while making the network request we are printing the error
             console.error('Authenticating request failed:', error);
-            //And Reset the queue so that the unresolved promise didnot get's stuck in the promise queue.if we didnot reset the promise queue as we have unresloved promise we get network error every time we make a new request that's why we reset the promise queue
+            //And Reset the queue so that the unresolved promise did not get's stuck in the promise queue.if we did not reset the promise queue as we have unresolved promise we get network error every time we make a new request that's why we reset the promise queue
             this.queue = Promise.resolve();
             // throwing the error to the parent function which called this function
             throw error;
         });
-        //   returing the pending promise queue with our network request promise
+        //   returning the pending promise queue with our network request promise
         return this.queue;
     }
 

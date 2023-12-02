@@ -77,7 +77,7 @@ const ResetForgotPasswordPage = () => {
 
             // setting the isFullPageLoaderActive to true so that we can see the full loading page while the user is verifying the password reset token
             setIsFullPageLoaderActive(true);
-            // getting all our queryparams from the url
+            // getting all our query params from the url
             const queryParams = new URLSearchParams(location.search);
             // getting our token query param value from our query params
             const tokenValue = queryParams.get('token');
@@ -152,7 +152,7 @@ const ResetForgotPasswordPage = () => {
         if (!isNewPasswordEmpty && !isReTypedNewPasswordEmpty && doesNewPasswordAndReEnteredNewPasswordMatch) {
 
             try {
-                // getting all our queryparams from the url
+                // getting all our query params from the url
                 const queryParams = new URLSearchParams(location.search);
                 // getting our token query param value from our query params
                 const tokenValue = queryParams.get('token');
@@ -261,7 +261,7 @@ const ResetForgotPasswordPage = () => {
                                     </svg>
                                 </span>
 
-                                {/* if isCliked is true and isNewPasswordValid is true and doesNewPasswordAndReEnteredNewPasswordMatch also becomes true then we render the tick mark symbol svg */}
+                                {/* if isClicked is true and isNewPasswordValid is true and doesNewPasswordAndReEnteredNewPasswordMatch also becomes true then we render the tick mark symbol svg */}
                                 {
 
                                     passwordValidation.isClicked && passwordValidation.isNewPasswordValid && passwordValidation.doesNewPasswordAndReEnteredNewPasswordMatch ?
@@ -329,12 +329,12 @@ const ResetForgotPasswordPage = () => {
                             </div>
 
                             <div className='relative mb-5'>
-                                {/* if isCliked is true and isNewPasswordValid is true and doesNewPasswordAndReEnteredNewPasswordMatch also becomes true then we render the "New Password is valid" paragraph */}
+                                {/* if isClicked is true and isNewPasswordValid is true and doesNewPasswordAndReEnteredNewPasswordMatch also becomes true then we render the "New Password is valid" paragraph */}
                                 <p className={`mt-2 min-w-[90vw] absolute text-sm text-green-500 ${passwordValidation.isClicked && passwordValidation.isNewPasswordValid && passwordValidation.doesNewPasswordAndReEnteredNewPasswordMatch ? "" : "invisible"}`}>New Password is valid</p>
-                                {/* if isCliked is true and isNewPasswordValid is false then we render the "New Password Must not be blank" paragraph */}
+                                {/* if isClicked is true and isNewPasswordValid is false then we render the "New Password Must not be blank" paragraph */}
                                 <p className={`mt-2 min-w-[90vw] absolute top-0 text-sm text-red-500 ${passwordValidation.isClicked && !passwordValidation.isNewPasswordValid ? "" : "invisible"}`}>New Password Must not be blank</p>
 
-                                {/* if isCliked is true and isNewPasswordValid is true and doesNewPasswordAndReEnteredNewPasswordMatch becomes false then we render the "Passwords do not match" paragraph */}
+                                {/* if isClicked is true and isNewPasswordValid is true and doesNewPasswordAndReEnteredNewPasswordMatch becomes false then we render the "Passwords do not match" paragraph */}
                                 <p className={`mt-2 min-w-[90vw] absolute top-0 text-sm text-red-500 ${passwordValidation.isClicked && passwordValidation.isNewPasswordValid && !passwordValidation.doesNewPasswordAndReEnteredNewPasswordMatch ? "" : "invisible"}`}>Passwords do not match</p>
                             </div>
 
@@ -360,7 +360,7 @@ const ResetForgotPasswordPage = () => {
                                     </svg>
                                 </span>
 
-                                {/* if isCliked is true and isReEnteredNewPasswordValid is true and doesNewPasswordAndReEnteredNewPasswordMatch also becomes true then we render the tick mark symbol svg */}
+                                {/* if isClicked is true and isReEnteredNewPasswordValid is true and doesNewPasswordAndReEnteredNewPasswordMatch also becomes true then we render the tick mark symbol svg */}
 
                                 {
 

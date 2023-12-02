@@ -8,7 +8,7 @@ const ErrorPage = () => {
     // used for setting the progress bar This state is taken from the notes context
     const { setProgressBar } = useContext(NotesContext)
 
-    // used to set the the progress bar when any body comes to the signup page 
+    // used to set the the progress bar when any body comes to the sign up page 
     useEffect(() => {
 
         // set's the progress bar to 100 percent when we route to this page

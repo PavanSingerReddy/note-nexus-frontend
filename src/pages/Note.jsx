@@ -12,7 +12,7 @@ const Note = React.forwardRef(({ noteItem, index, onClick }, ref) => {
   const { setProgressBar } = useContext(NotesContext)
 
   const editButtonHandler = (event) => {
-    // stops the event bubling from the note component as note component also has the onclick event attached to it
+    // stops the event bubbling from the note component as note component also has the onclick event attached to it
     event.stopPropagation()
     event.preventDefault()
     // increasing the progress bar value
@@ -65,14 +65,14 @@ const Note = React.forwardRef(({ noteItem, index, onClick }, ref) => {
   return (
     <>
       {/* if the user clicks on this note then we execute the viewNoteHandler which sends the user to another route /viewnote which shows the note details and we are also adjusting the col-span and row-span of the grid element based on the index number so that the style of the note element looks unique and also making the outer element flex and also making all its inner elements flex so that the text does not overflow out of the container */}
-      {/* passing the ref if we got the ref as a function or callback it get's executed here if we didnot got any ref here from the parent component ref will not be attached here */}
+      {/* passing the ref if we got the ref as a function or callback it get's executed here if we did not got any ref here from the parent component ref will not be attached here */}
       <div ref={ref} onClick={viewNoteHandler} className={`flex cursor-pointer bg-gray-300 relative transition-shadow shadow-sm hover:shadow-2xl p-5 rounded-lg break-all ${(index + 1) % 5 == 0 ? "col-span-2" : ""} ${(index + 1) % 3 == 0 ? "row-span-2" : ""}`}>
         <div className='flex flex-col mb-3'>
           <div className='flex flex-col'>
-            {/* we are stoping propogation of event bubling from the above div which has onClick event attached to it so that the user can select the title of the note properly */}
+            {/* we are stopping propagation of event bubbling from the above div which has onClick event attached to it so that the user can select the title of the note properly */}
             <h3 onClick={(e) => e.stopPropagation()} className='font-bold cursor-text text-lg h-6 text-green-900 overflow-auto hide-scroll-bar'> {noteItem.title} </h3>
           </div>
-          {/* we are stoping propogation of event bubling from the above div which has onClick event attached to it so that the user can select the content of the note properly*/}
+          {/* we are stopping propagation of event bubbling from the above div which has onClick event attached to it so that the user can select the content of the note properly*/}
           <p onClick={(e) => e.stopPropagation()} className='mt-1 cursor-text overflow-auto hide-scroll-bar'
           > {noteItem.content} </p></div>
 
