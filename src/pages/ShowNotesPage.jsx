@@ -14,7 +14,7 @@ const ShowNotesPage = () => {
     const navigate = useNavigate()
 
     // used for setting the progress bar
-    const { setProgressBar } = useContext(NotesContext)
+    const { setProgressBar, setSortedFilteredNotes } = useContext(NotesContext)
 
     // getting setShowAlert and setAlertErrorMessage from AlertContext
     const { setShowAlert, setAlertErrorMessage } = useContext(AlertContext)
@@ -87,6 +87,8 @@ const ShowNotesPage = () => {
                 // setting isFullPageLoaderActive state to false so that the full page loading is disabled
                 setIsFullPageLoaderActive(false)
                 // after logging out the user we send the user to the login page as the user is not authenticated
+                // setting the sorted filter notes array to empty so that while logging out our sorted filtered notes array is empty
+                setSortedFilteredNotes([]);
                 navigate("/login");
             }
         }

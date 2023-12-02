@@ -13,7 +13,7 @@ import AlertContext from '../context/AlertContext';
 const HomePage = () => {
 
   // used for setting the progress bar
-  const { setProgressBar } = useContext(NotesContext)
+  const { setProgressBar, setSortedFilteredNotes } = useContext(NotesContext)
 
   // getting setShowAlert and setAlertErrorMessage from AlertContext
   const { setShowAlert, setAlertErrorMessage } = useContext(AlertContext)
@@ -87,9 +87,11 @@ const HomePage = () => {
           // setting the alert message
           setAlertErrorMessage("got error while authenticating the user and got error doing logout too")
         }
-
+        
         // setting isFullPageLoaderActive state to false so that the full page loading is disabled
         setIsFullPageLoaderActive(false)
+        // setting the sorted filter notes array to empty so that while logging out our sorted filtered notes array is empty
+        setSortedFilteredNotes([]);
         // after logging out the user we send the user to the login page as the user is not authenticated
         navigate("/login");
       }

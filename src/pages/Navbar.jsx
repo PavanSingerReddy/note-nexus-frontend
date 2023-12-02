@@ -20,7 +20,7 @@ const Navbar = () => {
   }, [])
 
   // used for setting the progress bar
-  const { setProgressBar } = useContext(NotesContext)
+  const { setProgressBar, setSortedFilteredNotes } = useContext(NotesContext)
 
   // use navigate is used for routing in to different webpages in the react router
   const navigate = useNavigate();
@@ -55,6 +55,8 @@ const Navbar = () => {
       // setting the alert message based on the error response
       setAlertErrorMessage(error.response && error.response.data && error.response.data.errorMessage ? error.response.data.errorMessage : error.message)
     }
+    // setting the sorted filter notes array to empty so that while logging out our sorted filtered notes array is empty
+    setSortedFilteredNotes([]);
     // going to the login page
     navigate("/login")
   }

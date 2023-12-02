@@ -19,7 +19,7 @@ const ChangePasswordPage = () => {
     const navigate = useNavigate()
 
     // used for setting the progress bar
-    const { setProgressBar } = useContext(NotesContext)
+    const { setProgressBar, setSortedFilteredNotes } = useContext(NotesContext)
 
     // loading the isFullPageLoaderActive state and setIsFullPageLoaderActive function from the LoaderContext to show the loading page while authenticating the user 
     const { isFullPageLoaderActive, setIsFullPageLoaderActive } = useContext(LoaderContext);
@@ -123,6 +123,8 @@ const ChangePasswordPage = () => {
                 }
                 // setting isFullPageLoaderActive state to false so that the full page loading is disabled
                 setIsFullPageLoaderActive(false)
+                // setting the sorted filter notes array to empty so that while logging out our sorted filtered notes array is empty
+                setSortedFilteredNotes([]);
                 // after logging out the user we send the user to the login page as the user is not authenticated
                 navigate("/login");
             }
@@ -202,6 +204,8 @@ const ChangePasswordPage = () => {
                 }
                 // setting isFullPageLoaderActive state to false so that the full page loading is disabled
                 setIsFullPageLoaderActive(false)
+                // setting the sorted filter notes array to empty so that while logging out our sorted filtered notes array is empty
+                setSortedFilteredNotes([]);
                 // after logging out the user we send the user to the login page as the user is not authenticated
                 navigate("/login");
             }
