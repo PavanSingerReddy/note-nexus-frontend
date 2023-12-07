@@ -140,7 +140,7 @@ const AwaitingConfirmationPage = () => {
             {/* if the email state is truthy then only we render this page else we render an empty page and return the user to the login page */}
             {email ? <>
 
-                <div className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden py-6 sm:py-12 bg-white">
+                <div className="relative flex min-h-[calc(100dvh)] flex-col items-center justify-center overflow-hidden py-6 sm:py-12 bg-white">
                     <div className="lg:max-w-xl max-w-sm px-5 text-center">
                         <h2 className="mb-2 text-4xl font-bold text-zinc-800">Check your inbox</h2>
                         <p className="mb-2 text-lg text-zinc-500">We are glad, that you're with us ? We've sent you a verification link to the registered email address.</p>

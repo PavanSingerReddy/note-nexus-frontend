@@ -70,6 +70,21 @@ const Navbar = () => {
       width: 75
     }))
     navigate("/changePassword")
+
+    // this below code is executed and set's the progress bar to 100 and then after 1 second it sets false when the changePassword is clicked when on the change password page itself
+    // set's the progress bar to 100 percent when we route to this page and the authentication is successful
+    setProgressBar((prevState) => ({
+      show: true,
+      width: 100
+    }))
+
+    // set's the progress bar to 0 after 1 second and hides the progress bar
+    setTimeout(() => {
+      setProgressBar((prevState) => ({
+        show: false,
+        width: 0
+      }))
+    }, 1000);
   }
 
 

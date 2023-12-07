@@ -110,7 +110,7 @@ const RegistrationVerificationPage = () => {
 
                 <>
 
-                    <div className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden py-6 sm:py-12 bg-white">
+                    <div className="relative flex min-h-[calc(100dvh)] flex-col items-center justify-center overflow-hidden py-6 sm:py-12 bg-white">
                         <div className="lg:max-w-xl max-w-sm px-5 text-center flex flex-col justify-center items-center">
                             <div className='w-32 animate-jump-in'>
                                 <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M8.81802 12.3107L10.9393 14.432L15.182 10.1893M21.75 12C21.75 17.3848 17.3848 21.75 12 21.75C6.61522 21.75 2.25 17.3848 2.25 12C2.25 6.61522 6.61522 2.25 12 2.25C17.3848 2.25 21.75 6.61522 21.75 12Z" stroke="#3A52EE" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path> </g></svg>

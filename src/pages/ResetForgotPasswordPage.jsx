@@ -237,7 +237,7 @@ const ResetForgotPasswordPage = () => {
             {/* if isFullPageLoaderActive state is true then we show the loading page else we show the actual full page */}
             {isFullPageLoaderActive ? <FullPageLoader /> :
                 <>
-                    <div className="m-3 flex justify-center items-center h-[90vh] flex-col text-xs sm:text-sm md:text-base">
+                    <div className="mx-3 flex justify-center items-center h-[90vh] flex-col text-xs sm:text-sm md:text-base">
                         <form className="flex flex-col items-start">
                             {/* new password input */}
                             <label htmlFor='New Password' className='my-3 block text-base font-medium text-dark dark:text-white'>

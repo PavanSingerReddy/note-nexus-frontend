@@ -183,7 +183,7 @@ const ForgotPasswordPage = () => {
     return (
         <>
 
-            <div className="m-3 flex justify-center items-center h-screen flex-col text-xs sm:text-sm md:text-base">
+            <div className="mx-3 flex justify-center items-center h-[calc(100dvh)] flex-col text-xs sm:text-sm md:text-base">
 
                 <h2 className="mb-2 text-4xl font-bold text-zinc-800">Check your inbox</h2>
                 <p className="mb-2 text-lg text-zinc-500">We are glad, that you're with us ? We've sent you a Password Reset Token to the registered email address to Reset the Email address.</p>
