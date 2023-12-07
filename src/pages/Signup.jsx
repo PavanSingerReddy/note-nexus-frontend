@@ -325,9 +325,9 @@ const Signup = () => {
             </div>
             <div className='relative mb-8'>
               {/* if isClicked is true and isEmailValid is true then we render the "Email Id is valid" paragraph */}
-              <p className={`mt-2 min-w-[90vw] absolute text-sm text-green-500 ${formValidation.isClicked && formValidation.isEmailValid ? "" : "invisible"}`}>Email Id is valid</p>
+              <p className={`mt-2 absolute text-sm text-green-500 ${formValidation.isClicked && formValidation.isEmailValid ? "" : "invisible"}`}>Email Id is valid</p>
               {/* if isClicked is true and isEmailValid is false then we render the "Email Id is not valid" paragraph */}
-              <p className={`mt-2 min-w-[90vw] absolute top-0 text-sm text-red-500 ${formValidation.isClicked && !formValidation.isEmailValid ? "" : "invisible"}`}>Email Id is not valid</p>
+              <p className={`mt-2 absolute top-0 text-sm text-red-500 ${formValidation.isClicked && !formValidation.isEmailValid ? "" : "invisible"}`}>Email Id is not valid</p>
             </div>
           </div>
           {/* <!-- Username Input --> */}
@@ -410,9 +410,9 @@ const Signup = () => {
             </div>
             <div className='relative mb-8'>
               {/* if isClicked is true and isUserNameValid is true then we render the "Username is valid" paragraph */}
-              <p className={`mt-2 min-w-[90vw] absolute text-sm text-green-500 ${formValidation.isClicked && formValidation.isUserNameValid ? "" : "invisible"}`}>Username is valid</p>
+              <p className={`mt-2 absolute text-sm text-green-500 ${formValidation.isClicked && formValidation.isUserNameValid ? "" : "invisible"}`}>Username is valid</p>
               {/* if isClicked is true and isUserNameValid is false then we render the "Username Must not be blank" paragraph */}
-              <p className={`mt-2 min-w-[90vw] absolute top-0 text-sm text-red-500 ${formValidation.isClicked && !formValidation.isUserNameValid ? "" : "invisible"}`}>Username Must not be blank</p>
+              <p className={`mt-2 absolute top-0 text-sm text-red-500 ${formValidation.isClicked && !formValidation.isUserNameValid ? "" : "invisible"}`}>Username Must not be blank</p>
             </div>
           </div>
           {/* <!-- Password Input --> */}
@@ -494,12 +494,12 @@ const Signup = () => {
             </div>
             <div className='relative mb-8'>
               {/* if isClicked is true and isPasswordValid is true and doesPasswordAndReEnteredPasswordMatch also becomes true then we render the "Password is valid" paragraph */}
-              <p className={`mt-2 min-w-[90vw] absolute text-sm text-green-500 ${formValidation.isClicked && formValidation.isPasswordValid && formValidation.doesPasswordAndReEnteredPasswordMatch ? "" : "invisible"}`}>Password is valid</p>
+              <p className={`mt-2 absolute text-sm text-green-500 ${formValidation.isClicked && formValidation.isPasswordValid && formValidation.doesPasswordAndReEnteredPasswordMatch ? "" : "invisible"}`}>Password is valid</p>
               {/* if isClicked is true and isPasswordValid is false then we render the "Password Must not be blank" paragraph */}
-              <p className={`mt-2 min-w-[90vw] absolute top-0 text-sm text-red-500 ${formValidation.isClicked && !formValidation.isPasswordValid ? "" : "invisible"}`}>Password Must not be blank</p>
+              <p className={`mt-2 absolute top-0 text-sm text-red-500 ${formValidation.isClicked && !formValidation.isPasswordValid ? "" : "invisible"}`}>Password Must not be blank</p>
 
               {/* if isClicked is true and isPasswordValid is true and doesPasswordAndReEnteredPasswordMatch becomes false then we render the "Passwords do not match" paragraph */}
-              <p className={`mt-2 min-w-[90vw] absolute top-0 text-sm text-red-500 ${formValidation.isClicked && formValidation.isPasswordValid && !formValidation.doesPasswordAndReEnteredPasswordMatch ? "" : "invisible"}`}>Passwords do not match</p>
+              <p className={`mt-2 absolute top-0 text-sm text-red-500 ${formValidation.isClicked && formValidation.isPasswordValid && !formValidation.doesPasswordAndReEnteredPasswordMatch ? "" : "invisible"}`}>Passwords do not match</p>
             </div>
           </div>
           {/* <!-- Re-entered Password Input --> */}
@@ -581,12 +581,12 @@ const Signup = () => {
             </div>
             <div className='relative mb-8'>
               {/* if isClicked is true and isReEnterdPasswordValid is true and doesPasswordAndReEnteredPasswordMatch also becomes true then we render the "Re-entered Password is valid" paragraph */}
-              <p className={`mt-2 min-w-[90vw] absolute text-sm text-green-500 ${formValidation.isClicked && formValidation.isReEnterdPasswordValid && formValidation.doesPasswordAndReEnteredPasswordMatch ? "" : "invisible"}`}>Re-entered Password is valid</p>
+              <p className={`mt-2 absolute text-sm text-green-500 ${formValidation.isClicked && formValidation.isReEnterdPasswordValid && formValidation.doesPasswordAndReEnteredPasswordMatch ? "" : "invisible"}`}>Re-entered Password is valid</p>
               {/* if isClicked is true and isReEnterdPasswordValid is false then we render the "Re-entered Password Must not be blank" paragraph */}
-              <p className={`mt-2 min-w-[90vw] absolute top-0 text-sm text-red-500 ${formValidation.isClicked && !formValidation.isReEnterdPasswordValid ? "" : "invisible"}`}> Re-entered Password Must not be blank</p>
+              <p className={`mt-2 absolute top-0 text-sm text-red-500 ${formValidation.isClicked && !formValidation.isReEnterdPasswordValid ? "" : "invisible"}`}> Re-entered Password Must not be blank</p>
 
               {/* if isClicked is true and isReEnterdPasswordValid is true and doesPasswordAndReEnteredPasswordMatch becomes false then we render the "Passwords do not match" paragraph */}
-              <p className={`mt-2 min-w-[90vw] absolute top-0 text-sm text-red-500 ${formValidation.isClicked && formValidation.isReEnterdPasswordValid && !formValidation.doesPasswordAndReEnteredPasswordMatch ? "" : "invisible"}`}>Passwords do not match</p>
+              <p className={`mt-2 absolute top-0 text-sm text-red-500 ${formValidation.isClicked && formValidation.isReEnterdPasswordValid && !formValidation.doesPasswordAndReEnteredPasswordMatch ? "" : "invisible"}`}>Passwords do not match</p>
             </div>
           </div>
           {/* <!-- Login Button --> */}

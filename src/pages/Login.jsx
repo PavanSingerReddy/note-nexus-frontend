@@ -269,9 +269,9 @@ const Login = () => {
             </div>
             <div className='relative mb-8'>
               {/* if isClicked is true and isEmailValid is true then we render the "Email Id is valid" paragraph */}
-              <p className={`mt-2 min-w-[90vw] absolute text-sm text-green-500 ${formValidation.isClicked && formValidation.isEmailValid ? "" : "invisible"}`}>Email Id is valid</p>
+              <p className={`mt-2 absolute text-sm text-green-500 ${formValidation.isClicked && formValidation.isEmailValid ? "" : "invisible"}`}>Email Id is valid</p>
               {/* if isClicked is true and isEmailValid is false then we render the "Email Id is not valid" paragraph */}
-              <p className={`mt-2 min-w-[90vw] absolute top-0 text-sm text-red-500 ${formValidation.isClicked && !formValidation.isEmailValid ? "" : "invisible"}`}>Email Id is not valid</p>
+              <p className={`mt-2 absolute top-0 text-sm text-red-500 ${formValidation.isClicked && !formValidation.isEmailValid ? "" : "invisible"}`}>Email Id is not valid</p>
             </div>
           </div>
           {/* <!-- Password Input --> */}
@@ -356,9 +356,9 @@ const Login = () => {
 
             <div className='relative mb-8'>
               {/* if isClicked is true and isPasswordValid is true then we render the "Password is valid" paragraph */}
-              <p className={`mt-2 min-w-[90vw] absolute text-sm text-green-500 ${formValidation.isClicked && formValidation.isPasswordValid ? "" : "invisible"}`}>Password is valid</p>
+              <p className={`mt-2 absolute text-sm text-green-500 ${formValidation.isClicked && formValidation.isPasswordValid ? "" : "invisible"}`}>Password is valid</p>
               {/* if isClicked is true and isPasswordValid is false then we render the "Password Must not be blank" paragraph */}
-              <p className={`mt-2 min-w-[90vw] absolute top-0 text-sm text-red-500 ${formValidation.isClicked && !formValidation.isPasswordValid ? "" : "invisible"}`}>Password Must not be blank</p>
+              <p className={`mt-2 absolute top-0 text-sm text-red-500 ${formValidation.isClicked && !formValidation.isPasswordValid ? "" : "invisible"}`}>Password Must not be blank</p>
             </div>
           </div>
           {/* <!-- Remember Me Checkbox --> */}

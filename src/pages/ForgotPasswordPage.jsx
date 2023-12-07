@@ -275,7 +275,7 @@ const ForgotPasswordPage = () => {
                 </form>
 
                 <Link to="/login" className="mt-3 inline-block rounded bg-indigo-600 px-5 py-3 font-medium text-white shadow-md shadow-indigo-500/20 hover:bg-indigo-700">Go To Login Page →</Link>
-                <button onClick={getPasswordResetLink} className={`${!isDisabled ? `transition ease-in-out delay-150 bg-orange-600 hover:-translate-y-1 hover:scale-110 hover:bg-red-600 duration-300 p-2 lg:p-3 m-3 rounded-lg text-white` : `bg-gray-300 cursor-not-allowed opacity-50 p-2 lg:p-3 m-3 rounded-lg text-gray-700 shadow-md shadow-indigo-500/20`}`}>
+                <button disabled={isDisabled} onClick={getPasswordResetLink} className={`${!isDisabled ? `transition ease-in-out delay-150 bg-orange-600 hover:-translate-y-1 hover:scale-110 hover:bg-red-600 duration-300 p-2 lg:p-3 m-3 rounded-lg text-white` : `bg-gray-300 cursor-not-allowed opacity-50 p-2 lg:p-3 m-3 rounded-lg text-gray-700 shadow-md shadow-indigo-500/20`}`}>
                     Get Password Reset Link
                 </button>
                 {/* we hide this element but it get's displayed when the is disabled is true */}
