@@ -1,12 +1,12 @@
 import React from 'react'
 
-// back button component in which we will get the event handling function as the props when the user clicks on this button
+
 const BackButton = ({ onClickBackButtonHandler }) => {
 
 
     return (
         <button
-            // setting our onClickBackButtonHandler function which we got from the props as a onClick event handler
+
             onClick={onClickBackButtonHandler}
             type="button"
             data-te-ripple-init

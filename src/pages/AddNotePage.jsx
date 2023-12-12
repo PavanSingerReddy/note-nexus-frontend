@@ -12,20 +12,20 @@ import AlertContext from '../context/AlertContext';
 const AddNotePage = () => {
 
 
-    // navigate hook which is used to navigate to the different routes in the react router dom
+
     const navigate = useNavigate()
 
-    // used for setting the progress bar
+
     const { setProgressBar, setSortedFilteredNotes } = useContext(NotesContext)
 
-    // getting setShowAlert and setAlertErrorMessage from AlertContext
+
     const { setShowAlert, setAlertErrorMessage } = useContext(AlertContext)
 
 
-    // used to set the the progress bar when any body comes to the Add Note Page 
+
     useEffect(() => {
 
-        // set's the progress bar to 80 percent when we route to this page
+
         setProgressBar((prevState) => ({
             show: true,
             width: 80
@@ -34,39 +34,39 @@ const AddNotePage = () => {
 
     }, [])
 
-    // loading the isFullPageLoaderActive state and setIsFullPageLoaderActive function from the LoaderContext to show the loading page while authenticating the user 
+
     const { isFullPageLoaderActive, setIsFullPageLoaderActive } = useContext(LoaderContext);
 
-    // this useEffect is used to check if the user is authenticated or not and it activates the loading page while the user is getting authenticated and after the authentication the loading page is set to false
+
     useEffect(() => {
 
-        //   getting AbortController from javascript which is used to cancel asynchronous functions like network request etc
+
         const controller = new AbortController()
 
-        //   extracting signal from the controller of abort controller
+
         const { signal } = controller
 
-        // this function is used instead of directly writing the code because useEffect does not support async function so we write this function and call it below
+
         const exec = async () => {
 
-            // setting the isFullPageLoaderActive to true so that we can see the full loading page
+
             setIsFullPageLoaderActive(true);
-            // checking if the user is authenticated or not and passing signal to cancel the request in the below return statement of this useEffect hook if this component unmounts so that we don't need to make multiple request if this component loads two or three times repeatedly
+
             try {
                 const response = await httpRequestAxiosQueueUtility.isAuthenticated({ signal })
 
-                // aborting any operation if we cancelled the isAuthenticated network request
+
                 if (import.meta.env.VITE_CANCEL_NETWORK_REQUEST_STRING.localeCompare(response) === 0) {
                     return
                 }
 
-                // set's the progress bar to 100 percent when we route to this page
+
                 setProgressBar((prevState) => ({
                     show: true,
                     width: 100
                 }))
 
-                // set's the progress bar to 0 after 1 second and hides the progress bar
+
                 setTimeout(() => {
                     setProgressBar((prevState) => ({
                         show: false,
@@ -74,50 +74,50 @@ const AddNotePage = () => {
                     }))
                 }, 1000);
 
-                // setting isFullPageLoaderActive state to false so that the full page loading is disabled
+
                 setIsFullPageLoaderActive(false)
             } catch (error) {
-                // setting the show Alert to true so that we can see the alert
+
                 setShowAlert(true)
-                // setting the alert message based on the error response
+
                 setAlertErrorMessage("got error while authenticating the user");
-                // logging out the user which clears all the user's cookies
+
                 try {
                     const logoutUrl = import.meta.env.VITE_LOGOUT_URL
                     await httpRequestAxiosQueueUtility.post(logoutUrl)
                 } catch (error) {
-                    // if any error occurs while logging out we print the error
-                    // setting the show Alert to true so that we can see the alert
+
+
                     setShowAlert(true)
-                    // setting the alert message based on the error response
+
                     setAlertErrorMessage("got error while authenticating the user and got error doing logout too")
                 }
-                // setting isFullPageLoaderActive state to false so that the full page loading is disabled
+
                 setIsFullPageLoaderActive(false)
-                // setting the sorted filter notes array to empty so that while logging out our sorted filtered notes array is empty
+
                 setSortedFilteredNotes([]);
-                // after logging out the user we send the user to the login page as the user is not authenticated
+
                 navigate("/login");
             }
         }
-        // calling the exec() function to perform our user authentication process
+
         exec();
 
 
-        // if this component unmounts then we are aborting any network request if the network request are pending and not completed.if they are already completed and there are no network request pending of this useEffect then nothing happens
+
         return () => {
             controller.abort()
         }
 
     }, [])
 
-    // state for accessing the values of the input element of the new note
+
     const [noteData, setNoteData] = useState({
         title: "",
         content: ""
     })
 
-    // function used to populate the note data to the noteData state when the user types anything in the input elements
+
     const onchangeHandler = (event) => {
         const { name, value } = event.target;
         setNoteData((prevState) => (
@@ -129,43 +129,43 @@ const AddNotePage = () => {
     }
 
 
-    // onClickHandler which adds the new note to the user when the user clicks on the tick mark button 
+
     const onClickHandler = async (event) => {
         event.preventDefault()
-        // increasing the progress bar value
+
         setProgressBar((prevState) => ({
             show: true,
             width: 25
         }))
-        // importing add note url using the environment variables in the root directory of this application
+
         const addNoteUrl = import.meta.env.VITE_Add_Note_Url
         try {
-            // increasing the progress bar value
+
             setProgressBar((prevState) => ({
                 show: true,
                 width: 40
             }))
             await httpRequestAxiosQueueUtility.post(addNoteUrl, noteData)
-            // increasing the progress bar value
+
             setProgressBar((prevState) => ({
                 show: true,
                 width: 75
             }))
         } catch (error) {
 
-            // setting the show Alert to true so that we can see the alert
+
             setShowAlert(true)
-            // setting the alert message based on the error response
+
             setAlertErrorMessage(error.response && error.response.data && error.response.data.errorMessage ? error.response.data.errorMessage : error.message)
 
         }
         navigate("/")
     }
 
-    // back button which goes to the user's home page which shows all the notes of the user
+
     const onClickBackButtonHandler = (event) => {
         event.preventDefault()
-        // increasing the progress bar value
+
         setProgressBar((prevState) => ({
             show: true,
             width: 50
@@ -176,23 +176,23 @@ const AddNotePage = () => {
     return (
         <>
 
-            {/* if isFullPageLoaderActive state is true then we show the loading page else we show the actual full page */}
+
             {isFullPageLoaderActive ? <FullPageLoader /> :
 
                 <>
 
-                    {/* navbar element which is used to logout a user,change password and also shows the application branding */}
+
                     < Navbar />
                     <div className='relative'>
-                        {/* passing the onClickBackButtonHandler which routes the user to the home page ("/") which contains all the user notes */}
+
                         <div className="relative top-1"><BackButton onClickBackButtonHandler={onClickBackButtonHandler} /></div>
                         <div className='absolute right-1 top-1'>
-                            {/* passing the onClickHandler which saves the new notes to the user account */}
+
                             <SaveButton onClickHandler={onClickHandler} />
                         </div>
                     </div>
 
-                    {/* Note Heading */}
+
 
 
                     <div className="m-3">
@@ -240,7 +240,7 @@ const AddNotePage = () => {
 
 
 
-                    {/* Note content */}
+
 
 
                     <div className="m-3">
@@ -282,7 +282,7 @@ const AddNotePage = () => {
                                 </svg>
                             </span>
                         </div>
-                    </div>
+                    </div >
                 </>
             }
         </>

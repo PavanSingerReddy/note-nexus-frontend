@@ -8,21 +8,21 @@ import AlertContext from '../context/AlertContext';
 
 const RegistrationVerificationPage = () => {
 
-    // useLocation is a react hook which gives the current page url and the query parameters in the react router dom
+
     const location = useLocation();
-    // use navigate is used for routing in to different webpages in the react router
+
     const navigate = useNavigate();
 
-    // used for setting the progress bar
+
     const { setProgressBar } = useContext(NotesContext)
 
-    // getting setShowAlert and setAlertErrorMessage from AlertContext
+
     const { setShowAlert, setAlertErrorMessage } = useContext(AlertContext)
 
-    // used to set the the progress bar when any body comes to the Registration Verification Page 
+
     useEffect(() => {
 
-        // set's the progress bar to 80 percent when we route to this page
+
         setProgressBar((prevState) => ({
             show: true,
             width: 80
@@ -31,39 +31,39 @@ const RegistrationVerificationPage = () => {
 
     }, [])
 
-    // loading the isFullPageLoaderActive state and setIsFullPageLoaderActive function from the LoaderContext to show the loading page while verifying the registration of the user
+
     const { isFullPageLoaderActive, setIsFullPageLoaderActive } = useContext(LoaderContext);
 
-    // when the user comes to this page then we verify the user's registration by calling the backend with the user's verification token value from our react's page url query parameters
+
     useEffect(() => {
 
-        //   getting AbortController from javascript which is used to cancel asynchronous functions like network request etc
+
         const controller = new AbortController();
-        //   extracting signal from the controller of abort controller
+
         const { signal } = controller;
 
 
-        // this function is used instead of directly writing the code because useEffect does not support async function so we write this function and call it below
+
         const exec = async () => {
 
 
-            // setting the isFullPageLoaderActive to true so that we can see the full loading page while the user is verifying the registration
+
             setIsFullPageLoaderActive(true);
-            // getting all our query params from the url
+
             const queryParams = new URLSearchParams(location.search);
-            // getting our token query param value from our query params
+
             const tokenValue = queryParams.get('token');
-            // sending request to the backend to verify our registration by using the registration token
+
             try {
                 const verificationUrl = `${import.meta.env.VITE_VERIFY_USER_URL}?token=${tokenValue}`
                 await httpRequestAxiosQueueUtility.get(verificationUrl, { signal })
-                // set's the progress bar to 100 percent when we successfully verify the user and enable the user
+
                 setProgressBar((prevState) => ({
                     show: true,
                     width: 100
                 }))
 
-                // set's the progress bar to 0 after 1 second and hides the progress bar
+
                 setTimeout(() => {
                     setProgressBar((prevState) => ({
                         show: false,
@@ -71,29 +71,29 @@ const RegistrationVerificationPage = () => {
                     }))
                 }, 1000);
 
-                // setting isFullPageLoaderActive state to false so that the full page loading is disabled
+
                 setIsFullPageLoaderActive(false)
 
             } catch (error) {
 
-                // setting the show Alert to true so that we can see the alert
+
                 setShowAlert(true)
-                // setting the alert message based on the error response
+
                 setAlertErrorMessage(error.response && error.response.data && error.response.data.errorMessage ? error.response.data.errorMessage : error.message)
 
-                // setting isFullPageLoaderActive state to false so that the full page loading is disabled
+
                 setIsFullPageLoaderActive(false)
 
-                // if we got any error when we are verifying the user we send the user to the login page as the user is not verified still
+
                 navigate("/login");
             }
 
         }
 
-        // executing our async function
+
         exec();
 
-        // if this page unmounts then we are aborting the above network request to verify the user this is use ful to abort multiple network request when we are in developer mode of react
+
         return () => {
             controller.abort()
         }
@@ -105,7 +105,7 @@ const RegistrationVerificationPage = () => {
 
     return (
         <>
-            {/* if isFullPageLoaderActive state is true then we show the loading page else we show the actual full page */}
+
             {isFullPageLoaderActive ? <FullPageLoader /> :
 
                 <>

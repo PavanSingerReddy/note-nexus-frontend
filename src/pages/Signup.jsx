@@ -9,25 +9,25 @@ import validator from 'validator';
 import AlertContext from '../context/AlertContext';
 const Signup = () => {
 
-  // use navigate is used for routing in to different webpages in the react router
+
   const navigate = useNavigate();
-  // used for setting the progress bar
+
   const { setProgressBar } = useContext(NotesContext)
 
-  // getting setShowAlert and setAlertErrorMessage from AlertContext
+
   const { setShowAlert, setAlertErrorMessage } = useContext(AlertContext)
 
-  // used to set the the progress bar when any body comes to the sign up page 
+
   useEffect(() => {
 
-    // set's the progress bar to 100 percent when we route to this page
+
     setProgressBar((prevState) => ({
       show: true,
       width: 100
     }))
 
 
-    // set's the progress bar to 0 after 1 second and hides the progress bar
+
     setTimeout(() => {
       setProgressBar((prevState) => ({
         show: false,
@@ -36,7 +36,7 @@ const Signup = () => {
     }, 1000);
 
 
-    // To get the value of the email set by sign up page while registration and if it the email cookie is present then we delete the cookie as it is not needed here it is only needed to send the verification token again
+
     const cookie = Cookies.get('email')
     if (cookie) {
       Cookies.remove("email");
@@ -45,7 +45,7 @@ const Signup = () => {
   }, [])
 
 
-  // form data state used to store the form data and can be used to send the user sign up data to the backend api
+
   const [formData, setFormData] = useState({
     email: "",
     username: "",
@@ -54,7 +54,7 @@ const Signup = () => {
   })
 
 
-  // formValidation state is used to store the variables required for validating the input fields
+
   const [formValidation, setFormValidation] = useState({
     isEmailValid: false,
     isUserNameValid: false,
@@ -64,7 +64,7 @@ const Signup = () => {
     isClicked: false
   })
 
-  // handles the form data change and updates the state of the form data
+
   const handleOnChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
@@ -73,26 +73,26 @@ const Signup = () => {
   }
 
 
-  // function which handles the sign up logic and send's the user data to the backend api for sign up
+
   const handleOnSubmit = async (event) => {
     event.preventDefault();
 
-    // checking if the email entry is valid or not
+
     const isEmailValid = validator.isEmail(formData.email)
 
-    // checking if the username entry is empty or not
+
     const isUserNameValid = !validator.isEmpty(formData.username)
 
-    // checking if the password entry is empty or not
+
     const isPasswordValid = !validator.isEmpty(formData.password)
 
-    // checking if the retypedpassword entry is empty or not
+
     const isReEnterdPasswordValid = !validator.isEmpty(formData.retypedpassword)
 
-    // checking if the password and retypedpassword matches
+
     const doesPasswordAndReEnteredPasswordMatch = formData.password.localeCompare(formData.retypedpassword) === 0
 
-    // setting form validation state according to their values
+
     setFormValidation({
       ...formValidation,
       isEmailValid: isEmailValid,
@@ -105,60 +105,60 @@ const Signup = () => {
 
 
 
-    // checking if the isEmailValid,isUserNameValid,isPasswordValid,isReEnteredPassword and doesPasswordAndReEnteredPasswordMatch if all of them are true then only we perform the sign up functionality
+
     if (isEmailValid && isUserNameValid && isPasswordValid && isReEnterdPasswordValid && doesPasswordAndReEnteredPasswordMatch) {
 
-      // setting the progress bar loading to true and updating it's value
+
       setProgressBar((prevState) => ({
         show: true,
         width: 25
       }))
-      // backend url for registering a new user
-      // importing sign up url using the environment variables in the root directory of this application
+
+
       const url = import.meta.env.VITE_SIGNUP_URL
 
-      // try catch for handling errors when we are calling the backend api
+
       try {
 
-        // increasing the progress bar value
+
         setProgressBar((prevState) => ({
           ...prevState,
           width: 40
         }))
 
-        // using httpRequestAxiosQueueUtility which provides us a object for http request which is based on axios api
+
         const response = await httpRequestAxiosQueueUtility.post(url, formData);
 
-        // increasing the progress bar value
+
         setProgressBar((prevState) => ({
           ...prevState,
           width: 75
         }))
 
 
-        // To set a session cookie which can be used in AwaitingConfirmationPage component to resend the verification token
+
         Cookies.set('email', formData.email);
 
-        // navigating to the login page after successful sign up
+
         navigate("/awaitConfirmation")
       } catch (error) {
 
-        // if any error occurs while sign up changing the progress bar value to zero and hiding the progress bar
+
         setProgressBar((prevState) => ({
           show: false,
           width: 0
         }))
 
-        // setting the show Alert to true so that we can see the alert
+
         setShowAlert(true)
-        // setting the alert message based on the error response
+
         setAlertErrorMessage(error.response && error.response.data && error.response.data.errorMessage ? error.response.data.errorMessage : error.message)
       }
     }
     else {
-      // setting the show Alert to true so that we can see the alert
+
       setShowAlert(true)
-      // setting the alert message
+
       setAlertErrorMessage("Error while doing sign up");
     }
   }
@@ -167,66 +167,66 @@ const Signup = () => {
 
 
 
-  // border color of the email input field which changes its color according to the email validation
+
   let emailIdBorderColor;
-  // border color of the username input field which changes its color according to the username validation
+
   let userNameBorderColor;
-  // border color of the password input field which changes its color according to the password validation
+
   let passwordBorderColor;
-  // border color of the retyped password input field which changes its color according to the retyped password validation
+
   let reTypedPasswordBorderColor;
 
 
-  // if the user clicked on the sign up button then isClicked will be true and if the user's email id is valid then isEmailValid also becomes true.And Then if all of these two conditions satisfy then we change the border color to green
+
   if (formValidation.isClicked && formValidation.isEmailValid) {
     emailIdBorderColor = 'green'
   }
-  // else if the user clicks on the signup button and the isEmailValid is not valid then border color becomes red
+
   else if (formValidation.isClicked && !formValidation.isEmailValid) {
     emailIdBorderColor = 'red'
   }
-  // else the border color of the email will be blue
+
   else {
     emailIdBorderColor = '#6b93d7'
   }
 
 
-  // if the user clicked on the sign up button then isClicked will be true and if the user's username is not blank then isUserNameValid is also becomes true.And Then if all of these two conditions satisfy then we change the border color to green
+
   if (formValidation.isClicked && formValidation.isUserNameValid) {
     userNameBorderColor = 'green'
   }
-  // else if the user clicks on the sign up button and the isUserNameValid is not valid then border color becomes red
+
   else if (formValidation.isClicked && !formValidation.isUserNameValid) {
     userNameBorderColor = 'red'
   }
-  // else the border color of the email will be blue
+
   else {
     userNameBorderColor = '#6b93d7'
   }
 
 
-  // if the user clicked on the sign up button then isClicked will be true and if the user's password is not blank then isPasswordValid will also becomes true and if both the password and Re-entered password match then doesPasswordAndReEnteredPasswordMatch becomes true.And Then if all three of these conditions satisfy then we change the border color to green
+
   if (formValidation.isClicked && formValidation.isPasswordValid && formValidation.doesPasswordAndReEnteredPasswordMatch) {
     passwordBorderColor = 'green'
   }
-  // else if the user clicks on the sign up button and the password is not valid or password and re-typed password does not match then border color becomes red
+
   else if (formValidation.isClicked && (!formValidation.isPasswordValid || !formValidation.doesPasswordAndReEnteredPasswordMatch)) {
     passwordBorderColor = 'red'
   }
-  // else the border color of the email will be blue
+
   else {
     passwordBorderColor = '#6b93d7'
   }
 
-  // if the user clicked on the sign up button then isClicked will be true and if the user's re-typed password is not blank then isReEnterdPasswordValid will also becomes true and if the password and retyped password also matches then doesPasswordAndReEnteredPasswordMatch becomes true.And Then if all of these three conditions satisfy then we change the border color to green
+
   if (formValidation.isClicked && formValidation.isReEnterdPasswordValid && formValidation.doesPasswordAndReEnteredPasswordMatch) {
     reTypedPasswordBorderColor = 'green'
   }
-  // else if the user clicks on the sign up button and the re-typed password is not valid then border color becomes red
+
   else if (formValidation.isClicked && (!formValidation.isReEnterdPasswordValid || !formValidation.doesPasswordAndReEnteredPasswordMatch)) {
     reTypedPasswordBorderColor = 'red'
   }
-  // else the border color of the email will be blue
+
   else {
     reTypedPasswordBorderColor = '#6b93d7'
   }
@@ -257,7 +257,7 @@ const Signup = () => {
                 </svg>
               </span>
 
-              {/* if isClicked is true and isEmailValid is true then we render the tick mark symbol svg */}
+
               {
 
                 formValidation.isClicked && formValidation.isEmailValid ?
@@ -287,7 +287,7 @@ const Signup = () => {
               }
 
 
-              {/* now if isClicked is true and isEmailValid is false then we render the "!" symbol */}
+
 
               {
                 formValidation.isClicked && !formValidation.isEmailValid ?
@@ -324,9 +324,9 @@ const Signup = () => {
               }
             </div>
             <div className='relative mb-8'>
-              {/* if isClicked is true and isEmailValid is true then we render the "Email Id is valid" paragraph */}
+
               <p className={`mt-2 absolute text-sm text-green-500 ${formValidation.isClicked && formValidation.isEmailValid ? "" : "invisible"}`}>Email Id is valid</p>
-              {/* if isClicked is true and isEmailValid is false then we render the "Email Id is not valid" paragraph */}
+
               <p className={`mt-2 absolute top-0 text-sm text-red-500 ${formValidation.isClicked && !formValidation.isEmailValid ? "" : "invisible"}`}>Email Id is not valid</p>
             </div>
           </div>
@@ -342,7 +342,7 @@ const Signup = () => {
                 </svg>
               </span>
 
-              {/* if isClicked is true and isUserNameValid is true then we render the tick mark symbol svg */}
+
               {
 
                 formValidation.isClicked && formValidation.isUserNameValid ?
@@ -372,7 +372,7 @@ const Signup = () => {
               }
 
 
-              {/* now if isClicked is true and isUserNameValid false then we render the "!" symbol */}
+
 
               {
                 formValidation.isClicked && !formValidation.isUserNameValid ?
@@ -403,15 +403,15 @@ const Signup = () => {
                         fill="#DC3545"
                       />
                     </svg>
-                  </span> : <></>
+                  </span > : <></>
 
 
               }
-            </div>
+            </div >
             <div className='relative mb-8'>
-              {/* if isClicked is true and isUserNameValid is true then we render the "Username is valid" paragraph */}
+
               <p className={`mt-2 absolute text-sm text-green-500 ${formValidation.isClicked && formValidation.isUserNameValid ? "" : "invisible"}`}>Username is valid</p>
-              {/* if isClicked is true and isUserNameValid is false then we render the "Username Must not be blank" paragraph */}
+
               <p className={`mt-2 absolute top-0 text-sm text-red-500 ${formValidation.isClicked && !formValidation.isUserNameValid ? "" : "invisible"}`}>Username Must not be blank</p>
             </div>
           </div>
@@ -426,7 +426,7 @@ const Signup = () => {
                 </svg>
               </span>
 
-              {/* if isClicked is true , isPasswordValid is true and also doesPasswordAndReEnteredPasswordMatch is also true then we render the tick mark symbol svg */}
+
               {
 
                 formValidation.isClicked && formValidation.isPasswordValid && formValidation.doesPasswordAndReEnteredPasswordMatch ?
@@ -450,13 +450,13 @@ const Signup = () => {
                         fill="#22AD5C"
                       />
                     </svg>
-                  </span>
+                  </span >
 
                   : <></>
               }
 
 
-              {/* now if isClicked is true and any of isPasswordValid or doesPasswordAndReEnteredPasswordMatch becomes false then we render the "!" symbol */}
+
 
               {
                 formValidation.isClicked && (!formValidation.isPasswordValid || !formValidation.doesPasswordAndReEnteredPasswordMatch) ?
@@ -487,18 +487,18 @@ const Signup = () => {
                         fill="#DC3545"
                       />
                     </svg>
-                  </span> : <></>
+                  </span > : <></>
 
 
               }
-            </div>
+            </div >
             <div className='relative mb-8'>
-              {/* if isClicked is true and isPasswordValid is true and doesPasswordAndReEnteredPasswordMatch also becomes true then we render the "Password is valid" paragraph */}
+
               <p className={`mt-2 absolute text-sm text-green-500 ${formValidation.isClicked && formValidation.isPasswordValid && formValidation.doesPasswordAndReEnteredPasswordMatch ? "" : "invisible"}`}>Password is valid</p>
-              {/* if isClicked is true and isPasswordValid is false then we render the "Password Must not be blank" paragraph */}
+
               <p className={`mt-2 absolute top-0 text-sm text-red-500 ${formValidation.isClicked && !formValidation.isPasswordValid ? "" : "invisible"}`}>Password Must not be blank</p>
 
-              {/* if isClicked is true and isPasswordValid is true and doesPasswordAndReEnteredPasswordMatch becomes false then we render the "Passwords do not match" paragraph */}
+
               <p className={`mt-2 absolute top-0 text-sm text-red-500 ${formValidation.isClicked && formValidation.isPasswordValid && !formValidation.doesPasswordAndReEnteredPasswordMatch ? "" : "invisible"}`}>Passwords do not match</p>
             </div>
           </div>
@@ -513,7 +513,7 @@ const Signup = () => {
                 </svg>
               </span>
 
-              {/* if isClicked is true, isReEnterdPasswordValid is true and also doesPasswordAndReEnteredPasswordMatch is true then we render the tick mark symbol svg */}
+
               {
 
                 formValidation.isClicked && formValidation.isReEnterdPasswordValid && formValidation.doesPasswordAndReEnteredPasswordMatch ?
@@ -537,13 +537,13 @@ const Signup = () => {
                         fill="#22AD5C"
                       />
                     </svg>
-                  </span>
+                  </span >
 
                   : <></>
               }
 
 
-              {/* now if isClicked is true and any of isReEnterdPasswordValid or doesPasswordAndReEnteredPasswordMatch is false then we render the "!" symbol */}
+
 
               {
                 formValidation.isClicked && (!formValidation.isReEnterdPasswordValid || !formValidation.doesPasswordAndReEnteredPasswordMatch) ?
@@ -574,18 +574,18 @@ const Signup = () => {
                         fill="#DC3545"
                       />
                     </svg>
-                  </span> : <></>
+                  </span > : <></>
 
 
               }
-            </div>
+            </div >
             <div className='relative mb-8'>
-              {/* if isClicked is true and isReEnterdPasswordValid is true and doesPasswordAndReEnteredPasswordMatch also becomes true then we render the "Re-entered Password is valid" paragraph */}
+
               <p className={`mt-2 absolute text-sm text-green-500 ${formValidation.isClicked && formValidation.isReEnterdPasswordValid && formValidation.doesPasswordAndReEnteredPasswordMatch ? "" : "invisible"}`}>Re-entered Password is valid</p>
-              {/* if isClicked is true and isReEnterdPasswordValid is false then we render the "Re-entered Password Must not be blank" paragraph */}
+
               <p className={`mt-2 absolute top-0 text-sm text-red-500 ${formValidation.isClicked && !formValidation.isReEnterdPasswordValid ? "" : "invisible"}`}> Re-entered Password Must not be blank</p>
 
-              {/* if isClicked is true and isReEnterdPasswordValid is true and doesPasswordAndReEnteredPasswordMatch becomes false then we render the "Passwords do not match" paragraph */}
+
               <p className={`mt-2 absolute top-0 text-sm text-red-500 ${formValidation.isClicked && formValidation.isReEnterdPasswordValid && !formValidation.doesPasswordAndReEnteredPasswordMatch ? "" : "invisible"}`}>Passwords do not match</p>
             </div>
           </div>
@@ -595,9 +595,9 @@ const Signup = () => {
         {/* <!-- Sign up  Link --> */}
         <div className="mt-6 text-blue-500 text-center">
           <Link to="/login" className="hover:underline">Login Here</Link>
-        </div>
-      </div>
-    </div>
+        </div >
+      </div >
+    </div >
   )
 }
 

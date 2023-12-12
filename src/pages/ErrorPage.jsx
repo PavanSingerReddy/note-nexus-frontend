@@ -5,20 +5,20 @@ import { useContext, useEffect } from "react"
 
 const ErrorPage = () => {
 
-    // used for setting the progress bar This state is taken from the notes context
+
     const { setProgressBar } = useContext(NotesContext)
 
-    // used to set the the progress bar when any body comes to the sign up page 
+
     useEffect(() => {
 
-        // set's the progress bar to 100 percent when we route to this page
+
         setProgressBar((prevState) => ({
             show: true,
             width: 100
         }))
 
 
-        // set's the progress bar to 0 after 1 second and hides the progress bar
+
         setTimeout(() => {
             setProgressBar((prevState) => ({
                 show: false,

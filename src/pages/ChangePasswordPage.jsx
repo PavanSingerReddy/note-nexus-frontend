@@ -10,24 +10,24 @@ import AlertContext from '../context/AlertContext';
 
 
 
-// page used to change the password of the already logged in user
+
 const ChangePasswordPage = () => {
 
 
 
-    // navigate hook which is used to navigate to the different routes in the react router dom
+
     const navigate = useNavigate()
 
-    // used for setting the progress bar
+
     const { setProgressBar, setSortedFilteredNotes } = useContext(NotesContext)
 
-    // loading the isFullPageLoaderActive state and setIsFullPageLoaderActive function from the LoaderContext to show the loading page while authenticating the user 
+
     const { isFullPageLoaderActive, setIsFullPageLoaderActive } = useContext(LoaderContext);
 
-    // getting setShowAlert and setAlertErrorMessage from AlertContext
+
     const { setShowAlert, setAlertErrorMessage } = useContext(AlertContext)
 
-    // PasswordFormData state which is used to store the data of the input password fields
+
     const [passwordFormData, setPasswordFormData] = useState({
         oldpassword: "",
         newpassword: "",
@@ -35,7 +35,7 @@ const ChangePasswordPage = () => {
     })
 
 
-    // passwordValidation state is used to store the variables required for validating the password fields
+
     const [passwordValidation, setPasswordValidation] = useState({
         isNewPasswordValid: false,
         isReEnterdNewPasswordValid: false,
@@ -44,7 +44,7 @@ const ChangePasswordPage = () => {
         isClicked: false
     })
 
-    // function used to populate the password form data to the passwordFormData state when the user types anything in the input elements
+
     const onchangeHandler = (event) => {
         const { name, value } = event.target;
         setPasswordFormData((prevState) => (
@@ -55,10 +55,10 @@ const ChangePasswordPage = () => {
         ))
     }
 
-    // used to set the the progress bar when any body comes to the Add Note Page 
+
     useEffect(() => {
 
-        // set's the progress bar to 80 percent when we route to this page
+
         setProgressBar((prevState) => ({
             show: true,
             width: 80
@@ -68,37 +68,37 @@ const ChangePasswordPage = () => {
     }, [])
 
 
-    // this useEffect is used to check if the user is authenticated or not and it activates the loading page while the user is getting authenticated and after the authentication the loading page is set to false
+
     useEffect(() => {
 
-        //   getting AbortController from javascript which is used to cancel asynchronous functions like network request etc
+
         const controller = new AbortController()
 
-        //   extracting signal from the controller of abort controller
+
         const { signal } = controller
 
-        // this function is used instead of directly writing the code because useEffect does not support async function so we write this function and call it below
+
         const exec = async () => {
 
-            // setting the isFullPageLoaderActive to true so that we can see the full loading page
+
             setIsFullPageLoaderActive(true);
-            // checking if the user is authenticated or not and passing signal to cancel the request in the below return statement of this useEffect hook if this component unmounts so that we don't need to make multiple request if this component loads two or three times repeatedly
+
             try {
 
                 const response = await httpRequestAxiosQueueUtility.isAuthenticated({ signal })
 
-                // aborting any operation if we cancelled the isAuthenticated network request
+
                 if (import.meta.env.VITE_CANCEL_NETWORK_REQUEST_STRING.localeCompare(response) === 0) {
                     return
                 }
 
-                // set's the progress bar to 100 percent when we route to this page and the authentication is successful
+
                 setProgressBar((prevState) => ({
                     show: true,
                     width: 100
                 }))
 
-                // set's the progress bar to 0 after 1 second and hides the progress bar
+
                 setTimeout(() => {
                     setProgressBar((prevState) => ({
                         show: false,
@@ -106,39 +106,39 @@ const ChangePasswordPage = () => {
                     }))
                 }, 1000);
 
-                // setting isFullPageLoaderActive state to false so that the full page loading is disabled
+
                 setIsFullPageLoaderActive(false)
             } catch (error) {
-                // setting the show Alert to true so that we can see the alert
+
                 setShowAlert(true)
-                // setting the alert message
+
                 setAlertErrorMessage("got error while authenticating the user");
-                // logging out the user which clears all the user's cookies
+
                 try {
-                    // importing logout url from the env file
+
                     const logoutUrl = import.meta.env.VITE_LOGOUT_URL
-                    // request used for logging out the user
+
                     await httpRequestAxiosQueueUtility.post(logoutUrl)
                 } catch (error) {
 
-                    // setting the show Alert to true so that we can see the alert
+
                     setShowAlert(true)
-                    // setting the alert message
+
                     setAlertErrorMessage("got error while authenticating the user and got error doing logout too")
                 }
-                // setting isFullPageLoaderActive state to false so that the full page loading is disabled
+
                 setIsFullPageLoaderActive(false)
-                // setting the sorted filter notes array to empty so that while logging out our sorted filtered notes array is empty
+
                 setSortedFilteredNotes([]);
-                // after logging out the user we send the user to the login page as the user is not authenticated
+
                 navigate("/login");
             }
         }
-        // calling the exec() function to perform our user authentication process
+
         exec();
 
 
-        // if this component unmounts then we are aborting any network request if the network request are pending and not completed.if they are already completed and there are no network request pending of this useEffect then nothing happens
+
         return () => {
             controller.abort()
         }
@@ -146,21 +146,21 @@ const ChangePasswordPage = () => {
     }, [])
 
 
-    // function which is executed when user clicks on the change password button
+
     const changePassword = async (event) => {
-        // preventing the default behavior of the button
+
         event.preventDefault()
 
-        // checking if the new password entry is empty or not
+
         const isNewPasswordEmpty = validator.isEmpty(passwordFormData.newpassword)
-        // checking if the retyped new password is empty or not
+
         const isReTypedNewPasswordEmpty = validator.isEmpty(passwordFormData.retypednewpassword)
-        // checking if the old password is empty or not
+
         const isOldPasswordValid = validator.isEmpty(passwordFormData.oldpassword)
-        // checking if the newpassword and retypednewpassword matches
+
         const doesNewPasswordAndReEnteredNewPasswordMatch = passwordFormData.newpassword.localeCompare(passwordFormData.retypednewpassword) === 0
 
-        // setting password validation state according to their values
+
         setPasswordValidation({
             ...passwordValidation,
             isNewPasswordValid: !isNewPasswordEmpty,
@@ -171,103 +171,103 @@ const ChangePasswordPage = () => {
         })
 
 
-        // checking if the new password , retyped new password and old password is not empty and also checking if the new password and retyped new password matches
+
         if (!isNewPasswordEmpty && !isReTypedNewPasswordEmpty && !isOldPasswordValid && doesNewPasswordAndReEnteredNewPasswordMatch) {
-            // making network request to change the password
+
             try {
-                // increasing the progress bar value
+
                 setProgressBar((prevState) => ({
                     show: true,
                     width: 40
                 }))
-                // url for changing the password
+
                 const changePasswordUrl = import.meta.env.VITE_CHANGE_PASSWORD_URL;
-                // making post request with data to change the password
+
                 await httpRequestAxiosQueueUtility.post(changePasswordUrl, passwordFormData)
-                // increasing the progress bar value
+
                 setProgressBar((prevState) => ({
                     show: true,
                     width: 75
                 }))
-                // after successfully changing the password redirect to home page
+
                 navigate("/")
             } catch (error) {
 
-                // setting the show Alert to true so that we can see the alert
+
                 setShowAlert(true)
-                // setting the alert message
+
                 setAlertErrorMessage("error while saving new password")
-                // logging out the user which clears all the user's cookies
+
                 try {
                     const logoutUrl = import.meta.env.VITE_LOGOUT_URL
                     await httpRequestAxiosQueueUtility.post(logoutUrl)
                 } catch (error) {
-                    // setting the show Alert to true so that we can see the alert
+
                     setShowAlert(true)
-                    // setting the alert message
+
                     setAlertErrorMessage("error while saving new password and also got error during logout")
                 }
-                // setting isFullPageLoaderActive state to false so that the full page loading is disabled
+
                 setIsFullPageLoaderActive(false)
-                // setting the sorted filter notes array to empty so that while logging out our sorted filtered notes array is empty
+
                 setSortedFilteredNotes([]);
-                // after logging out the user we send the user to the login page as the user is not authenticated
+
                 navigate("/login");
             }
         }
         else {
-            // setting the show Alert to true so that we can see the alert
+
             setShowAlert(true)
-            // setting the alert message
+
             setAlertErrorMessage("Error while changing the password")
         }
 
     }
 
 
-    // border color of the new password input field which changes its color according to the new password validation
+
     let newPasswordBorderColor;
-    // border color of the retyped new password input field which changes its color according to the retyped new password validation
+
     let reTypedNewPasswordBorderColor;
-    // border color of the old password input field which changes its color according to the old password validation
+
     let oldPasswordBorderColor;
 
-    // if the user clicked on the change password button then isClicked will be true and if the user's new password is not blank then isValid is also becomes true and if both the new password and Re-entered new password match then doesNewPasswordAndReEnteredNewPasswordMatch becomes true.And Then if all three of these conditions satisfy then we change the border color to green
+
     if (passwordValidation.isClicked && passwordValidation.isNewPasswordValid && passwordValidation.doesNewPasswordAndReEnteredNewPasswordMatch) {
         newPasswordBorderColor = 'green'
     }
-    // else if the user clicks on the change password button and the new password is not valid or new password and re-typed new password does not match then border color becomes red
+
     else if (passwordValidation.isClicked && (!passwordValidation.isNewPasswordValid || !passwordValidation.doesNewPasswordAndReEnteredNewPasswordMatch)) {
         newPasswordBorderColor = 'red'
     }
-    // else the border color of the email will be blue
+
     else {
         newPasswordBorderColor = '#6b93d7'
     }
 
-    // if the user clicked on the change password button then isClicked will be true and if the user's re-typed new password is not blank then isValid is also becomes true and if the new password and retyped new password also matches then doesNewPasswordAndReEnteredNewPasswordMatch becomes true.And Then if all of these three conditions satisfy then we change the border color to green
+
     if (passwordValidation.isClicked && passwordValidation.isReEnterdNewPasswordValid && passwordValidation.doesNewPasswordAndReEnteredNewPasswordMatch) {
         reTypedNewPasswordBorderColor = 'green'
     }
-    // else if the user clicks on the change password button and the re-typed new password is not valid then border color becomes red
+
     else if (passwordValidation.isClicked && (!passwordValidation.isReEnterdNewPasswordValid || !passwordValidation.doesNewPasswordAndReEnteredNewPasswordMatch)) {
         reTypedNewPasswordBorderColor = 'red'
     }
-    // else the border color of the email will be blue
+
     else {
         reTypedNewPasswordBorderColor = '#6b93d7'
     }
 
 
-    // if the user clicked on the change password button then isClicked will be true and if the user's old password is not blank then isOldPasswordValid is also becomes true.And Then if all of these two conditions satisfy then we change the border color to green
+
     if (passwordValidation.isClicked && passwordValidation.isOldPasswordValid) {
         oldPasswordBorderColor = 'green'
     }
-    // else if the user clicks on the change password button and the old password is not valid then border color becomes red
+
     else if (passwordValidation.isClicked && !passwordValidation.isOldPasswordValid) {
         oldPasswordBorderColor = 'red'
     }
-    // else the border color of the email will be blue
+
     else {
         oldPasswordBorderColor = '#6b93d7'
     }
@@ -277,16 +277,16 @@ const ChangePasswordPage = () => {
     return (
         <>
 
-            {/* if isFullPageLoaderActive state is true then we show the loading page else we show the actual full page */}
+
             {isFullPageLoaderActive ? <FullPageLoader /> :
 
                 <>
                     <div className="flex flex-col h-[calc(100dvh)]">
-                        {/* navbar element which is used to logout a user,change password and also shows the application branding */}
+
                         < Navbar />
                         <div className="mx-3 flex justify-center items-center h-[calc(100dvh)] flex-col text-xs sm:text-sm md:text-base">
                             <form className="flex flex-col items-start">
-                                {/* previous password input */}
+
                                 <label htmlFor='Previous Password' className='my-3 block text-base font-medium text-dark dark:text-white'>
                                     Previous Password
                                 </label>
@@ -308,7 +308,7 @@ const ChangePasswordPage = () => {
                                             <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2m3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2M5 8h6a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1" />
                                         </svg>
                                     </span>
-                                    {/* if isClicked is true and isOldPasswordValid is true then we render the tick mark symbol svg */}
+
                                     {
                                         passwordValidation.isClicked && passwordValidation.isOldPasswordValid ?
                                             <span className='absolute top-1/2 right-4 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6'>
@@ -333,7 +333,7 @@ const ChangePasswordPage = () => {
                                             </span>
                                             : <></>
                                     }
-                                    {/* now if isClicked is true and isOldPasswordValid is false then we render the "!" symbol */}
+
                                     {
                                         passwordValidation.isClicked && !passwordValidation.isOldPasswordValid ?
                                             <span className='absolute top-1/2 right-4 -translate-y-1/2  w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6'>
@@ -365,12 +365,12 @@ const ChangePasswordPage = () => {
                                     }
                                 </div>
                                 <div className='relative mb-5'>
-                                    {/* if isClicked is true and isOldPasswordValid is true then we render the "Old Password is valid" paragraph */}
+
                                     <p className={`mt-2 min-w-full absolute text-sm text-green-500 ${passwordValidation.isClicked && passwordValidation.isOldPasswordValid ? "" : "invisible"}`}>Old Password is valid</p>
-                                    {/* if isClicked is true and isOldPasswordValid is false then we render the "Old Password Must not be blank" paragraph */}
+
                                     <p className={`mt-2 min-w-full absolute top-0 text-sm text-red-500 ${passwordValidation.isClicked && !passwordValidation.isOldPasswordValid ? "" : "invisible"}`}>Old Password Must not be blank</p>
                                 </div>
-                                {/* new password input */}
+
                                 <label htmlFor='New Password' className='my-3 block text-base font-medium text-dark dark:text-white'>
                                     New Password
                                 </label>
@@ -391,7 +391,7 @@ const ChangePasswordPage = () => {
                                             <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2m3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2M5 8h6a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1" />
                                         </svg>
                                     </span>
-                                    {/* if isClicked is true and isNewPasswordValid is true and doesNewPasswordAndReEnteredNewPasswordMatch also becomes true then we render the tick mark symbol svg */}
+
                                     {
                                         passwordValidation.isClicked && passwordValidation.isNewPasswordValid && passwordValidation.doesNewPasswordAndReEnteredNewPasswordMatch ?
                                             <span className='absolute top-1/2 right-4 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6'>
@@ -416,7 +416,7 @@ const ChangePasswordPage = () => {
                                             </span>
                                             : <></>
                                     }
-                                    {/* now if isClicked is true and any one of isNewPasswordValid or doesNewPasswordAndReEnteredNewPasswordMatch becomes false then we render the "!" symbol */}
+
                                     {
                                         passwordValidation.isClicked && (!passwordValidation.isNewPasswordValid || !passwordValidation.doesNewPasswordAndReEnteredNewPasswordMatch) ?
                                             <span className='absolute top-1/2 right-4 -translate-y-1/2  w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6'>
@@ -444,18 +444,18 @@ const ChangePasswordPage = () => {
                                                         fill="#DC3545"
                                                     />
                                                 </svg>
-                                            </span> : <></>
+                                            </span > : <></>
                                     }
-                                </div>
+                                </div >
                                 <div className='relative mb-5'>
-                                    {/* if isClicked is true and isNewPasswordValid is true and doesNewPasswordAndReEnteredNewPasswordMatch also becomes true then we render the "New Password is valid" paragraph */}
+
                                     <p className={`mt-2 min-w-full absolute text-sm text-green-500 ${passwordValidation.isClicked && passwordValidation.isNewPasswordValid && passwordValidation.doesNewPasswordAndReEnteredNewPasswordMatch ? "" : "invisible"}`}>New Password is valid</p>
-                                    {/* if isClicked is true and isNewPasswordValid is false then we render the "New Password Must not be blank" paragraph */}
+
                                     <p className={`mt-2 min-w-full absolute top-0 text-sm text-red-500 ${passwordValidation.isClicked && !passwordValidation.isNewPasswordValid ? "" : "invisible"}`}>New Password Must not be blank</p>
-                                    {/* if isClicked is true and isNewPasswordValid is true and doesNewPasswordAndReEnteredNewPasswordMatch becomes false then we render the "Passwords do not match" paragraph */}
+
                                     <p className={`mt-2 min-w-full absolute top-0 text-sm text-red-500 ${passwordValidation.isClicked && passwordValidation.isNewPasswordValid && !passwordValidation.doesNewPasswordAndReEnteredNewPasswordMatch ? "" : "invisible"}`}>Passwords do not match</p>
                                 </div>
-                                {/* re-enter new password */}
+
                                 <label htmlFor='Re-enter New Password' className='my-3 block text-base font-medium text-dark dark:text-white'>
                                     Re-enter New Password
                                 </label>
@@ -476,7 +476,7 @@ const ChangePasswordPage = () => {
                                             <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2m3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2M5 8h6a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1" />
                                         </svg>
                                     </span>
-                                    {/* if isClicked is true and isReEnteredNewPasswordValid is true and doesNewPasswordAndReEnteredNewPasswordMatch also becomes true then we render the tick mark symbol svg */}
+
                                     {
                                         passwordValidation.isClicked && passwordValidation.isReEnterdNewPasswordValid && passwordValidation.doesNewPasswordAndReEnteredNewPasswordMatch ?
                                             <span className='absolute top-1/2 right-4 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6'>
@@ -498,10 +498,10 @@ const ChangePasswordPage = () => {
                                                         fill="#22AD5C"
                                                     />
                                                 </svg>
-                                            </span>
+                                            </span >
                                             : <></>
                                     }
-                                    {/* now if isClicked is true and any one of isReEnterdNewPasswordValid or doesNewPasswordAndReEnteredNewPasswordMatch becomes false then we render the "!" symbol */}
+
                                     {
                                         passwordValidation.isClicked && (!passwordValidation.isReEnterdNewPasswordValid || !passwordValidation.doesNewPasswordAndReEnteredNewPasswordMatch) ?
                                             <span className='absolute top-1/2 right-4 -translate-y-1/2  w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6'>
@@ -529,23 +529,23 @@ const ChangePasswordPage = () => {
                                                         fill="#DC3545"
                                                     />
                                                 </svg>
-                                            </span> : <></>
+                                            </span > : <></>
                                     }
-                                </div>
+                                </div >
                                 <div className='relative mb-8'>
-                                    {/* if isClicked is true and isReEnterdNewPasswordValid is true and doesNewPasswordAndReEnteredNewPasswordMatch also becomes true then we render the "Re-entered New Password is valid" paragraph */}
+
                                     <p className={`mt-2 min-w-full absolute text-sm text-green-500 ${passwordValidation.isClicked && passwordValidation.isReEnterdNewPasswordValid && passwordValidation.doesNewPasswordAndReEnteredNewPasswordMatch ? "" : "invisible"}`}>Re-entered New Password is valid</p>
-                                    {/* if isClicked is true and isReEnterdNewPasswordValid is false then we render the "Re-entered New Password Must not be blank" paragraph */}
+
                                     <p className={`mt-2 min-w-full absolute top-0 text-sm text-red-500 ${passwordValidation.isClicked && !passwordValidation.isReEnterdNewPasswordValid ? "" : "invisible"}`}>Re-entered New Password Must not be blank</p>
-                                    {/* if isClicked is true and isReEnterdNewPasswordValid is true and doesNewPasswordAndReEnteredNewPasswordMatch becomes false then we render the "Passwords do not match" paragraph */}
+
                                     <p className={`mt-2 min-w-full absolute top-0 text-sm text-red-500 ${passwordValidation.isClicked && passwordValidation.isReEnterdNewPasswordValid && !passwordValidation.doesNewPasswordAndReEnteredNewPasswordMatch ? "" : "invisible"}`}>Passwords do not match</p>
                                 </div>
-                            </form>
+                            </form >
                             <button onClick={changePassword} className="transition ease-in-out delay-150 bg-orange-600 hover:-translate-y-1 hover:scale-110 hover:bg-red-600 duration-300 p-2 lg:p-3 m-3 rounded-lg text-white">
                                 Change Password
                             </button>
-                        </div>
-                    </div>
+                        </div >
+                    </div >
                 </>}
         </>
     )

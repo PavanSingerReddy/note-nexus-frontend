@@ -1,11 +1,11 @@
 import React from 'react'
 
 
-// save button component in which we will get the event handling function as the props when the user clicks on this button
+
 const SaveButton = ({ onClickHandler }) => {
     return (
         <button
-            // setting our onClickHandler function which we got from the props as a onClick event handler
+
             onClick={onClickHandler}
             type="button"
             data-te-ripple-init

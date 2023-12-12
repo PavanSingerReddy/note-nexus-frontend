@@ -10,36 +10,36 @@ import Cookies from 'js-cookie';
 const ForgotPasswordPage = () => {
 
 
-    // navigate hook which is used to navigate to the different routes in the react router dom
+
     const navigate = useNavigate()
 
-    // used for setting the progress bar
+
     const { setProgressBar } = useContext(NotesContext)
 
-    // getting setShowAlert and setAlertErrorMessage from AlertContext
+
     const { setShowAlert, setAlertErrorMessage } = useContext(AlertContext)
 
-    // formData state which is used to store the email of the user who forgotten the password
+
     const [formData, setFormData] = useState({
         email: ""
     })
 
-    // count down state which is used to set the count down timer to enable the get password reset Link button
+
     const [countdown, setCountdown] = useState(30);
 
-    // is disabled state to show if the password reset Link button is disabled or not
+
     const [isDisabled, setIsDisabled] = useState(false);
 
-    // used to set the the progress bar when any body comes to the login page 
+
     useEffect(() => {
 
-        // set's the progress bar to 100 percent when we route to this page
+
         setProgressBar((prevState) => ({
             show: true,
             width: 100
         }))
 
-        // set's the progress bar to 0 after 1 second and hides the progress bar
+
         setTimeout(() => {
             setProgressBar((prevState) => ({
                 show: false,
@@ -48,7 +48,7 @@ const ForgotPasswordPage = () => {
         }, 1000);
 
 
-        // To get the value of the email set by sign up page while registration and if it the email cookie is present then we delete the cookie as it is not needed here it is only needed to send the verification token again
+
         const cookie = Cookies.get('email')
         if (cookie) {
             Cookies.remove("email");
@@ -56,39 +56,39 @@ const ForgotPasswordPage = () => {
 
     }, [])
 
-    // this use effect is used to set the timer when ever user click on the password reset Link button
+
     useEffect(() => {
-        // defining timer so that it can be used to clear the setInterval when the next time this useEffect runs using the clean up function
+
         let timer;
-        // if the button isDisabled state is true and the countdown is greater than 0 then we set the setInterval which runs every second
+
         if (isDisabled && countdown > 0) {
-            // setting the setInterval function which updates the state of setCountDown and decrements it by one every second from it's initial state of 30
+
             timer = setInterval(() => {
-                // decrementing the countdown state by one
+
                 setCountdown(countdown - 1);
             }, 1000);
-            // if the button is not disabled or countdown is equal to 0 then we set the isDisabled state to false and remove the setInterval which we have set above using timer
+
         } else if (!isDisabled || countdown === 0) {
             setIsDisabled(false);
             clearInterval(timer);
         }
 
-        // clean up function which is used to remove the setInterval by using the timer variable when the next time this useEffect hook get's called.so as countDown state updates every second this clean up section also run's every second which removes the previous setInterval
+
         return () => {
             clearInterval(timer);
         }
 
-        // our useEffect runs every time when ever the isDisabled or countdown state updates
+
     }, [isDisabled, countdown]);
 
-    // formVerifcation state is used to check if our email field contains a valid email or not
+
     const [formVerification, setFormVerification] = useState({
         isValid: false,
         isClicked: false
 
     });
 
-    // function used to populate the email data to the FormData state when the user types anything in the email input element
+
     const onchangeHandler = (event) => {
 
         const { name, value } = event.target;
@@ -101,45 +101,45 @@ const ForgotPasswordPage = () => {
     }
 
 
-    // function which executes when the user click on the Get Password Reset Link Button
+
     const getPasswordResetLink = async (event) => {
-        // preventing the default behavior of the button
+
         event.preventDefault()
 
-        // validator is a npm package which is used for input fields validation here it is used to validate the email.It is used to validate the email
+
         const isEmailValid = validator.isEmail(formData.email);
 
-        // updating the formVerification state and modifying the isClicked to true and also updating the isValid to reflect the validation of the email
+
         setFormVerification({
             isValid: isEmailValid,
             isClicked: true
         })
 
-        // if the mail is valid then we run the below code
+
         if (isEmailValid) {
-            // setting is disabled to true when the user clicks on the button so that he cannot send multiple forgotten password emails without waiting for 30 seconds. after 30 seconds the button get's enabled automatically
+
             setIsDisabled(true);
-            // setting the countdown value to 30 seconds so that button will be disabled for 30 seconds
+
             setCountdown(30);
 
-            // making network request to get the password reset link to the registered email
+
             try {
-                // increasing the progress bar value
+
                 setProgressBar((prevState) => ({
                     show: true,
                     width: 40
                 }))
-                // url of the backend for sending the verification mail to reset the password
+
                 const changePasswordUrl = import.meta.env.VITE_FORGOT_PASSWORD_URL;
-                // making post request with data to change the password
+
                 await httpRequestAxiosQueueUtility.post(changePasswordUrl, formData)
-                // increasing the progress bar value
+
                 setProgressBar((prevState) => ({
                     show: true,
                     width: 100
                 }))
 
-                // set's the progress bar to 0 after 1 second and hides the progress bar
+
                 setTimeout(() => {
                     setProgressBar((prevState) => ({
                         show: false,
@@ -148,11 +148,11 @@ const ForgotPasswordPage = () => {
                 }, 1000);
 
             } catch (error) {
-                // setting the show Alert to true so that we can see the alert
+
                 setShowAlert(true)
-                // setting the alert message
+
                 setAlertErrorMessage("error sending the password reset token to the user")
-                // if any error occurs while sending the link to email for resetting the password change the progress bar value to zero and hiding the progress bar
+
                 setProgressBar((prevState) => ({
                     show: false,
                     width: 0
@@ -164,18 +164,18 @@ const ForgotPasswordPage = () => {
     }
 
 
-    // border color of the email input field which changes its color according to the email validation
+
     let borderColor;
 
-    // if the user clicked on the get password reset link button then isClicked will be true and if the user's email is valid then isValid is also becomes true.Then if both of these conditions satisfy then we change the border color to green
+
     if (formVerification.isClicked && formVerification.isValid) {
         borderColor = 'green'
     }
-    // else if the user clicks on the get password reset link button and the email is not valid then border color becomes red
+
     else if (formVerification.isClicked && !formVerification.isValid) {
         borderColor = 'red'
     }
-    // else the border color of the email will be blue
+
     else {
         borderColor = '#6b93d7'
     }
@@ -188,7 +188,7 @@ const ForgotPasswordPage = () => {
                 <h2 className="mb-2 text-4xl font-bold text-zinc-800">Check your inbox</h2>
                 <p className="mb-2 text-lg text-zinc-500">We are glad, that you're with us ? We've sent you a Password Reset Token to the registered email address to Reset the Email address.</p>
                 <form className="flex flex-col items-start">
-                    {/* Email input */}
+
                     <label htmlFor='Email' className='my-3 block text-base font-medium text-dark dark:text-white'>
                         Email
                     </label>
@@ -212,7 +212,7 @@ const ForgotPasswordPage = () => {
                             </svg>
                         </span>
                         {
-                            // if the email is valid and the user clicked on the get password reset link then we get enable the check mark logo on the email input else we render an empty element
+
                             formVerification.isValid && formVerification.isClicked ?
                                 <span className='absolute top-1/2 right-4 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6'>
                                     <svg
@@ -236,7 +236,7 @@ const ForgotPasswordPage = () => {
                                 </span> : <></>}
 
                         {
-                            // if the email is not valid and the user clicked on the get password reset link then we get enable the check mark logo on the email input else we render an empty element
+
                             !formVerification.isValid && formVerification.isClicked ?
 
                                 <span className='absolute top-1/2 right-4 -translate-y-1/2  w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6'>
@@ -266,10 +266,10 @@ const ForgotPasswordPage = () => {
                                     </svg>
                                 </span> : <></>}
                     </div>
-                    {/* if the email is valid and the user clicked on the get password reset link then we render email is valid message else we render an empty element */}
+
                     {formVerification.isValid && formVerification.isClicked ? <p className='mt-[10px] text-sm text-green-500'>Email is valid</p> : <></>}
 
-                    {/* if the email is not valid and the user clicked on the get password reset link then we render Invalid email address message else we render an empty element */}
+
                     {!formVerification.isValid && formVerification.isClicked ? <p className='mt-[10px] text-sm text-red-500'>Invalid email address</p> : <></>}
 
                 </form>
@@ -278,7 +278,7 @@ const ForgotPasswordPage = () => {
                 <button disabled={isDisabled} onClick={getPasswordResetLink} className={`${!isDisabled ? `transition ease-in-out delay-150 bg-orange-600 hover:-translate-y-1 hover:scale-110 hover:bg-red-600 duration-300 p-2 lg:p-3 m-3 rounded-lg text-white` : `bg-gray-300 cursor-not-allowed opacity-50 p-2 lg:p-3 m-3 rounded-lg text-gray-700 shadow-md shadow-indigo-500/20`}`}>
                     Get Password Reset Link
                 </button>
-                {/* we hide this element but it get's displayed when the is disabled is true */}
+
                 <span className={`mt-3 text-indigo-500 ${isDisabled ? '' : 'invisible'}`}>
                     {`Resend Token enables in (${countdown})`}
                 </span>

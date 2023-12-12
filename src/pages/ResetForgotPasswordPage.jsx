@@ -10,25 +10,25 @@ import AlertContext from '../context/AlertContext';
 const ResetForgotPasswordPage = () => {
 
 
-    // useLocation is a react hook which gives the current page url and the query parameters in the react router dom
+
     const location = useLocation();
 
-    // use navigate is used for routing in to different webpages in the react router
+
     const navigate = useNavigate();
 
-    // used for setting the progress bar
+
     const { setProgressBar } = useContext(NotesContext)
 
-    // getting setShowAlert and setAlertErrorMessage from AlertContext
+
     const { setShowAlert, setAlertErrorMessage } = useContext(AlertContext)
 
-    // loading the isFullPageLoaderActive state and setIsFullPageLoaderActive function from the LoaderContext to show the loading page while verifying the password reset token of the user
+
     const { isFullPageLoaderActive, setIsFullPageLoaderActive } = useContext(LoaderContext);
 
-    // used to set the the progress bar when any body comes to the Reset Forgot Password Page 
+
     useEffect(() => {
 
-        // set's the progress bar to 80 percent when we route to this page
+
         setProgressBar((prevState) => ({
             show: true,
             width: 80
@@ -36,7 +36,7 @@ const ResetForgotPasswordPage = () => {
 
     }, [])
 
-    // passwordValidation state is used to store the variables required for validating the password fields
+
     const [passwordValidation, setPasswordValidation] = useState({
         isNewPasswordValid: false,
         isReEnterdNewPasswordValid: false,
@@ -44,13 +44,13 @@ const ResetForgotPasswordPage = () => {
         isClicked: false
     })
 
-    // PasswordFormData state which is used to store the data of the input password fields
+
     const [passwordFormData, setPasswordFormData] = useState({
         newpassword: "",
         retypednewpassword: ""
     })
 
-    // function used to populate the password form data to the passwordFormData state when the user types anything in the input elements
+
     const onchangeHandler = (event) => {
         const { name, value } = event.target;
         setPasswordFormData((prevState) => (
@@ -62,36 +62,36 @@ const ResetForgotPasswordPage = () => {
     }
 
 
-    // when the user comes to this page then we verify the user's password reset token by calling the backend with the user's password reset token value from our react's page url query parameters
+
     useEffect(() => {
 
-        // getting AbortController from javascript which is used to cancel asynchronous functions like network request etc
+
         const controller = new AbortController();
-        //   extracting signal from the controller of abort controller
+
         const { signal } = controller;
 
 
-        // this function is used instead of directly writing the code because useEffect does not support async function so we write this function and call it below
+
         const exec = async () => {
 
 
-            // setting the isFullPageLoaderActive to true so that we can see the full loading page while the user is verifying the password reset token
+
             setIsFullPageLoaderActive(true);
-            // getting all our query params from the url
+
             const queryParams = new URLSearchParams(location.search);
-            // getting our token query param value from our query params
+
             const tokenValue = queryParams.get('token');
-            // sending request to the backend to verify our password reset token
+
             try {
                 const verificationUrl = `${import.meta.env.VITE_VERIFY_RESET_PASSWORD_VERIFICATION_TOKEN_URL}?token=${tokenValue}`
                 await httpRequestAxiosQueueUtility.get(verificationUrl, { signal })
-                // set's the progress bar to 100 percent when we successfully verify the password reset token
+
                 setProgressBar((prevState) => ({
                     show: true,
                     width: 100
                 }))
 
-                // set's the progress bar to 0 after 1 second and hides the progress bar
+
                 setTimeout(() => {
                     setProgressBar((prevState) => ({
                         show: false,
@@ -99,29 +99,29 @@ const ResetForgotPasswordPage = () => {
                     }))
                 }, 1000);
 
-                // setting isFullPageLoaderActive state to false so that the full page loading is disabled
+
                 setIsFullPageLoaderActive(false)
 
             } catch (error) {
 
-                // setting the show Alert to true so that we can see the alert
+
                 setShowAlert(true)
-                // setting the alert message based on the error response
+
                 setAlertErrorMessage(error.response && error.response.data && error.response.data.errorMessage ? error.response.data.errorMessage : error.message)
 
-                // setting isFullPageLoaderActive state to false so that the full page loading is disabled
+
                 setIsFullPageLoaderActive(false)
 
-                // if we got any error when we are verifying the password reset token then we send the user to the login page as the token is not valid
+
                 navigate("/login");
             }
 
         }
 
-        // executing our async function
+
         exec();
 
-        // if this page unmounts then we are aborting the above network request to verify the password reset token.this return statement is useful to abort multiple network request when we are in developer mode of react
+
         return () => {
             controller.abort()
         }
@@ -130,16 +130,16 @@ const ResetForgotPasswordPage = () => {
 
 
 
-    // this function is called when the user presses the Reset password button
+
     const resetPassword = async () => {
 
-        // checking if the new password entry is empty or not
+
         const isNewPasswordEmpty = validator.isEmpty(passwordFormData.newpassword)
-        // checking if the retyped new password is empty or not
+
         const isReTypedNewPasswordEmpty = validator.isEmpty(passwordFormData.retypednewpassword)
-        // checking if the newpassword and retypednewpassword matches
+
         const doesNewPasswordAndReEnteredNewPasswordMatch = passwordFormData.newpassword.localeCompare(passwordFormData.retypednewpassword) === 0
-        // setting password validation state according to their values
+
         setPasswordValidation({
             ...passwordValidation,
             isNewPasswordValid: !isNewPasswordEmpty,
@@ -148,30 +148,30 @@ const ResetForgotPasswordPage = () => {
             isClicked: true
         })
 
-        // changing the password of the user only if the the below conditions meet
+
         if (!isNewPasswordEmpty && !isReTypedNewPasswordEmpty && doesNewPasswordAndReEnteredNewPasswordMatch) {
 
             try {
-                // getting all our query params from the url
+
                 const queryParams = new URLSearchParams(location.search);
-                // getting our token query param value from our query params
+
                 const tokenValue = queryParams.get('token');
 
-                // set's the progress bar to 80 percent when we successfully change the password of the user
+
                 setProgressBar((prevState) => ({
                     show: true,
                     width: 75
                 }))
-                // reset password url
+
                 const verificationUrl = `${import.meta.env.VITE_RESET_PASSWORD_VERIFICATION_TOKEN_URL}?token=${tokenValue}`
                 await httpRequestAxiosQueueUtility.post(verificationUrl, passwordFormData)
-                // set's the progress bar to 100 percent when we successfully change the password of the user
+
                 setProgressBar((prevState) => ({
                     show: true,
                     width: 100
                 }))
 
-                // set's the progress bar to 0 after 1 second and hides the progress bar
+
                 setTimeout(() => {
                     setProgressBar((prevState) => ({
                         show: false,
@@ -179,20 +179,20 @@ const ResetForgotPasswordPage = () => {
                     }))
                 }, 1000);
 
-                // after completion of the resetting the password then we are routing the user to the login page
+
                 navigate("/login");
 
             } catch (error) {
 
-                // setting the show Alert to true so that we can see the alert
+
                 setShowAlert(true)
-                // setting the alert message based on the error response
+
                 setAlertErrorMessage(error.response && error.response.data && error.response.data.errorMessage ? error.response.data.errorMessage : error.message)
 
-                // setting isFullPageLoaderActive state to false so that the full page loading is disabled
+
                 setIsFullPageLoaderActive(false)
 
-                // if we got any error when we are changing the password of the user we send the user to the login page
+
                 navigate("/login");
             }
 
@@ -200,33 +200,33 @@ const ResetForgotPasswordPage = () => {
     }
 
 
-    // border color of the new password input field which changes its color according to the new password validation
+
     let newPasswordBorderColor;
-    // border color of the retyped new password input field which changes its color according to the retyped new password validation
+
     let reTypedNewPasswordBorderColor;
 
-    // if the user clicked on the reset password button then isClicked will be true and if the user's new password is not blank then isValid is also becomes true and if both the new password and Re-entered new password match then doesNewPasswordAndReEnteredNewPasswordMatch becomes true.And Then if all three of these conditions satisfy then we change the border color to green
+
     if (passwordValidation.isClicked && passwordValidation.isNewPasswordValid && passwordValidation.doesNewPasswordAndReEnteredNewPasswordMatch) {
         newPasswordBorderColor = 'green'
     }
-    // else if the user clicks on the change password button and the new password is not valid or new password and re-typed new password does not match then border color becomes red
+
     else if (passwordValidation.isClicked && (!passwordValidation.isNewPasswordValid || !passwordValidation.doesNewPasswordAndReEnteredNewPasswordMatch)) {
         newPasswordBorderColor = 'red'
     }
-    // else the border color of the email will be blue
+
     else {
         newPasswordBorderColor = '#6b93d7'
     }
 
-    // if the user clicked on the Reset password button then isClicked will be true and if the user's re-typed new password is not blank then isValid is also becomes true and if the new password and retyped new password also matches then doesNewPasswordAndReEnteredNewPasswordMatch becomes true.And Then if all of these three conditions satisfy then we change the border color to green
+
     if (passwordValidation.isClicked && passwordValidation.isReEnterdNewPasswordValid && passwordValidation.doesNewPasswordAndReEnteredNewPasswordMatch) {
         reTypedNewPasswordBorderColor = 'green'
     }
-    // else if the user clicks on the change password button and the re-typed new password is not valid then border color becomes red
+
     else if (passwordValidation.isClicked && (!passwordValidation.isReEnterdNewPasswordValid || !passwordValidation.doesNewPasswordAndReEnteredNewPasswordMatch)) {
         reTypedNewPasswordBorderColor = 'red'
     }
-    // else the border color of the email will be blue
+
     else {
         reTypedNewPasswordBorderColor = '#6b93d7'
     }
@@ -234,12 +234,12 @@ const ResetForgotPasswordPage = () => {
     return (
         <>
 
-            {/* if isFullPageLoaderActive state is true then we show the loading page else we show the actual full page */}
+
             {isFullPageLoaderActive ? <FullPageLoader /> :
                 <>
                     <div className="mx-3 flex justify-center items-center h-[90vh] flex-col text-xs sm:text-sm md:text-base">
                         <form className="flex flex-col items-start">
-                            {/* new password input */}
+
                             <label htmlFor='New Password' className='my-3 block text-base font-medium text-dark dark:text-white'>
                                 New Password
                             </label>
@@ -261,7 +261,7 @@ const ResetForgotPasswordPage = () => {
                                     </svg>
                                 </span>
 
-                                {/* if isClicked is true and isNewPasswordValid is true and doesNewPasswordAndReEnteredNewPasswordMatch also becomes true then we render the tick mark symbol svg */}
+
                                 {
 
                                     passwordValidation.isClicked && passwordValidation.isNewPasswordValid && passwordValidation.doesNewPasswordAndReEnteredNewPasswordMatch ?
@@ -291,7 +291,7 @@ const ResetForgotPasswordPage = () => {
                                 }
 
 
-                                {/* now if isClicked is true and any one of isNewPasswordValid or doesNewPasswordAndReEnteredNewPasswordMatch becomes true then we render the "!" symbol */}
+
 
                                 {
                                     passwordValidation.isClicked && (!passwordValidation.isNewPasswordValid || !passwordValidation.doesNewPasswordAndReEnteredNewPasswordMatch) ?
@@ -329,16 +329,16 @@ const ResetForgotPasswordPage = () => {
                             </div>
 
                             <div className='relative mb-5'>
-                                {/* if isClicked is true and isNewPasswordValid is true and doesNewPasswordAndReEnteredNewPasswordMatch also becomes true then we render the "New Password is valid" paragraph */}
+
                                 <p className={`mt-2 min-w-[90vw] absolute text-sm text-green-500 ${passwordValidation.isClicked && passwordValidation.isNewPasswordValid && passwordValidation.doesNewPasswordAndReEnteredNewPasswordMatch ? "" : "invisible"}`}>New Password is valid</p>
-                                {/* if isClicked is true and isNewPasswordValid is false then we render the "New Password Must not be blank" paragraph */}
+
                                 <p className={`mt-2 min-w-[90vw] absolute top-0 text-sm text-red-500 ${passwordValidation.isClicked && !passwordValidation.isNewPasswordValid ? "" : "invisible"}`}>New Password Must not be blank</p>
 
-                                {/* if isClicked is true and isNewPasswordValid is true and doesNewPasswordAndReEnteredNewPasswordMatch becomes false then we render the "Passwords do not match" paragraph */}
+
                                 <p className={`mt-2 min-w-[90vw] absolute top-0 text-sm text-red-500 ${passwordValidation.isClicked && passwordValidation.isNewPasswordValid && !passwordValidation.doesNewPasswordAndReEnteredNewPasswordMatch ? "" : "invisible"}`}>Passwords do not match</p>
                             </div>
 
-                            {/* re-enter new password */}
+
                             <label htmlFor='Re-enter New Password' className='my-3 block text-base font-medium text-dark dark:text-white'>
                                 Re-enter New Password
                             </label>
@@ -360,7 +360,7 @@ const ResetForgotPasswordPage = () => {
                                     </svg>
                                 </span>
 
-                                {/* if isClicked is true and isReEnteredNewPasswordValid is true and doesNewPasswordAndReEnteredNewPasswordMatch also becomes true then we render the tick mark symbol svg */}
+
 
                                 {
 
@@ -391,7 +391,7 @@ const ResetForgotPasswordPage = () => {
                                 }
 
 
-                                {/* now if isClicked is true and any one of isReEnterdNewPasswordValid or doesNewPasswordAndReEnteredNewPasswordMatch becomes true then we render the "!" symbol */}
+
 
                                 {
                                     passwordValidation.isClicked && (!passwordValidation.isReEnterdNewPasswordValid || !passwordValidation.doesNewPasswordAndReEnteredNewPasswordMatch) ?
@@ -429,11 +429,11 @@ const ResetForgotPasswordPage = () => {
                             </div>
 
                             <div className='relative mb-8'>
-                                {/* if isCliked is true and isReEnterdNewPasswordValid is true and doesNewPasswordAndReEnteredNewPasswordMatch also becomes true then we render the "Re-entered New Password is valid" paragraph */}
+
                                 <p className={`mt-2 min-w-[90vw] absolute text-sm text-green-500 ${passwordValidation.isClicked && passwordValidation.isReEnterdNewPasswordValid && passwordValidation.doesNewPasswordAndReEnteredNewPasswordMatch ? "" : "invisible"}`}>Re-entered New Password is valid</p>
-                                {/* if isCliked is true and isReEnterdNewPasswordValid is false then we render the "Re-entered New Password Must not be blank" paragraph */}
+
                                 <p className={`mt-2 min-w-[90vw] absolute top-0 text-sm text-red-500 ${passwordValidation.isClicked && !passwordValidation.isReEnterdNewPasswordValid ? "" : "invisible"}`}>Re-entered New Password Must not be blank</p>
-                                {/* if isCliked is true and isReEnterdNewPasswordValid is true and doesNewPasswordAndReEnteredNewPasswordMatch becomes false then we render the "Passwords do not match" paragraph */}
+
                                 <p className={`mt-2 min-w-[90vw] absolute top-0 text-sm text-red-500 ${passwordValidation.isClicked && passwordValidation.isReEnterdNewPasswordValid && !passwordValidation.doesNewPasswordAndReEnteredNewPasswordMatch ? "" : "invisible"}`}>Passwords do not match</p>
                             </div>
                         </form>

@@ -10,24 +10,24 @@ import Cookies from 'js-cookie';
 
 
 const Login = () => {
-  // use navigate is used for routing in to different webpages in the react router
+
   const navigate = useNavigate();
-  // used for setting the progress bar This state is taken from the notes context
+
   const { setProgressBar } = useContext(NotesContext)
 
-  // getting setShowAlert and setAlertErrorMessage from AlertContext
+
   const { setShowAlert, setAlertErrorMessage } = useContext(AlertContext)
 
-  // used to set the the progress bar when any body comes to the login page 
+
   useEffect(() => {
 
-    // set's the progress bar to 100 percent when we route to this page
+
     setProgressBar((prevState) => ({
       show: true,
       width: 100
     }))
 
-    // set's the progress bar to 0 after 1 second and hides the progress bar
+
     setTimeout(() => {
       setProgressBar((prevState) => ({
         show: false,
@@ -36,7 +36,7 @@ const Login = () => {
     }, 1000);
 
 
-    // To get the value of the email set by sign up page while registration and if it the email cookie is present then we delete the cookie as it is not needed here it is only needed to send the verification token again
+
     const cookie = Cookies.get('email')
     if (cookie) {
       Cookies.remove("email");
@@ -44,13 +44,13 @@ const Login = () => {
 
   }, [])
 
-  // form data state used to store the form data and can be used to send the user login data to the backend api
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   })
 
-  // formValidation state is used to store the variables required for validating the input fields
+
   const [formValidation, setFormValidation] = useState({
     isEmailValid: false,
     isPasswordValid: false,
@@ -58,7 +58,7 @@ const Login = () => {
   })
 
 
-  // handles the form data change and updates the state of the form data
+
   const handleOnChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
@@ -66,18 +66,18 @@ const Login = () => {
     }));
   }
 
-  // function which handles the login logic and send's the user data to the backend api for login
+
   const handleOnSubmit = async (event) => {
     event.preventDefault();
 
 
-    // checking if the email entry is valid or not
+
     const isEmailValid = validator.isEmail(formData.email)
 
-    // checking if the password entry is empty or not
+
     const isPasswordValid = !validator.isEmpty(formData.password)
 
-    // setting form validation state according to their values
+
     setFormValidation({
       ...formValidation,
       isEmailValid: isEmailValid,
@@ -85,93 +85,93 @@ const Login = () => {
       isClicked: true
     })
 
-    // checking if the isEmailValid and isPasswordValid are true or not. if all of them are true then only we perform the login functionality
+
     if (isEmailValid && isPasswordValid) {
 
 
-      // setting the progress bar loading to true and updating it's value
+
       setProgressBar((prevState) => ({
         show: true,
         width: 25
       }))
 
-      // backend url for logging in a user
-      // importing login url using the environment variables in the root directory of this application
+
+
       const url = import.meta.env.VITE_LOGIN_URL
 
-      // try catch for handling errors when we are calling the backend api
+
       try {
 
-        // increasing the progress bar value
+
         setProgressBar((prevState) => ({
           ...prevState,
           width: 40
         }))
 
-        // using httpRequestAxiosQueueUtility which provides us a object for http request which is based on axios api
+
         const response = await httpRequestAxiosQueueUtility.post(url, formData)
 
-        // increasing the progress bar value
+
         setProgressBar((prevState) => ({
           ...prevState,
           width: 75
         }))
 
-        // navigating to the home page after successful login
+
         navigate("/")
       } catch (error) {
 
-        // if any error occurs while logging in changing the progress bar value to zero and hiding the progress bar
+
         setProgressBar((prevState) => ({
           show: false,
           width: 0
         }))
 
-        // setting the show Alert to true so that we can see the alert
+
         setShowAlert(true)
-        // setting the alert message based on the error response
+
         setAlertErrorMessage(error.response && error.response.data && error.response.data.errorMessage ? error.response.data.errorMessage : error.message)
       }
     } else {
-      // setting the show Alert to true so that we can see the alert
+
       setShowAlert(true)
-      // setting the alert message
+
       setAlertErrorMessage("error while doing logging in")
 
     }
   }
 
-  // border color of the email input field which changes its color according to the email validation
+
   let emailIdBorderColor;
-  // border color of the password input field which changes its color according to the password validation
+
   let passwordBorderColor;
 
 
 
-  // if the user clicked on the login button then isClicked will be true and if the user's email id is valid then isEmailValid also becomes true.And Then if all of these two conditions satisfy then we change the border color to green
+
   if (formValidation.isClicked && formValidation.isEmailValid) {
     emailIdBorderColor = 'green'
   }
-  // else if the user clicks on the login button and the isEmailValid is not valid then border color becomes red
+
   else if (formValidation.isClicked && !formValidation.isEmailValid) {
     emailIdBorderColor = 'red'
   }
-  // else the border color of the email will be blue
+
   else {
     emailIdBorderColor = '#6b93d7'
   }
 
 
 
-  // if the user clicked on the login button then isClicked will be true and if the user's password is not blank then isPasswordValid will also becomes true .And Then if all two of these conditions satisfy then we change the border color to green
+
   if (formValidation.isClicked && formValidation.isPasswordValid) {
     passwordBorderColor = 'green'
   }
-  // else if the user clicks on the login button and the password is not valid then border color becomes red
+
   else if (formValidation.isClicked && !formValidation.isPasswordValid) {
     passwordBorderColor = 'red'
   }
-  // else the border color of the email will be blue
+
   else {
     passwordBorderColor = '#6b93d7'
   }
@@ -200,7 +200,7 @@ const Login = () => {
                 </svg>
               </span>
 
-              {/* if isClicked is true and isEmailValid is true then we render the tick mark symbol svg */}
+
               {
 
                 formValidation.isClicked && formValidation.isEmailValid ?
@@ -230,7 +230,7 @@ const Login = () => {
               }
 
 
-              {/* now if isClicked is true and isEmailValid is false then we render the "!" symbol */}
+
 
               {
                 formValidation.isClicked && !formValidation.isEmailValid ?
@@ -268,9 +268,9 @@ const Login = () => {
 
             </div>
             <div className='relative mb-8'>
-              {/* if isClicked is true and isEmailValid is true then we render the "Email Id is valid" paragraph */}
+
               <p className={`mt-2 absolute text-sm text-green-500 ${formValidation.isClicked && formValidation.isEmailValid ? "" : "invisible"}`}>Email Id is valid</p>
-              {/* if isClicked is true and isEmailValid is false then we render the "Email Id is not valid" paragraph */}
+
               <p className={`mt-2 absolute top-0 text-sm text-red-500 ${formValidation.isClicked && !formValidation.isEmailValid ? "" : "invisible"}`}>Email Id is not valid</p>
             </div>
           </div>
@@ -286,7 +286,7 @@ const Login = () => {
                 </svg>
               </span>
 
-              {/* if isClicked is true and isPasswordValid is also true then we render the tick mark symbol svg */}
+
               {
 
                 formValidation.isClicked && formValidation.isPasswordValid ?
@@ -316,7 +316,7 @@ const Login = () => {
               }
 
 
-              {/* now if isClicked is true and isPasswordValid becomes false then we render the "!" symbol */}
+
 
               {
                 formValidation.isClicked && !formValidation.isPasswordValid ?
@@ -355,9 +355,9 @@ const Login = () => {
             </div>
 
             <div className='relative mb-8'>
-              {/* if isClicked is true and isPasswordValid is true then we render the "Password is valid" paragraph */}
+
               <p className={`mt-2 absolute text-sm text-green-500 ${formValidation.isClicked && formValidation.isPasswordValid ? "" : "invisible"}`}>Password is valid</p>
-              {/* if isClicked is true and isPasswordValid is false then we render the "Password Must not be blank" paragraph */}
+
               <p className={`mt-2 absolute top-0 text-sm text-red-500 ${formValidation.isClicked && !formValidation.isPasswordValid ? "" : "invisible"}`}>Password Must not be blank</p>
             </div>
           </div>
@@ -376,9 +376,9 @@ const Login = () => {
         {/* <!-- Sign up  Link --> */}
         <div className="mt-6 text-blue-500 text-center">
           <Link to="/signup" className="hover:underline">Sign up Here</Link>
-        </div>
-      </div>
-    </div>
+        </div >
+      </div >
+    </div >
   )
 }
 

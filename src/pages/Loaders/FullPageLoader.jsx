@@ -1,6 +1,6 @@
 import React from 'react'
 
-// loading full page animation page
+
 const FullPageLoader = () => {
     return (
         <>

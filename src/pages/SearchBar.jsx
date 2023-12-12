@@ -4,7 +4,7 @@ import NotesContext from '../context/NotesContext';
 
 const SearchPage = () => {
 
-    // using searchTerm and setSearchTerm states from the Notes context
+
     const { searchTerm, setSearchTerm } = useContext(NotesContext)
 
     return (
