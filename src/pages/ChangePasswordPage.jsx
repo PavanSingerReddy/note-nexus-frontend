@@ -366,9 +366,9 @@ const ChangePasswordPage = () => {
                                 </div>
                                 <div className='relative mb-5'>
                                     {/* if isClicked is true and isOldPasswordValid is true then we render the "Old Password is valid" paragraph */}
-                                    <p className={`mt-2 min-w-full absolute text-sm text-green-500 ${passwordValidation.isClicked && passwordValidation.isOldPasswordValid ? "" : "invisible"}`}>Old Password is valid</p>
+                                    <p className={`m-2 min-w-[100vw] absolute text-sm text-green-500 ${passwordValidation.isClicked && passwordValidation.isOldPasswordValid ? "" : "invisible"}`}>Old Password is valid</p>
                                     {/* if isClicked is true and isOldPasswordValid is false then we render the "Old Password Must not be blank" paragraph */}
-                                    <p className={`mt-2 min-w-full absolute top-0 text-sm text-red-500 ${passwordValidation.isClicked && !passwordValidation.isOldPasswordValid ? "" : "invisible"}`}>Old Password Must not be blank</p>
+                                    <p className={`m-2 min-w-[100vw] absolute top-0 text-sm text-red-500 ${passwordValidation.isClicked && !passwordValidation.isOldPasswordValid ? "" : "invisible"}`}>Old Password Must not be blank</p>
                                 </div>
                                 {/* new password input */}
                                 <label htmlFor='New Password' className='my-3 block text-base font-medium text-dark dark:text-white'>
@@ -449,11 +449,11 @@ const ChangePasswordPage = () => {
                                 </div>
                                 <div className='relative mb-5'>
                                     {/* if isClicked is true and isNewPasswordValid is true and doesNewPasswordAndReEnteredNewPasswordMatch also becomes true then we render the "New Password is valid" paragraph */}
-                                    <p className={`mt-2 min-w-full absolute text-sm text-green-500 ${passwordValidation.isClicked && passwordValidation.isNewPasswordValid && passwordValidation.doesNewPasswordAndReEnteredNewPasswordMatch ? "" : "invisible"}`}>New Password is valid</p>
+                                    <p className={`m-2 min-w-[100vw] absolute text-sm text-green-500 ${passwordValidation.isClicked && passwordValidation.isNewPasswordValid && passwordValidation.doesNewPasswordAndReEnteredNewPasswordMatch ? "" : "invisible"}`}>New Password is valid</p>
                                     {/* if isClicked is true and isNewPasswordValid is false then we render the "New Password Must not be blank" paragraph */}
-                                    <p className={`mt-2 min-w-full absolute top-0 text-sm text-red-500 ${passwordValidation.isClicked && !passwordValidation.isNewPasswordValid ? "" : "invisible"}`}>New Password Must not be blank</p>
+                                    <p className={`m-2 min-w-[100vw] absolute top-0 text-sm text-red-500 ${passwordValidation.isClicked && !passwordValidation.isNewPasswordValid ? "" : "invisible"}`}>New Password Must not be blank</p>
                                     {/* if isClicked is true and isNewPasswordValid is true and doesNewPasswordAndReEnteredNewPasswordMatch becomes false then we render the "Passwords do not match" paragraph */}
-                                    <p className={`mt-2 min-w-full absolute top-0 text-sm text-red-500 ${passwordValidation.isClicked && passwordValidation.isNewPasswordValid && !passwordValidation.doesNewPasswordAndReEnteredNewPasswordMatch ? "" : "invisible"}`}>Passwords do not match</p>
+                                    <p className={`m-2 min-w-[100vw] absolute top-0 text-sm text-red-500 ${passwordValidation.isClicked && passwordValidation.isNewPasswordValid && !passwordValidation.doesNewPasswordAndReEnteredNewPasswordMatch ? "" : "invisible"}`}>Passwords do not match</p>
                                 </div>
                                 {/* re-enter new password */}
                                 <label htmlFor='Re-enter New Password' className='my-3 block text-base font-medium text-dark dark:text-white'>
@@ -534,11 +534,11 @@ const ChangePasswordPage = () => {
                                 </div>
                                 <div className='relative mb-8'>
                                     {/* if isClicked is true and isReEnterdNewPasswordValid is true and doesNewPasswordAndReEnteredNewPasswordMatch also becomes true then we render the "Re-entered New Password is valid" paragraph */}
-                                    <p className={`mt-2 min-w-full absolute text-sm text-green-500 ${passwordValidation.isClicked && passwordValidation.isReEnterdNewPasswordValid && passwordValidation.doesNewPasswordAndReEnteredNewPasswordMatch ? "" : "invisible"}`}>Re-entered New Password is valid</p>
+                                    <p className={`m-2 min-w-[100vw] absolute text-sm text-green-500 ${passwordValidation.isClicked && passwordValidation.isReEnterdNewPasswordValid && passwordValidation.doesNewPasswordAndReEnteredNewPasswordMatch ? "" : "invisible"}`}>Re-entered New Password is valid</p>
                                     {/* if isClicked is true and isReEnterdNewPasswordValid is false then we render the "Re-entered New Password Must not be blank" paragraph */}
-                                    <p className={`mt-2 min-w-full absolute top-0 text-sm text-red-500 ${passwordValidation.isClicked && !passwordValidation.isReEnterdNewPasswordValid ? "" : "invisible"}`}>Re-entered New Password Must not be blank</p>
+                                    <p className={`m-2 min-w-[100vw] absolute top-0 text-sm text-red-500 ${passwordValidation.isClicked && !passwordValidation.isReEnterdNewPasswordValid ? "" : "invisible"}`}>Re-entered New Password Must not be blank</p>
                                     {/* if isClicked is true and isReEnterdNewPasswordValid is true and doesNewPasswordAndReEnteredNewPasswordMatch becomes false then we render the "Passwords do not match" paragraph */}
-                                    <p className={`mt-2 min-w-full absolute top-0 text-sm text-red-500 ${passwordValidation.isClicked && passwordValidation.isReEnterdNewPasswordValid && !passwordValidation.doesNewPasswordAndReEnteredNewPasswordMatch ? "" : "invisible"}`}>Passwords do not match</p>
+                                    <p className={`m-2 min-w-[100vw] absolute top-0 text-sm text-red-500 ${passwordValidation.isClicked && passwordValidation.isReEnterdNewPasswordValid && !passwordValidation.doesNewPasswordAndReEnteredNewPasswordMatch ? "" : "invisible"}`}>Passwords do not match</p>
                                 </div>
                             </form>
                             <button onClick={changePassword} className="transition ease-in-out delay-150 bg-orange-600 hover:-translate-y-1 hover:scale-110 hover:bg-red-600 duration-300 p-2 lg:p-3 m-3 rounded-lg text-white">
