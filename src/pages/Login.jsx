@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react'
-import noteImage from "../assets/noteImage.jpg"
-import { Link, useNavigate } from 'react-router-dom'
+import React, { useContext, useEffect, useState } from 'react';
+import noteImage from "../assets/noteImage.jpg";
+import { Link, useNavigate } from 'react-router-dom';
 import httpRequestAxiosQueueUtility from '../utils/HttpRequestAxiosQueueUtility';
 import NotesContext from '../context/NotesContext';
 import validator from 'validator';

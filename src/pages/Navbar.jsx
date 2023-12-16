@@ -1,6 +1,6 @@
-import React, { useContext, useEffect } from 'react'
-import Logo from "../assets/note-nexus-high-resolution-logo-black-transparent.svg"
-import Avatar from "../assets/note-nexus-favicon-black.svg"
+import React, { useContext, useEffect } from 'react';
+import Logo from "../assets/note-nexus-high-resolution-logo-black-transparent.svg";
+import Avatar from "../assets/note-nexus-favicon-black.svg";
 // Initialization for ES Users
 import {
   Collapse,

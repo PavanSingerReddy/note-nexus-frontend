@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react'
-import noteImage from "../assets/noteImage.jpg"
-import { Link } from 'react-router-dom'
+import React, { useContext, useEffect, useState } from 'react';
+import noteImage from "../assets/noteImage.jpg";
+import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import NotesContext from '../context/NotesContext';
 import Cookies from 'js-cookie';

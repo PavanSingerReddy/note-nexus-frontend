@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import NotesContext from '../context/NotesContext'
+import React, { useContext, useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import NotesContext from '../context/NotesContext';
 import Cookies from 'js-cookie';
 import httpRequestAxiosQueueUtility from '../utils/HttpRequestAxiosQueueUtility';
 import AlertContext from '../context/AlertContext';

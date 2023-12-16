@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
-import Note from './Note'
-import { useNavigate } from 'react-router-dom'
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import Note from './Note';
+import { useNavigate } from 'react-router-dom';
 import NotesContext from '../context/NotesContext';
 import DeleteConfirmationModel from './Modals/DeleteConfirmationModel';
 import useNotes from '../hooks/useNotes';

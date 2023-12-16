@@ -1,10 +1,10 @@
-import React, { isValidElement, useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import validator from 'validator'
 import NotesContext from '../context/NotesContext'
 import { Link, useNavigate } from 'react-router-dom'
 import httpRequestAxiosQueueUtility from '../utils/HttpRequestAxiosQueueUtility'
 import AlertContext from '../context/AlertContext'
-import Cookies from 'js-cookie';
+import Cookies from 'js-cookie'
 
 
 const ForgotPasswordPage = () => {
@@ -151,7 +151,7 @@ const ForgotPasswordPage = () => {
                 // setting the show Alert to true so that we can see the alert
                 setShowAlert(true)
                 // setting the alert message
-                setAlertErrorMessage("error sending the password reset token to the user")
+                setAlertErrorMessage(error.response && error.response.data && error.response.data.errorMessage ? error.response.data.errorMessage : error.message)
                 // if any error occurs while sending the link to email for resetting the password change the progress bar value to zero and hiding the progress bar
                 setProgressBar((prevState) => ({
                     show: false,

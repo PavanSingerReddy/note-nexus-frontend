@@ -229,8 +229,10 @@ class HttpRequestAxiosQueueUtility {
 
             // If the error is due to a cancelled request (checked using axios.isCancel).The cancelled request uses AbortController. if you want to check if the request is cancelled or not you can use the signal.aborted from the AbortController object which returns true or false.true if the request is aborted and false if the request is not aborted
             if (axios.isCancel(error)) {
-                // if the request is cancelled then we are returning the resolved promise with the cancel network string
-                return Promise.resolve(import.meta.env.VITE_CANCEL_NETWORK_REQUEST_STRING);
+                // reset the queue by setting it to a resolved promise.
+                this.queue = Promise.resolve();
+                // Then, return immediately to prevent further execution.
+                return;
             }
 
             // if any error occurs while making the network request we are printing the error
