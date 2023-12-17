@@ -4,6 +4,7 @@ import NotesContext from '../context/NotesContext';
 import Cookies from 'js-cookie';
 import httpRequestAxiosQueueUtility from '../utils/HttpRequestAxiosQueueUtility';
 import AlertContext from '../context/AlertContext';
+import IsNotAuthenticatedPage from '../HOC(Higher-Order Component)/IsNotAuthenticatedPage';
 
 // The user get's redirected to this page after sign up
 const AwaitingConfirmationPage = () => {
@@ -163,4 +164,6 @@ const AwaitingConfirmationPage = () => {
     )
 }
 
-export default AwaitingConfirmationPage
+
+// we are exporting the value returned by this "IsNotAuthenticatedPage(AwaitingConfirmationPage)" HOC(HIGHER-ORDER-FUNCTION) function This function returns a new function which will encapsulate this AwaitingConfirmationPage component in it and also have the capability of verifying that the user is unauthenticated(not authenticated or logged in) before rendering this AwaitingConfirmationPage
+export default IsNotAuthenticatedPage(AwaitingConfirmationPage)

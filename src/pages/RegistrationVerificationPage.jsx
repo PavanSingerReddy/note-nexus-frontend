@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import NotesContext from '../context/NotesContext';
 import VerifyToken from '../HOC(Higher-Order Component)/VerifyToken';
+import IsNotAuthenticatedPage from '../HOC(Higher-Order Component)/IsNotAuthenticatedPage';
 
 const RegistrationVerificationPage = () => {
 
@@ -46,5 +47,6 @@ const RegistrationVerificationPage = () => {
     )
 }
 
+// First we are checking if the RegistrationVerificationPage is not verified by using IsNotAuthenticatedPage HOC because our user must not be already logged in while verifying the new user he should logout first and then verify the new user
 // we are exporting the value returned by this "VerifyToken(RegistrationVerificationPage, import.meta.env.VITE_VERIFY_USER_URL)" HOC(HIGHER-ORDER-FUNCTION) function This function returns a new function which will encapsulate this RegistrationVerificationPage component in it and also have the capability verifying the token in the url parameters of this page using the "import.meta.env.VITE_VERIFY_USER_URL"(backend url) before rendering this RegistrationVerificationPage.This HOC(HIGHER-ORDER-Function) is useful for verifying the newly registered user's with their token
-export default VerifyToken(RegistrationVerificationPage, import.meta.env.VITE_VERIFY_USER_URL)
+export default IsNotAuthenticatedPage(VerifyToken(RegistrationVerificationPage, import.meta.env.VITE_VERIFY_USER_URL))

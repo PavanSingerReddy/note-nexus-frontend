@@ -6,6 +6,7 @@ import NotesContext from '../context/NotesContext';
 import validator from 'validator';
 import AlertContext from '../context/AlertContext';
 import Cookies from 'js-cookie';
+import IsNotAuthenticatedPage from '../HOC(Higher-Order Component)/IsNotAuthenticatedPage';
 
 
 
@@ -382,4 +383,6 @@ const Login = () => {
   )
 }
 
-export default Login
+
+// we are exporting the value returned by this "IsNotAuthenticatedPage(Login)" HOC(HIGHER-ORDER-FUNCTION) function This function returns a new function which will encapsulate this Login component in it and also have the capability of verifying that the user is unauthenticated(not authenticated or logged in) before rendering this Login
+export default IsNotAuthenticatedPage(Login)

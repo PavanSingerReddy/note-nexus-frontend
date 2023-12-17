@@ -5,6 +5,7 @@ import httpRequestAxiosQueueUtility from '../utils/HttpRequestAxiosQueueUtility'
 import validator from 'validator';
 import AlertContext from '../context/AlertContext';
 import VerifyToken from '../HOC(Higher-Order Component)/VerifyToken';
+import IsNotAuthenticatedPage from '../HOC(Higher-Order Component)/IsNotAuthenticatedPage';
 
 const ResetForgotPasswordPage = () => {
 
@@ -373,5 +374,6 @@ const ResetForgotPasswordPage = () => {
         </>
     )
 }
-// we are exporting the value returned by this "VerifyToken(ResetForgotPasswordPage, import.meta.env.VITE_VERIFY_RESET_PASSWORD_VERIFICATION_TOKEN_URL)" HOC(HIGHER-ORDER-FUNCTION) function This function returns a new function which will encapsulate this ResetForgotPasswordPage component in it and also have the capability verifying the token in the url parameters of this page using the "import.meta.env.VITE_VERIFY_RESET_PASSWORD_VERIFICATION_TOKEN_URL"(backend url) before rendering this ResetForgotPasswordPage.This HOC(HIGHER-ORDER-Function) is useful for verifying the password Reset Token which is present in the url parameter before allowing the user to change the password
-export default VerifyToken(ResetForgotPasswordPage, import.meta.env.VITE_VERIFY_RESET_PASSWORD_VERIFICATION_TOKEN_URL)
+// First we are checking if the ResetForgotPasswordPage is not verified by using IsNotAuthenticatedPage HOC because our user must not be already logged in while changing the password he should logout first and change the password
+//After that we are exporting the value returned by this "VerifyToken(ResetForgotPasswordPage, import.meta.env.VITE_VERIFY_RESET_PASSWORD_VERIFICATION_TOKEN_URL)" HOC(HIGHER-ORDER-FUNCTION) function This function returns a new function which will encapsulate this ResetForgotPasswordPage component in it and also have the capability verifying the token in the url parameters of this page using the "import.meta.env.VITE_VERIFY_RESET_PASSWORD_VERIFICATION_TOKEN_URL"(backend url) before rendering this ResetForgotPasswordPage.This HOC(HIGHER-ORDER-Function) is useful for verifying the password Reset Token which is present in the url parameter before allowing the user to change the password
+export default IsNotAuthenticatedPage(VerifyToken(ResetForgotPasswordPage, import.meta.env.VITE_VERIFY_RESET_PASSWORD_VERIFICATION_TOKEN_URL))
