@@ -47,7 +47,7 @@ const ShowNotesPage = () => {
             show: true,
             width: 50
         }))
-        navigate("/")
+        navigate("/home")
     }
 
     return (

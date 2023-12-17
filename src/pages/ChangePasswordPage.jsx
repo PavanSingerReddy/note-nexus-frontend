@@ -116,7 +116,7 @@ const ChangePasswordPage = () => {
                     width: 75
                 }))
                 // after successfully changing the password redirect to home page
-                navigate("/")
+                navigate("/home")
             } catch (error) {
 
                 // setting the show Alert to true so that we can see the alert

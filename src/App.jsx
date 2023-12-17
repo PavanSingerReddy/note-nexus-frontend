@@ -56,7 +56,9 @@ function App() {
               {/* on viewnote route of react router we are rendering the ShowNotesPage component */}
               <Route path='/viewnote' element={<ShowNotesPage />} />
               {/* on the application home route or root of the application of react router we are rendering the HomePage component */}
-              <Route path="/" element={<HomePage />} />
+              <Route path="/home" element={<HomePage />} />
+              {/* on the root("/") route also we are rendering login page as the user should first login to reach his home page */}
+              <Route path="/" element={<Login />} />
               {/* on every other route of react router dom we are rendering the error page */}
               <Route path="*" element={<ErrorPage />} />
             </Routes>

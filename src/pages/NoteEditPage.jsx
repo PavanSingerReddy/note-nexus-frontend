@@ -91,7 +91,7 @@ const NoteEditPage = () => {
             setAlertErrorMessage(error.response && error.response.data && error.response.data.errorMessage ? error.response.data.errorMessage : error.message)
         }
         // after editing the note we are navigating to the home page of the user
-        navigate("/")
+        navigate("/home")
     }
 
     // function which is used to handle the back button click and navigate the user to the home page
@@ -102,7 +102,7 @@ const NoteEditPage = () => {
             show: true,
             width: 50
         }))
-        navigate("/")
+        navigate("/home")
     }
 
 

@@ -119,7 +119,7 @@ const Login = () => {
         }))
 
         // navigating to the home page after successful login
-        navigate("/")
+        navigate("/home")
       } catch (error) {
 
         // if any error occurs while logging in changing the progress bar value to zero and hiding the progress bar

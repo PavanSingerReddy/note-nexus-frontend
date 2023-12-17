@@ -84,10 +84,10 @@ const IsNotAuthenticatedPage = (PageComponent) => {
 
         // if the user is unauthenticated then we return the Component(PageComponent) which was given to this HOC(Higher-Order-Function) and we are also passing the props to this component.These props will be given to us by the React when we return this function and in the props argument of this returned function react fills the props which was given to the Component(PageComponent) and here we are also passing the props which was given to us by react for PageComponent after isNotAuthenticated becomes true.
 
-        // if the user is authenticated then we return the ' <Navigate to="/" replace /> ' Component.In react-router-dom v6, returning <Navigate to="/" replace /> from a component will cause the app to navigate to the “/” route. The replace prop means that this new location will replace the current entry in the history stack of react-router-dom.
+        // if the user is authenticated then we return the ' <Navigate to="/home" replace /> ' Component.In react-router-dom v6, returning <Navigate to="/home" replace /> from a component will cause the app to navigate to the "/home" route. The replace prop means that this new location will replace the current entry in the history stack of react-router-dom.
 
-        // This means that if you click the back button in your browser, it won’t take you back to the page that rendered <Navigate to="/" replace />, but instead to whatever page was before that in your history stack
-        return isNotAuthenticated ? <PageComponent {...props} /> : <Navigate to="/" replace />
+        // This means that if you click the back button in your browser, it won’t take you back to the page that rendered <Navigate to="/home" replace />, but instead to whatever page was before that in your history stack
+        return isNotAuthenticated ? <PageComponent {...props} /> : <Navigate to="/home" replace />
     }
 }
 

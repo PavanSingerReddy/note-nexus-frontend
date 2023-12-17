@@ -90,7 +90,7 @@ const AddNotePage = () => {
             setAlertErrorMessage(error.response && error.response.data && error.response.data.errorMessage ? error.response.data.errorMessage : error.message)
 
         }
-        navigate("/")
+        navigate("/home")
     }
 
     // back button which goes to the user's home page which shows all the notes of the user
@@ -101,7 +101,7 @@ const AddNotePage = () => {
             show: true,
             width: 50
         }))
-        navigate("/")
+        navigate("/home")
     }
 
     return (
@@ -110,7 +110,7 @@ const AddNotePage = () => {
             {/* navbar element which is used to logout a user,change password and also shows the application branding */}
             < Navbar />
             <div className='relative'>
-                {/* passing the onClickBackButtonHandler which routes the user to the home page ("/") which contains all the user notes */}
+                {/* passing the onClickBackButtonHandler which routes the user to the home page ("/home") which contains all the user notes */}
                 <div className="relative top-1"><BackButton onClickBackButtonHandler={onClickBackButtonHandler} /></div>
                 <div className='absolute right-1 top-1'>
                     {/* passing the onClickHandler which saves the new notes to the user account */}
