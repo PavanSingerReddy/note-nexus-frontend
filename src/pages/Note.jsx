@@ -70,10 +70,10 @@ const Note = React.forwardRef(({ noteItem, index, onClick }, ref) => {
         <div className='flex flex-col mb-3'>
           <div className='flex flex-col'>
             {/* we are stopping propagation of event bubbling from the above div which has onClick event attached to it so that the user can select the title of the note properly */}
-            <h3 onClick={(e) => e.stopPropagation()} className='font-bold cursor-text text-lg h-6 text-green-900 overflow-auto hide-scroll-bar break-normal'> {noteItem.title} </h3>
+            <h3 onClick={(e) => e.stopPropagation()} className='font-bold cursor-text text-lg h-6 text-green-900 overflow-auto hide-scroll-bar break-long-words'> {noteItem.title} </h3>
           </div>
           {/* we are stopping propagation of event bubbling from the above div which has onClick event attached to it so that the user can select the content of the note properly*/}
-          <p onClick={(e) => e.stopPropagation()} className='mt-1 cursor-text overflow-auto hide-scroll-bar break-normal'
+          <p onClick={(e) => e.stopPropagation()} className='mt-1 cursor-text overflow-auto hide-scroll-bar break-long-words'
           > {noteItem.content} </p></div>
 
         <div className='font-thin cursor-text text-xs absolute left-3 bottom-3'>
