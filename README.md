@@ -1,8 +1,8 @@
-# Note Taking Application Frontend      
+# Note Nexus Frontend      
 
 Harness the power of React for seamless note management!
 
-This is the frontend part of the Note Application, built with React
+This is the frontend part of the Note Nexus Application, built with React
 
 ## Features
 
@@ -28,7 +28,7 @@ git clone https://github.com/PavanSingerReddy/note-nexus-frontend
 
 2. **Navigate to the project directory :**
 ```
-cd note-frontend
+cd note-nexus-frontend
 ```
 
 3. **Install dependencies :**
@@ -46,6 +46,9 @@ npm run dev
 ```
 
 3. Access the app in your browser using the provided localhost URL (usually http://localhost:5000).
+
+
+4. You can access the whole application live at https://pavansingerreddy.tech/.
 
 
 ## Contributing
