@@ -145,6 +145,7 @@ const AwaitingConfirmationPage = () => {
                     <div className="lg:max-w-xl max-w-sm px-5 text-center">
                         <h2 className="mb-2 text-4xl font-bold text-zinc-800">Check your inbox</h2>
                         <p className="mb-2 text-lg text-zinc-500">We are glad, that you're with us ? We've sent you a verification link to the registered email address.</p>
+                        <p className="mb-2 text-lg text-zinc-500"><b>NOTE</b> : Sometimes the Verification email may go to your spam folder so please check the spam folder too</p>
                         <Link onClick={removeEmailToken} to="/login" className="mt-3 inline-block w-full rounded bg-indigo-600 px-5 py-3 font-medium text-white shadow-md shadow-indigo-500/20 hover:bg-indigo-700">Go To Login Page →</Link>
 
                         {/* when the user clicks on this button we resend the verification token to the user the styles of this button is based on the isDisabled state when the user clicks on this button it remains greyed out until the is disabled state becomes false */}

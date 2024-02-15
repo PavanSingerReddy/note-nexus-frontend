@@ -188,6 +188,7 @@ const ForgotPasswordPage = () => {
 
                 <h2 className="mb-2 text-4xl font-bold text-zinc-800">Check your inbox</h2>
                 <p className="mb-2 text-lg text-zinc-500">We are glad, that you're with us ? We've sent you a Password Reset Token to the registered email address to Reset the Email address.</p>
+                <p className="mb-2 text-lg text-zinc-500"><b>NOTE</b> : Sometimes the Verification email may go to your spam folder so please check the spam folder too</p>
                 <form className="flex flex-col items-start">
                     {/* Email input */}
                     <label htmlFor='Email' className='my-3 block text-base font-medium text-dark dark:text-white'>
